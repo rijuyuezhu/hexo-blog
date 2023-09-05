@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/04/网页前端初步-总结/ -->
+
+<h1 class=" text-2xl mt-2 font-sans">网络前端初步 总结</h1>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">前置工具</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">前端所需的工具</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">首先需要写代码的工具<ul class=" list-disc font-serif">
+<li class=" ml-8">推荐 <a href="https://code.visualstudio.com/">VS Code</a>.</li>
+<li class=" ml-8">编写 HTML, CSS, JavaScript 够用了.</li>
+</ul>
+</li>
+<li class=" ml-8">然后是修图的工具<ul class=" list-disc font-serif">
+<li class=" ml-8">推荐 <a href="https://www.gimp.org/">GIMP</a>.</li>
+<li class=" ml-8">比 Photoshop 入门简单.</li>
+</ul>
+</li>
+<li class=" ml-8">拥抱开源!</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">一些常用学习网站</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://weblab.mit.edu/schedule/">MIT 的一门 Web 开发入门课</a>.<ul class=" list-disc font-serif">
+<li class=" ml-8">详细介绍了网页的前端与后端制作, 只关注前端的话只用学 HTML, CSS, JavaScript.</li>
+<li class=" ml-8">这门课 2021 年的授课视频在 <a href="https://www.youtube.com/watch?v=pUh6LHV787A">Youtube</a> 上可以看到(这一年的比较清晰).</li>
+</ul>
+</li>
+<li class=" ml-8"><a href="https://developer.mozilla.org/zh-CN/">MDN 文档</a>.<ul class=" list-disc font-serif">
+<li class=" ml-8">可以查到几乎所有的网页编写资料.</li>
+</ul>
+</li>
+<li class=" ml-8"><a href="https://www.runoob.com/">菜鸟教程</a>.<ul class=" list-disc font-serif">
+<li class=" ml-8">比 MDN 写得更简略.</li>
+</ul>
+</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">认识网页前端</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">HTML: 是网页的"骨架". 有了它, 网页就有了基本的框架.</li>
+<li class=" ml-8">CSS: 是网页的"皮肤". 有了它, 网页就有了各种各样的样式.</li>
+<li class=" ml-8">JavaScript: 是网页的"肌肉". 有了它, 网页就可以有各种运动效果.</li>
+</ul>
+<p class=" font-serif my-1">下面先给几个例子:</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<p class=" font-serif my-1">在 VS Code 里打开一个工作区. 新建一个 <code>index.html</code>, 输入以下内容.</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"zh-CN"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>我的网页<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>你好，世界！<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<p class=" font-serif my-1">效果如下:</p>
+<p class=" font-serif my-1"><img alt="effect" src="html1.png"/></p>
+<p class=" font-serif my-1">具体的细节后面再说.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<p class=" font-serif my-1">我们来试试加入 CSS 来改变一下样式.</p>
+<p class=" font-serif my-1">在之前的 <code>index.html</code> 中加入一行, 成为</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"zh-CN"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>我的网页<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"style.css"</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>你好，世界！<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<p class=" font-serif my-1">并且, 在同级目录新建一个文件 <code>style.css</code>(和上面的 <code>href="style.css"</code> 相对应), 写:</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">purple</span><span class="p">;</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">44</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">    </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">刷新页面, 现在的效果为</p>
+<p class=" font-serif my-1"><img alt="with css" src="html2.png"/></p>
+<p class=" font-serif my-1">文字是居中的, 且文字大小和文字颜色发生了变化.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<p class=" font-serif my-1">再来试试加入一些 Javascript 吧!</p>
+<p class=" font-serif my-1">修改 <code>index.html</code> 如下:</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"zh-CN"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>我的网页<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"style.css"</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">"firstTitle"</span><span class="p">&gt;</span>你好，世界！<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"script.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">网页由 HTML, CSS, JavaScript 三部分构成.</h2>
+<p class=" font-serif my-1">然后, 再在同级目录下添加一个 script.js, 输入</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"firstTitle"</span><span class="p">);</span>
+<span class="nx">title</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"这是 JavaScript 修改后的标题!"</span><span class="p">;</span>
+<span class="nx">title</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"green"</span><span class="p">;</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">效果为:</p>
+<p class=" font-serif my-1"><img alt="" src="html3.png"/></p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">因为网页一加载就会执行 script.js, 所以直接就会改变标题.</li>
+<li class=" ml-8">但是我们可以加入 <code>if</code>, <code>for</code>, 按钮等元素进行控制. 后面再说.</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">HTML 的基本元素</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">HTML 基本框架</h2>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"zh-CN"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>我的网页<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"style.css"</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        <span class="cm">&lt;!-- contents --&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8">几乎所有的 HTML 元素(标签)都要写成 <code>&lt;name&gt;</code> 和 <code>&lt;/name&gt;</code> 开闭的形式, 类似于 C 语言的 <code>{</code> 和 <code>}</code>.</li>
+<li class=" ml-8">除了有一些标签, 中间一般不会夹元素, 比如上面的 <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>, 还有后面会说到的 <code>&lt;img&gt;</code> 等, 那么它们一般不会有闭合标签.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">HTML 的注释的写法是 <code>&lt;!-- XXX --&gt;</code>. 注释的内容不会被浏览器渲染.</li>
+<li class=" ml-8">HTML 最外面有一个固定的大标签 <code>&lt;html&gt;</code> 代表整个页面, 然后在 <code>&lt;html&gt;</code> 里有 <code>&lt;head&gt;</code> 和 <code>&lt;body&gt;</code> 两个标签, 分别表示标题部分和主要页面部分.</li>
+<li class=" ml-8">HTML 常用的标签有:<ul class=" list-disc font-serif">
+<li class=" ml-8"><code>&lt;p&gt;contents&lt;/p&gt;</code> 段落, 段落结尾换行.</li>
+<li class=" ml-8"><code>&lt;h1&gt;title&lt;/h1&gt;</code> 标题, 可以用 <code>&lt;h1&gt;</code> <code>&lt;h2&gt;</code> 一直到 <code>&lt;h6&gt;</code>, 大小从大到小.</li>
+<li class=" ml-8"><code>&lt;a href="your-link"&gt;contents&lt;/a&gt;</code> 超链接, 可以连接页内, 也可以连接页外.</li>
+<li class=" ml-8"><code>&lt;div&gt;contents&lt;/div&gt;</code> 万能块状标签, 用来划分页面元素, 方便加 CSS 和 JavaScript.</li>
+</ul>
+</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">HTML 常用的标签有: (续)<ul class=" list-disc font-serif">
+<li class=" ml-8"><code>&lt;br&gt;</code> 换行.</li>
+<li class=" ml-8"><code>&lt;hr&gt;</code> 分割线.</li>
+<li class=" ml-8"><code>&lt;b&gt;contents&lt;/b&gt;</code> 加粗.</li>
+<li class=" ml-8"><code>&lt;img src="path" alt="desc"&gt;</code>插入图片, 其中路径为 <code>path</code>, 描述为 <code>desc</code>.</li>
+<li class=" ml-8"><code>&lt;button type="button" onclick="js-code"&gt;&lt;/button&gt;</code> 按钮, 按下后执行 <code>onclick</code> 后面的 JavaScript 代码.</li>
+</ul>
+</li>
+<li class=" ml-8">还有更多的标签, 但可能不太用得到. 可以逛 MDN 或者菜鸟教程了解更多的信息.</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">HTML 和 CSS 配合使用</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">在 HTML 中引用 CSS</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">HTML 是单独的一个文件, 默认不会与其他文件产生关联.</li>
+<li class=" ml-8">所以需要<strong>导入</strong> CSS.</li>
+<li class=" ml-8">只需要在 <code>title</code> 部分加入一句</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"style.css"</span><span class="p">/&gt;</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">其中 <code>href</code> 后是 CSS 样式文件的目录.</p>
+<p class=" font-serif my-1">就可以应用这个文件中的 CSS 样式了.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">CSS 基础格式</h2>
+<p class=" font-serif my-1">所有的 CSS 采用形如</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nt">name</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">attribute1</span><span class="p">:</span><span class="w"> </span><span class="n">value1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">attribute2</span><span class="p">:</span><span class="w"> </span><span class="n">value2</span><span class="p">;</span>
+<span class="w">    </span><span class="c">/* ... */</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">的形式进行格式设置. 其中:</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><code>name</code> 是标签名或 class 名或 id 名.</li>
+<li class=" ml-8"><code>attribute</code> 是属性.</li>
+<li class=" ml-8"><code>value</code> 是值.</li>
+<li class=" ml-8"><code>/* Contents */</code> 是注释(类似 C 的).</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">对标签名进行格式设置</h2>
+<p class=" font-serif my-1">比如, 我们要对所有的 <code>&lt;p&gt;</code> 和 <code>&lt;li&gt;</code> 进行格式设置, 设置为红色, 行高设置为 1.5 倍, 字号设为 24px. 那么我可以写</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nt">p</span><span class="o">,</span><span class="w"> </span><span class="nt">li</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">red</span><span class="p">;</span>
+<span class="w">    </span><span class="k">line-height</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="p">;</span>
+<span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mi">24</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">这样， 所有在 HTML 中写的 <code>&lt;p&gt;</code> 和 <code>&lt;li&gt;</code> 都会应用这种格式.</p>
+<p class=" font-serif my-1">CSS 中有很多属性可以更改, 而且很多属性有注意事项. 在应用属性前, 可以查一查 MDN 或者菜鸟教程了解更多.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">对 class 名和 id 名进行格式设置</h2>
+<p class=" font-serif my-1">有些时候我们不想让某种标签的全部元素应用相同的格式, 比如让某一个 <code>&lt;p&gt;</code>标签有以上的格式, 那么可以使用 HTML 的 class 或 id 功能.</p>
+<p class=" font-serif my-1">在 HTML 中我们这样写 <code>&lt;p&gt;</code> 标签:</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"className"</span><span class="p">&gt;</span>content1<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">"idName"</span><span class="p">&gt;</span>content2<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">这里有两种写法, 我们可以对 class 名或 id 名进行 CSS 样式设置为:</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="p">.</span><span class="nc">className</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c">/* 内容略, 注意 className 前的 . */</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">idName</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c">/* 内容略, 注意idName 前的 # */</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">class 和 id 的区别</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">在 HTML 中, 可以有多个元素有着同样的 class, 一个元素可以有多个 class.<ul class=" list-disc font-serif">
+<li class=" ml-8">多个 class 的语法是</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"class1 class2 class3"</span><span class="p">&gt;</span>contents<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8">在 HTML 中, 只能有唯一的一个元素有着某个 id, 一个元素只能有唯一的一个 id.</li>
+<li class=" ml-8"><strong>在使用 CSS 的时候, 避免使用 id 来进行格式设计, 而是使用 class.</strong></li>
+</ul>
+<blockquote>
+<p class=" font-serif my-1">思考题: 如果一个元素, 它的标签进行了格式设置, 有多个 class 且也进行了格式设计, 同时也有一个 id 进行了格式设计(虽然最好不要这样). 如果它们的格式有冲突, 哪个的优先级最高?</p>
+</blockquote>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">使用 JavaScript 将页面动起来</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">JavaScript 简介</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">JavaScript 是 Web 的编程语言.</li>
+<li class=" ml-8">可以看菜鸟教程学习 JavaScript 基础. 你会发现它和 C 和 Python 十分相像!<ul class=" list-disc font-serif">
+<li class=" ml-8">有着和 C 几乎一模一样的 <code>for</code>, <code>if</code>, <code>while</code>, <code>switch</code> 等。</li>
+<li class=" ml-8">和 Python 一样是解释型语言, 弱类型.</li>
+</ul>
+</li>
+<li class=" ml-8">所以学起来很快!</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">使用 JavaScript 操纵 HTML</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">使用</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="kd">const</span><span class="w"> </span><span class="nx">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"idName"</span><span class="p">);</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">返回一个 <code>idName</code> 对应的 HTML 元素的索引.</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">使用</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="kd">const</span><span class="w"> </span><span class="nx">nodeArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">"className"</span><span class="p">);</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">返回一个 <code>className</code> 对应的 HTML 元素组成的 HTML Collection, 可以用 <code>for</code> 循环遍历:</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="k">for</span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">nodeArray</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Do something on nodeArray[i]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">使用 JavaScript 操纵 HTML</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">更改对象的内部 HTML</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"idName"</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="w"> </span><span class="s2">"newHTML"</span><span class="p">;</span>
+</code></pre></div>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8">更改对象的属性(比如是一张图片更改 <code>src</code>)</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"pic"</span><span class="p">).</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"newPath"</span><span class="p">;</span>
+</code></pre></div>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8">更改对象的样式(比如更改文字颜色)</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"para"</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"newColor"</span><span class="p">;</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">使用更多有意思的东西</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">HTML 的按钮元素</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"js-code"</span><span class="p">&gt;</span>Name<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">可以把 <code>onclick</code> 后面的 <code>js-code</code> 改为一串 javaScript 代码, 一般是某个函数的入口</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">显示/隐藏 HTML 元素</li>
+</ul>
+<p class=" font-serif my-1">有个样式属性叫做 <code>display</code>.</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"divName"</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">;</span>
+<span class="c1">// 隐藏</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"divName"</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"block"</span><span class="p">;</span>
+<span class="c1">// 显示</span>
+</code></pre></div>
+
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">学会网页设计啦!</h1>
+<p class=" font-serif my-1">那就开始做吧! <strike>可以找个网页抄抄</strike>.</p>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">找到网页设计思路</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">可以看看别的网页, 按下 F12 键可以看到网页源代码.</li>
+<li class=" ml-8">听一听 MIT Weblab 的课(见<a href="#/1/2">这一页</a>).</li>
+<li class=" ml-8">自己头脑风暴.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">如何收集材料</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><strike>把组里摸鱼的拉出来让他们收集, 转移矛盾.</strike></li>
+<li class=" ml-8">谷歌, 维基百科, 知网.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">欢迎来我们网页逛一逛!</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://20222-webmake-lc.pages.dev/">在 Cloudflare 挂载</a>;</li>
+<li class=" ml-8"><a href="https://project.rijuyuezhu.top/20222-webmake-lc/">在 GitHub Pages 挂载</a>;</li>
+<li class=" ml-8"><a href="https://github.com/rijuyuezhu/20222-webmake-lc">GitHub 仓库</a>.</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">(Advanced)网页部署</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">大致流程</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">建立 GitHub 仓库</li>
+</ul>
+<p class=" font-serif my-1">请自行搜索, 将自己的代码库用 git 上传到某个 GitHub 仓库去.</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">选择挂载的网站. 常见的选择有<ul class=" list-disc font-serif">
+<li class=" ml-8">GitHub Pages.</li>
+<li class=" ml-8">Cloudflare.</li>
+</ul>
+</li>
+<li class=" ml-8">定期 commit, 进行构建.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">GitHub Pages</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">请看<a href="https://pages.github.com/">这篇教程</a>.</li>
+<li class=" ml-8">优点:<ul class=" list-disc font-serif">
+<li class=" ml-8">免费;</li>
+<li class=" ml-8">速度还行;</li>
+<li class=" ml-8">自动构建.</li>
+</ul>
+</li>
+<li class=" ml-8">缺点:<ul class=" list-disc font-serif">
+<li class=" ml-8">代码必须公开;</li>
+<li class=" ml-8">只能对一个分支进行构建.</li>
+</ul>
+</li>
+<li class=" ml-8"><a href="https://project.rijuyuezhu.top/20222-webmake-lc/">这是</a>我们用 GitHub Page 进行挂载的网页.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Cloudflare</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">请看<a href="https://developers.cloudflare.com/pages/">这篇教程</a>.</li>
+<li class=" ml-8">优点:<ul class=" list-disc font-serif">
+<li class=" ml-8">免费;</li>
+<li class=" ml-8">自动构建;</li>
+<li class=" ml-8">可以使用私人仓库;</li>
+<li class=" ml-8">可以挂载多个网站;</li>
+<li class=" ml-8">可以同时对多个分支进行构建.</li>
+</ul>
+</li>
+<li class=" ml-8">缺点:<ul class=" list-disc font-serif">
+<li class=" ml-8">有点慢, 难连接.</li>
+</ul>
+</li>
+<li class=" ml-8"><a href="https://20222-webmake-lc.pages.dev/">这是</a>我们用 Cloudflare 进行挂载的网页.</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢观看!</h1>
+<p class=" font-serif my-1">来我们的 <a href="https://github.com/rijuyuezhu/20222-webmake-lc">GitHub 仓库</a>逛一逛吧! (求个 Star 😀)</p>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

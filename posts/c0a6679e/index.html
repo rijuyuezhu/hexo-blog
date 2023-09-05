@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Georgia:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="选题为 6-1, 讲解在 Stanford Lecture - Don Knuth: The Analysis of Algorithms 中的算法分析.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（二） Open Topic II 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/c0a6679e/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="选题为 6-1, 讲解在 Stanford Lecture - Don Knuth: The Analysis of Algorithms 中的算法分析.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-14T15:10:51.000Z">
+<meta property="article:modified_time" content="2023-09-04T23:49:17.475Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="算法分析">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="问题求解">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/c0a6679e/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/c0a6679e/","path":"posts/c0a6679e/","title":"问题求解（二） Open Topic II 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（二） Open Topic II 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%BC%95%E5%85%A5"><span class="nav-text">问题引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81"><span class="nav-text">数据特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0"><span class="nav-text">斯特林数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="nav-text">斯特林数介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AF%E7%89%B9%E6%9E%97%E8%BD%AE%E6%8D%A2%E6%95%B0%E5%92%8C%E5%8E%9F%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">斯特林轮换数和原问题的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%AF%E7%89%B9%E6%9E%97%E8%BD%AE%E6%8D%A2%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0"><span class="nav-text">斯特林轮换数的生成函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0"><span class="nav-text">概率生成函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="nav-text">概率生成函数的基本特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%9D%87%E5%80%BC%E5%92%8C%E6%96%B9%E5%B7%AE"><span class="nav-text">概率生成函数卷积的均值和方差</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-text">解决问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%B8%8E%E6%80%BB%E7%BB%93"><span class="nav-text">应用与总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/c0a6679e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（二） Open Topic II 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（二） Open Topic II 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-14 23:10:51" itemprop="dateCreated datePublished" datetime="2023-04-14T23:10:51+08:00">2023-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">课程笔记</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">问题求解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>选题为 6-1, 讲解在 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=vkUNH9r6UCI">Stanford Lecture - Don Knuth: The Analysis of Algorithms</a> 中的算法分析.</p>
+<span id="more"></span>
+<p>演示文稿: 详见 <a href="2.pdf">Slide</a>.</p>
+<h1 id="问题引入">问题引入</h1>
+<p>算法分析初探：</p>
+<p>对于以下寻找最大值的算法(假设元素互不相同)</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Given a[1..n]</span></span><br><span class="line">m = a[n]</span><br><span class="line">k = n-<span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> k != <span class="number">0</span> : </span><br><span class="line">    <span class="keyword">if</span> a[k] &gt; m :</span><br><span class="line">        m = a[k] <span class="comment"># (*)</span></span><br><span class="line">    k = k - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>尝试分析 (*) 句的执行次数.</p>
+<h1 id="数据特征">数据特征</h1>
+<p>要分析一个语句的执行次数, 我们可以从它的最小值、最大值、平均值、方差入手.</p>
+<p>(*) 的执行次数的最小值是 <span class="math inline">\(0\)</span> (当 <span class="math inline">\(a[n]\)</span> 即为最大值), 最大值是 <span class="math inline">\(n-1\)</span> (当序列降序), 平均值和方差呢?</p>
+<p>平均值可以用 TC 中提及的指示性随机变量得到, <span class="math inline">\(X_i\)</span> 表示在 <span class="math inline">\(k=i\)</span> 时发生替换的次数, 等价于 <span class="math inline">\(a[i]\)</span> 是 <span class="math inline">\(a[i..n]\)</span> 中的最大值, 那么有 <span class="math inline">\(E[X_i]=1/(n-i+1)\)</span>, 进一步有</p>
+<p><span class="math display">\[
+    E(X)=\sum_{i=1}^{n-i}\dfrac{1}{n-i+1}=H_n-1.
+\]</span></p>
+<p>其中 <span class="math inline">\(H_n\)</span> 是调和数.</p>
+<p>那么方差呢? 这时我们就需要一些其它的方法了. 我们尝试直接考虑 (*) 的概率分布, 即求 <span class="math inline">\(p_{n, k}\)</span>, 意为在 <span class="math inline">\(n\)</span> 个数时执行次数为 <span class="math inline">\(k(0\le k\le n-1)\)</span> 的概率.</p>
+<h1 id="斯特林数">斯特林数</h1>
+<h2 id="斯特林数介绍">斯特林数介绍</h2>
+<p>首先来介绍第一类斯特林数(斯特林轮换数), 在 TC 作业里第二类斯特林数(斯特林子集数). 第一类斯特林数和它类似.</p>
+<p><strong>斯特林轮换数:</strong> 将 <span class="math inline">\(n\)</span> 个两两不同的元素划分为 <span class="math inline">\(k\)</span> 个互不区分的非空轮换(圆排列)的方案数, 记为 <span class="math inline">\(\begin{bmatrix}n \\ k\end{bmatrix}\)</span>.</p>
+<p>有递推公式为</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+    n \\ k
+\end{bmatrix}
+=(n-1)
+\begin{bmatrix}
+    n-1 \\ k
+\end{bmatrix}
++
+\begin{bmatrix}
+    n-1 \\ k-1
+\end{bmatrix}, (n\ge 1, k\ge 1).
+\]</span></p>
+<p>初始条件为 <span class="math inline">\(\begin{bmatrix}n \\ 0\end{bmatrix} = [n=0]\)</span>.</p>
+<p>证明: 考虑第 <span class="math inline">\(n\)</span> 个元素, 有两种可能:</p>
+<ol type="1">
+<li>被加入原先某一个元素的后面, 有 <span class="math inline">\(n-1\)</span> 种可能. 没有形成新轮换, 所以乘上 <span class="math inline">\(\begin{bmatrix}n-1 \\ k\end{bmatrix}\)</span>,</li>
+<li>独占一个轮换, 那么先前 <span class="math inline">\(n-1\)</span> 个元素需要填另外 <span class="math inline">\(k-1\)</span> 个轮换, 所以是 <span class="math inline">\(\begin{bmatrix}n-1 \\ k-1\end{bmatrix}\)</span>.</li>
+</ol>
+<h2 id="斯特林轮换数和原问题的关系">斯特林轮换数和原问题的关系</h2>
+<p><span class="math display">\[
+    p_{n, k}=\dfrac{1}{n!}\begin{bmatrix}n \\ k+1\end{bmatrix}, (0\le k\le n-1).
+\]</span></p>
+<p>理解方法:</p>
+<p>要使得 (*) 执行 <span class="math inline">\(k\)</span> 次, 那么原序列必然能分成非空的 <span class="math inline">\(k+1\)</span> 部分, 每一部分的最右边的元素是该部分的最大元素, 而且各部分之间, 最大元素(每一部分的最右边元素)递减. 于是我们发现: 每一部分内元素可以随便排列, 但是最后要"移动"使得最大元在最右边, 等价于一个圆排列; 由于各部分之间要求最大元素递减, 相当于使得这 <span class="math inline">\(k+1\)</span> 个圆排列(轮换)不加以区分, 符合第一类斯特林数的定义. 最后除以 <span class="math inline">\(n!\)</span> 就是概率.</p>
+<h2 id="斯特林轮换数的生成函数">斯特林轮换数的生成函数</h2>
+<p>考虑对于每一个 <span class="math inline">\(n\)</span> 值, 斯特林轮换数的生成函数为 <span class="math inline">\(S_n(z)\)</span>.</p>
+<p>于是 <span class="math inline">\(S_0(z)=1, S_1(z)=z\)</span>, 且当 <span class="math inline">\(n\ge 2\)</span>,</p>
+<p><span class="math display">\[
+    \begin{aligned}
+        S_n(z) &amp;= \sum_{k\ge 0} \begin{bmatrix}n \\ k\end{bmatrix}z^k
+        \\
+        &amp;=\sum_{k\ge 1} \left((n-1)\begin{bmatrix}n-1 \\ k\end{bmatrix}+\begin{bmatrix}n-1 \\ k-1\end{bmatrix}\right)z^k
+        \\
+        &amp;=(n-1)\sum_{k\ge 1}\begin{bmatrix}n-1 \\ k\end{bmatrix}z^k+z\sum_{t\ge 0}\begin{bmatrix}n-1 \\ t\end{bmatrix}z^t
+        \\
+        &amp;=(n-1+z)S_{n-1}(z).
+    \end{aligned}
+\]</span></p>
+<p>归纳可得 <span class="math inline">\(S_n(z)=z(z+1)\cdots(z+n-1)=z^{\overline{n}}\)</span>.</p>
+<h1 id="概率生成函数">概率生成函数</h1>
+<h2 id="引入">引入</h2>
+<p>回到原问题, 我们看一看以下这个生成函数, 固定 <span class="math inline">\(n\)</span> 有</p>
+<p><span class="math display">\[
+    P_n(z)=\sum_{k\ge 0}p_{n, k}z^k
+\]</span></p>
+<p>它称为<strong>概率生成函数</strong>, 我们研究它的性质来研究均值和方差.</p>
+<h2 id="概率生成函数的基本特征">概率生成函数的基本特征</h2>
+<p>对于随机变量 <span class="math inline">\(X\)</span> 的概率生成函数</p>
+<p><span class="math display">\[
+    G(z)=\sum_{k\ge 0}p_kz^k.
+\]</span></p>
+<p>有 <span class="math inline">\(\displaystyle G(1)=\sum_{k\ge 0}p_k=1\)</span>. (概率生成函数的必要条件)</p>
+<p>求导有</p>
+<p><span class="math display">\[
+    G&#39;(z)=\sum_{k\ge 1}kp_kz^{k-1}.
+\]</span></p>
+<p>有 <span class="math inline">\(\displaystyle G&#39;(1)=\sum_{k\ge 1}kp_k=E(X)\)</span>. (均值)</p>
+<p>再求导有</p>
+<p><span class="math display">\[
+    G&#39;&#39;(z)=\sum_{k\ge 2}k(k-1)p_kz^{k-2}.
+\]</span></p>
+<p>有 <span class="math inline">\(\displaystyle G&#39;&#39;(1)=\sum_{k\ge 2}(k^2-k)p_k\)</span>.</p>
+<p>那么 <span class="math inline">\(\displaystyle G&#39;&#39;(1)+G&#39;(1)=\sum_{k\ge 1}k^2p_k=E(X^2)\)</span>.</p>
+<p>于是 <span class="math inline">\(\displaystyle G&#39;&#39;(1)+G&#39;(1)-[G&#39;(1)]^2=E(X^2)-E^2(X)=D(X)\)</span>. (方差)</p>
+<p>所以我们成功用 <span class="math inline">\(G&#39;(1), G&#39;&#39;(1)\)</span> 得到了 <span class="math inline">\(X\)</span> 的期望和方差, 总结是:</p>
+<p><span class="math display">\[
+    \begin{aligned}
+        E(X) &amp;= G&#39;(1),
+        \\
+        D(X) &amp;= G&#39;&#39;(1)+G&#39;(1)-[G&#39;(1)]^2.
+    \end{aligned}
+\]</span></p>
+<h2 id="概率生成函数卷积的均值和方差">概率生成函数卷积的均值和方差</h2>
+<p>设 <span class="math inline">\(X\)</span> 的生成函数为 <span class="math inline">\(G(z)\)</span>, <span class="math inline">\(Y\)</span> 的生成函数为 <span class="math inline">\(H(z)\)</span>, 令它们的卷积 <span class="math inline">\(F=G*H\)</span></p>
+<ol type="1">
+<li>若 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 独立, 那么 <span class="math inline">\(F(z)=(G*H)(z)\)</span> 是 <span class="math inline">\(X+Y\)</span> 的生成函数.</li>
+<li>若 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 不一定独立, 那么 <span class="math inline">\(F(z)\)</span> 不一定表示 <span class="math inline">\(X+Y\)</span> 的生成函数, 但这不影响 <span class="math inline">\(F\)</span> 的均值和方差的计算, 它的均值和方差的公式不依赖于 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 的独立性.</li>
+</ol>
+<p>首先验证 <span class="math inline">\(F\)</span> 是概率生成函数. 显然 <span class="math inline">\(F\)</span> 各项非负, 且 <span class="math inline">\(F(1)=G(1)H(1)=1\)</span>, 故 <span class="math inline">\(F\)</span> 是概率生成函数. 假设是 <span class="math inline">\(Z\)</span> 的生成函数.</p>
+<p>然后试着求求 <span class="math inline">\(Z\)</span> 的均值. 先求导</p>
+<p><span class="math display">\[
+    F&#39;(z)=G&#39;(z)H(z)+G(z)H&#39;(z).
+\]</span></p>
+<p>故 <span class="math inline">\(E(Z)=F&#39;(1)=G&#39;(1)H(1)+G(1)H&#39;(1)=G&#39;(1)+H&#39;(1)=E(X)+E(Y)\)</span>. <span class="math inline">\(Z\)</span> 的均值是 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 的均值的和.</p>
+<p>然后试着求求 <span class="math inline">\(Z\)</span> 的方差. 再求导</p>
+<p><span class="math display">\[
+    F&#39;&#39;(z)=G&#39;&#39;(z)H(z)+2G&#39;(z)H&#39;(z)+G(z)H&#39;&#39;(z)
+\]</span></p>
+<p>故</p>
+<p><span class="math display">\[
+    \begin{aligned}
+        D(Z) &amp;= F&#39;&#39;(1)+F&#39;(1)-[F&#39;(1)]^2
+        \\
+        &amp;= G&#39;&#39;(1)+2G&#39;(1)H&#39;(1)+H&#39;&#39;(1)+G&#39;(1)+H&#39;(1)-[G&#39;(1)+H&#39;(1)]^2
+        \\
+        &amp;= \lbrace G&#39;&#39;(1)+G&#39;(1)-[G&#39;(1)]^2\rbrace + \lbrace H&#39;&#39;(1)+H&#39;(1)-[H&#39;(1)]^2\rbrace
+        \\
+        &amp;=D(X)+D(Y).
+    \end{aligned}
+\]</span></p>
+<p><span class="math inline">\(Z\)</span> 的方差是 <span class="math inline">\(X\)</span> 和 <span class="math inline">\(Y\)</span> 的方差的和.</p>
+<h1 id="解决问题">解决问题</h1>
+<p>最后我们回到原题, 我们要求随机变量 <span class="math inline">\(X_n\)</span> 对应的生成函数</p>
+<p><span class="math display">\[
+    P_n(z)=\sum_{k\ge 0}p_{n, k}z^k
+\]</span></p>
+<p>的均值和方差.</p>
+<p>首先做点变形, 利用斯特林轮换数的生成函数有</p>
+<p><span class="math display">\[
+    \begin{aligned}
+        P_n(z) &amp;=\sum_{k\ge 0}p_{n, k}z^k
+        \\
+        &amp;=\sum_{k\ge 0} \left(\dfrac{1}{n!}\begin{bmatrix}n \\ k+1\end{bmatrix}\right)z^k
+        \\
+        &amp;=\dfrac{1}{n!\cdot z}\sum_{i\ge 0}\begin{bmatrix}n \\ i\end{bmatrix}z^i
+        \\
+        &amp;=\dfrac{1}{n!\cdot z} [z(z+1)\cdots(z+n-1)]
+        \\
+        &amp;=\dfrac{1}{n!}(z+1)(z+2)\cdots (z+n-1)
+    \end{aligned}
+\]</span></p>
+<p>为了求 <span class="math inline">\(P_n(z)\)</span> 的均值和方差, 我们把它分成 <span class="math inline">\(n-1\)</span> 个概率生成函数的乘积:</p>
+<p><span class="math display">\[
+    \begin{gather*}
+        P_n=A_2*A_3*\cdots*A_{n}
+        \\
+        A_i(z)=\dfrac{z+i-1}{i}.
+    \end{gather*}
+\]</span> 容易验证 <span class="math inline">\(A_i(1)=1\)</span>, 故此处 <span class="math inline">\(A_i\)</span> 均是概率生成函数. 然后来求求 <span class="math inline">\(A_i(z)\)</span> 的均值和方差. 易得 <span class="math inline">\(A_i&#39;(z)=1/i, A_i&#39;&#39;(z)=0\)</span>, 故</p>
+<p><span class="math display">\[
+    \begin{aligned}
+        E(A_i)&amp;=A_i&#39;(z)=\dfrac{1}{i}
+        \\
+        D(A_i)&amp;=A_i&#39;&#39;(z)+A_i&#39;(z)-[A_i&#39;(z)]^2=\dfrac{1}{i}-\dfrac{1}{i^2}
+    \end{aligned}
+\]</span></p>
+<p>那么,</p>
+<p><span class="math display">\[
+    \begin{gather*}
+        E(X_n)=\sum_{i=2}^n\dfrac{1}{i}=H_n-1
+        \\
+        D(X_n)=\sum_{i=2}^n(\dfrac{1}{i}-\dfrac{1}{i^2})=H_n-H_n^{(2)}
+    \end{gather*}
+\]</span></p>
+<p>其中 <span class="math inline">\(H_n\)</span> 为调和数 <span class="math inline">\(1+\dfrac{1}{2}+\dfrac{1}{3}+\cdots+\dfrac{1}{n}\)</span>, <span class="math inline">\(H_n^{(2)}\)</span> 为二阶调和数 <span class="math inline">\(1+\dfrac{1}{2^2}+\dfrac{1}{3^2}+\cdots+\dfrac{1}{n^2}\)</span>.</p>
+<h1 id="应用与总结">应用与总结</h1>
+<h2 id="应用">应用</h2>
+<p>于是我们得到了 (*) 的执行次数的数据如下</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">最小值</th>
+<th style="text-align: center;">最大值</th>
+<th style="text-align: center;">均值</th>
+<th style="text-align: center;">方差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(H_n-1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(H_n-H_n^{(2)}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>得到这些数据有什么用? 由于 <span class="math inline">\(H_n=\Theta(\lg n)\)</span>, 我们得知了在平均情况下只有 <span class="math inline">\(\lg n\)</span> 次最大值替换, 这样我们可能可以在该支路运行高复杂度的算法(如插入数据库等)但不改变平均情况复杂度. 对原序列进行随机打乱可以使得无针对性输入.</p>
+<h2 id="总结">总结</h2>
+<p>Knuth 介绍了很多算法分析里的常用方法, 包括定量分析, 计数技巧, 生成函数等等. 这些工具可帮助我们完成算法分析.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/c0a6679e/" title="问题求解（二） Open Topic II 笔记">https://blog.rijuyuezhu.top/posts/c0a6679e/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" rel="tag"># 算法分析</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag"># 计算机科学</a>
+              <a href="/tags/%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" rel="tag"># 问题求解</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/cb24788d/" rel="prev" title="斯特林数 学习笔记">
+                  <i class="fa fa-angle-left"></i> 斯特林数 学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/9d9ffb80/" rel="next" title="2021 CCPC Guilin 解题报告">
+                  2021 CCPC Guilin 解题报告 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

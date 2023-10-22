@@ -13,7 +13,7 @@
     <content><![CDATA[<p>A memory leak issue which might be confusing for students struggling with ICS Project (aka, <a href="https://nju-projectn.github.io/ics-pa-gitbook/">PA</a>) of Nanjing University.</p>
 <span id="more"></span>
 <h1 id="notification">Notification</h1>
-<p>The issue mentioned in this article has been discovered by the developer community for a while(And probabily been fixed so far). But for freshmen in this field, such as students taking NJU ICS course, this is not well-known and may cause serious confusion. <a href="https://github.com/top-mind"><strong>Geng Tiancheng(top-mind)</strong></a> discovered this during his implementing of PA(<a href="https://github.com/NJU-ProjectN/nemu/issues/77">GitHub issue page</a>). And he delegated me, <a href="https://github.com/rijuyuezhu"><strong>Wenrui Huang(rijuyuezhu)</strong></a>, to write a blog recording the issue, in order to help students who meets the same situation.</p>
+<p>The issue mentioned in this article has been discovered by the developer community for a while(And probabily been fixed so far). But for freshmen in this field, such as students taking NJU ICS course, this is not well-known and may cause serious confusion. <a href="https://github.com/top-mind"><strong>Geng Tiancheng(top-mind)</strong></a> discovered this during his implementing of PA(<a href="https://github.com/NJU-ProjectN/nemu/issues/77">GitHub issue page</a>). And he delegated me, <a href="https://github.com/rijuyuezhu"><strong>Wenrui Huang(rijuyuezhu)</strong></a>, to write a blog recording the issue, in order to help students who meet the same situation.</p>
 <h1 id="bug-summary">Bug Summary</h1>
 <h2 id="the-environment">The environment</h2>
 <p>All the tests are based on the environment listed below.</p>

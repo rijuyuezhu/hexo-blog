@@ -364,7 +364,7 @@ $$</p>
 <p class=" font-serif my-1">形式化地，<em>排序问题</em>定义为:</p>
 <ul class=" list-disc font-serif">
 <li class=" ml-8">Input: 正整数 $n\ge 1$ 和正整数序列 $a_1, a_2, \cdots, a_n$.</li>
-<li class=" ml-8">Constraints: 对任意输入实例 $(n, a_1, a_2, \cdots, a_n)$，$\mathcal M(n, a_1, a_2, \cdots, a_n)=(b_1, b_2,\cdots, b_n)$，满足多重集 $\lbrace a_1, a_2, \cdots, a_n\rbrace=\lbrace b_1, b_2, \cdots, b_n\rbrace$，且 $b_1\le b_2\le \cdots\le b_n$.</li>
+<li class=" ml-8">Constraints: 对任意输入实例 $(n, a_1, a_2, \cdots, a_n)$，$\mathcal M(n, a_1, a_2, \cdots, a_n)=\lbrace(b_1, b_2,\cdots, b_n)| 多重集 \lbrace a_1, a_2, \cdots, a_n\rbrace=\lbrace b_1, b_2, \cdots, b_n\rbrace，且 b_1\le b_2\le \cdots\le b_n\rbrace$.</li>
 <li class=" ml-8">Costs: 对 $(b_1, b_2, \cdots, b_n)\in \mathcal M(n, a_1, a_2, \cdots, a_n)$，$cost((b_1, b_2, \cdots, b_n), (n, a_1, a_2, \cdots, a_n))=0$.</li>
 <li class=" ml-8">Goal: 最小化。</li>
 </ul>
@@ -382,7 +382,7 @@ $$</p>
 <p class=" font-serif my-1">形式化地，<em>最小化唯一编码问题</em>定义为：</p>
 <ul class=" list-disc font-serif">
 <li class=" ml-8">Input: $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|-1}\rbrace$ 和 $w=c_1c_2\cdots c_{|w|}, c_i\in\Sigma$.</li>
-<li class=" ml-8">Constraints: 对任意输入实例 $(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)$，$\mathcal M(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)=(f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1}))$，满足上述约束。</li>
+<li class=" ml-8">Constraints: 对任意输入实例 $(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)$，$\mathcal M(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)=\lbrace(f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1}))|满足上述约束\rbrace$。</li>
 <li class=" ml-8">Costs: 对 $(f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1}))\in\mathcal M(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)$，$cost((f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1})),(x_0, x_1, \cdots, x_{|\Sigma|-1}, w))=\sum_{i=1}^{|w|}|f(c_i)|$.</li>
 <li class=" ml-8">Goal: 最小化。</li>
 </ul>

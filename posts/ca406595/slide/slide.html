@@ -373,7 +373,7 @@ $$</p>
 <section>
  <div>
 <h2 class=" text-xl mt-2 pb-2 font-sans">最小化唯一编码问题</h2>
-<p class=" font-serif my-1"><em>(最小化唯一编码问题)</em> 输入 $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|-1}\rbrace$ 和 $w\in \Sigma^*$，需要输出一个转化函数 $f: \Sigma\to \Sigma_{bool}^*$。约束为：根据 $f$ 可以确定性地构造函数 $g_f:\Sigma^*\to \Sigma_{bool}^*$ 为，若 $w'=c_1c_2\cdots c_{|w|}, c_i\in \Sigma$，则 $g_f(w')=f(c_1)f(c_2)\cdots f(c_{|w'|})$，要求 $g_f$ 是<strong>单射</strong>，且 $|g_f(w')|$ 是 $|w'|$ 的 poly-bounded 倍。最小化 $g_f(w)$.</p>
+<p class=" font-serif my-1"><em>(最小化唯一编码问题)</em> 输入 $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|-1}\rbrace$ 和 $w\in \Sigma^*$，需要输出一个转化函数 $f: \Sigma\to \Sigma_{bool}^*$。约束为：根据 $f$ 可以确定性地构造函数 $g_f:\Sigma^*\to \Sigma_{bool}^*$ 为，若 $w'=c_1c_2\cdots c_{|w|}, c_i\in \Sigma$，则 $g_f(w')=f(c_1)f(c_2)\cdots f(c_{|w'|})$，要求 $g_f$ 是<strong>单射</strong>，且 $|g_f(w')|$ 是 $|w'|$ 的 poly-bounded 倍。最小化 $|g_f(w)|$.</p>
 </div> </section>
 
 <section>

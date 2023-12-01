@@ -18,20 +18,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="This article is encrypted.">
+    <meta name="description" content="OT：除MAX-SAT和TSP外，分支定界和局部搜索算法还可用于解决其它问题，请为每种算法调研至少1种可以解决的问题，结合例子介绍算法的设计与分析。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="问题求解（三） Open Topic 12 笔记">
 <meta property="og:url" content="https://blog.rijuyuezhu.top/posts/60419685/index.html">
 <meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
-<meta property="og:description" content="This article is encrypted.">
+<meta property="og:description" content="OT：除MAX-SAT和TSP外，分支定界和局部搜索算法还可用于解决其它问题，请为每种算法调研至少1种可以解决的问题，结合例子介绍算法的设计与分析。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-22T10:08:48.000Z">
-<meta property="article:modified_time" content="2023-11-22T11:10:09.765Z">
+<meta property="article:modified_time" content="2023-11-30T12:17:06.748Z">
 <meta property="article:author" content="Rijuyuezhu">
 <meta property="article:tag" content="算法分析">
 <meta property="article:tag" content="计算机科学">
 <meta property="article:tag" content="问题求解">
-<meta property="article:tag" content="私密">
 <meta name="twitter:card" content="summary">
 
 
@@ -129,7 +128,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -142,6 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E5%92%8C%E5%B1%80%E9%83%A8%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95"><span class="nav-text">分支定界和局部搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E7%AE%97%E6%B3%95%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">分支定界算法的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%BC%95%E5%87%BA%E5%B0%8F%E6%9C%A8%E6%A3%8D"><span class="nav-text">问题引出——小木棍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E5%BD%A2%E5%BC%8F%E5%8C%96%E6%8F%8F%E8%BF%B0"><span class="nav-text">问题分析——形式化描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E6%80%A7%E8%B4%A8"><span class="nav-text">问题分析——性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95"><span class="nav-text">问题分析——回溯算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C"><span class="nav-text">问题分析——分支定界</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95%E6%9C%80%E5%A4%A7%E5%9B%A2%E9%97%AE%E9%A2%98"><span class="nav-text">局部搜索算法——最大团问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#neibourhood"><span class="nav-text">Neibourhood</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E-neibourhood"><span class="nav-text">证明 Neibourhood</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -256,18 +256,51 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Sorry, please try again." data-whm="The hash went wrong. Still you may have a look at the content of the article.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="c1e855a99996bbe11b21af98a39050113164e5a819d1a58947ac8a53dfb4ff81">ebfac267c39067e061265010f63356e645902020ae166eddce0b0d10c87a22eb4f1df73aaa2e54027d830a27693e571b6c35667f9e63a142d1a6d786d97b90d289f6513e96ad7582173646a66d6f7df3459e55f0c65883be36c9d7e60cf4cf635bce6e1c21342d14ae1ca66d77e7df4f11dc52e1622c6840a8e40bdf3d336dc0594a00ca45f80f8c57f29f1e4ab980164a1602acbbaf38350c84e84344b8c91e60bdb38f4fe4f8fc2bafe0d562f11011cc6208f546ad701edcee4c9b87d524b1c23455ee7d6cf686a10615495e008b9160f6a0de3a67d08332e9754a6c2d69ca413f508b08d2cf42e479ded9d2bf42aabe63c9b144047d8f88adf473ba9c5c7a31cdef6164791d6d3ff7b0b53aefea81fad4304721c89f7b5c5a41bf7ed71787b66b9def13245c00da392da03ef9c5acba3019d8e69977720641a73c318f025f09355b3deccc79cd299d68935db53df10cb01af96f4ea13bef6d5fcf36284cbd7089eb1fd0c51a514bce84f3a3c68836347dd2066582a46b9612e85a0da5dbb1c2e13e28dbadc45fe880dca83b936a1d8df09c873e913784fcbbe57987439c154a6aedc3d68e74aff498c8b36f18a3ab303495fd3bda4a89043f81212d73d43d9c6b8d4436f7c6491e74eb591c6720397e1e95d8768a14cd843e6effcfef9217d05d590b0a48ed52c41bea0892a2b3adbc5b6984ddb832d7bcaee57cc5828c3d15e666b11482036f8d240f37922fc87d7c4bccfb120f703415045794a1995f6867d71a889bc27ff0885f768637396d7c34c0854a03ddfd449b8cdd028ef06f77449518d37220e5caa5673bd46e1b1ecd711bda82de2a72586038268b30fc2bfdcea370c426c095a0a0204a44b0a6295b5ef30d95f39564a4460338bc1eeb2686a58701ec7b6808afa644d02c4e03c4fa8f4d0eaf303c38665f70784ec71112384a19b242ff020742801dcea6b4439c7986ba3ecee43500455293515c654fe798b5724da11f18f2eb2711bfad51b7d20a9f062dfdcf266f0d3c4d0f0bdbbf16bfe565c098f728968b61ecdda91c47c883f674400c41c5bb12cf699f212c73cf48134c986bd2659d95f454874a447e0eb2dd91110b1c82143cfea0a211fca8ebe21a6e1cf0d141f09e9d16ca92ec6ee987074d57f5475d37ddb8180f94d7891e8fa2c7a1f63c75d77763f072d082c335646a4f3467b178e3aae03483aa71ad6267e90867ac1e25f7f62adc057eace499a0489d6d170cc132a730adbfaca55556a4c82c6711ad6ec50d450b4d33696cf230dc7a9581421e9561e3f47e60eca2fee64e4257ef90612ae4302144aac646559f8275385a5ec6cc5f2ee15d08f5133b0c9d271f2d0e8660cb14a77992719c02c7e4c31afd18c62c2cb7189b61f5b920fd89f4f357ce087e618007ea5f77685070f26d9f6a8d28058f7391dd50328a87784ee8dac21fa5d56f5237be9e9d3bce9aa8852c94497a6f64dc6aa774859208aefc0d0305060786590f18d1ebe2c9813d609cc1ab8c40a3fa839257bf4f1670ae7becee1309edfe41e699a9db3c0f7373f12da49762adffbbdd04edbc5410ba6971d7095907b0be8265be5069fcefb73e0633ffe62b5bcb34fa52f683aee6fa84f5a5dfb65a9ed6929431363e425cb7c5a8769cec63e241347e17a99f7c797d8d394e29888dd66bb8887788be406116bef3b485cb7b9b3e3e374352175071eeaba7d7f04ee9793546493474d4c33e2be111122ddf183a700cbef2564f8da83b56d2959d1b2c5bf40fd823464a3a93c3c50f4e507a36412422df2cb85f7460afc486b7e2c4b022922475a0017315ac820413c7942dd045a71780fd029eceba675b7e687c438e8a882fb54342d1622cdb944d6cbfd80411cfeb2876e9a221a331906aea030e4df384be23e62815bc2d5c984bfe2a9bd9a388ae86833d3d170d8ce07e5763002904aaca9e47012f7d1d9973f3887c5e2a5d82ca0d0f28702fcc6166e1207fc9f6609a8db921c5eba62239029639d5095c0975a234018e6db01c8e622c9666fdf345f4200e9c4f1cb8d02442c719864c7860580f23d91d5728158d0ce223a9f1e5d9ef7114ac96637f6f14eef14183f25255c0bf130e219d052e62e7d305c7ac048e92a7c1258920be95c6bd56600c9b1d8ea16d8b08995c07b1e59c0ca4235c0744daf53d9873b8767ef1b66836caa82ab681579cc828a7e5527c2b6f623e3e06fcaf8dce9acf3a1955367ebb6163faf6de1494249010b90decc40820a31aadea14caff2a0458911add293d1e45474c3782f39978ee71ddddf4a50043f414e941b84535a554ad28933ffeaa592c1b6ed67e069dcb273a343d56af51ff6cce4051c3a106859e2a5de5828c35687b78a7cdb005c34c9af408f12ab7428d5ccaf94bec3ce140196c01c63946c5726de9bf2959cf6e03a6ea7c7fc9bec5aa18f422a000d1247e862a472c96864793d65339008edd3b715370f6f42cccd2490e1f1d54c79a002ecf9e8bde772402dd836d6efad3dbb9676722f33e6a3748d505ae6a3236c18cc8a92d1e0fdddec7aba8453aac773db133fb66b8b86589bbfabe85baeacf19159281c14de3d6b22741e2e300b0110fedc8e7bbe7f25f0c95de927200faead87d0ea36af7c9b263bb86dec4d41d0248ae42776ead8f20444451e658453381aed0789906794725a38ac277c321f10bbe6dfcd229d5ed350a7194962f42fb55d34b21ddfa6824dec5ce0c29c9c208ea98a915707cc594360e4932b7dd43d3af4340dc0fae93a6ca2e7c807903b7d808627f36bca8be65178ca3100dd3f517c8e61862c30043071eb1de0e38971c1d26b84bfa9c596e4a2fd35f7102b3ac1bad7f095e4cd980051024e3ba01492b6d1adc4e8bf53a4027b4cdd5c0b950dc46b1cfef357d0d7d80eb589688b838659d85de26a2ca0ac7d687d4da76192e8e16658c8fee3c89d417ac215eb832c934a0f23eebe6a4b8ee175466bfb71be31661f1d60b6faa055eba89967c47aa23a6716c4a085dc10c29b62c26098c329b21a9a0f14989f55c0168b6b806292ece88166e009e304ef009d17731b51755931be03e388f9889b93b4e9ac2c6dbcf8b35e40cd8e83ca92c680cf02eedbdf6e5de13e7570012844f2396a3523d96142b0b1e5ebb07ff94d991b76944e198fc8913eaff5829039a479319a3c4c4856a3b6e881600000d019b8a8c281d4d24101a77557a023a57014a57fdfde2f4f186430747402c082ddd797850d189b24b3ef4e26a1349348bca3ca3ab93f5ac474118be4b8392c360c98d360cf2e7450fb3a324bc7b8d341ebacad349f6a89add7a22fe4611c26755790b9bd11545c30dc511eed02694152c2ba4956c37ed6176d45c6300ca7f2375600c90ef96f66f0dce72759401502d089bc947798f84430fd1aef8942a7805b92e968ccc451d088c98fe3623531a8713b787ad4e01e411ad304f28de810331de5d2c7e62025e86b26ae3b0495aacc4aad0bbb8bcd2da90006006d4d3976e2cab6fc85675c4047bc3577610e9870de55c1baaf7bc33cc3c487def7e4e6c5ce92dbee38f3378309f4cd8c929b894f8697d67076c704c7bc2739aa39f07db69c483870db19d3c42d852e376c67f1390392b7dac959b1816dda130ef2e60390557a603b338817c12e01b2965b01dc1a46e9c7f02e4bcecdca05613110167b66371393ce8279020cf41e927888c7b15bfc1f3906be3eb0485c556e1c838db25b80571284ded2f649a3978229ce522a6253ae5e8a118883b1f5d1fd956ea277caa1774836870132a3f3643cd98257e157bf76f68c131e9b940b72d7b92ab50c63469a51984e5d5f332f6226c3bed9f51809da91aa49c8d41e6456de5f4c020c79b1bb825dbe01b14fac116fa99be23a1eda20994d7536d0e81ad470fe969098cf8eadefc5f477bbc11657cdcff86d68e8d18833105162d799a452e735f79045db16e14be22110a67f37a2c29414a9f894132fd0b799c7aa1e5b3cd5ee2edfa54838da32c410740a5b4736e1452ac01224f3c8ca6bacc4af86682105d9741898f80e9671d66bced4d39cb4003e94b55e1a0f720b8dc6fa8898a7dec9a37866580b1c72460b1a06b864a46ea93f8f16a748c265723414b99a5a8c2a5da5a00bfc256d3031611d6f93291f5964b75bb4492cae907c0711c0e75f837c56c838b3a326f50c888e0bccc55e7427597c6c3ecbcd0e4ef21822d20dd0497c39353586616dc534f657e942d21ad14bc79b4453942c53d0c8488b9d7b2b0bddec16085ce7ef627d127ee3ccac962934700e45eb329d406f138758c6f64b58a30442f40cda69483a6414ef8d6ead50556c261cd4560b86335a4ec5027e7d28faefc95cab151c6053b127ad0bf3e4698c9da0d8672ed64864ceeef88509709e495eafa28ada78046760f251a773d141d3367a86955fa2f949959c3e0c03f080edd74882e4b43f3e5a808ec328e372e54b1ae3edcca34761e42974b4f7e746aedd2a61a6fe22b7c354d92c938bc886534b3ea12f9910f2540bf4bf283d8ef2f924e32fdc17f51e1d780de8b023da46f202c05606dd3c086cf057f150c8f718d56d6d735c7cda3bba133d68727c9b0b90406672d0d4470b8e19096ad1116be30c6288412a097409e43461f61bb34c342b2935fbf4ec802a80b174463b1a3f74b557b25f6d2ed8060220936031d231bfdbc22a92add34b6bc128ec53f652759a5a69128b8cb1e0cd6cb9df5f3aa7c8ed36ac56e9933074753fa36a99c9d2851a44522b11083470832add1a0c61392cbd61a4fd7d8bb117961eb1bad5a16fb7f8bbe57565a3f1464e725ef41b6dbc66e2ce538dd79636cb446b6c82cd140e305081ecdc595f6bc78929b6d57c2e2ddd77a4bf57f9857548da4f1e540ec93fa39dfcd7d4557bb3bdbb3f946218b64446290fe33581d0f9f9094be487b6b70e60a3be2c7489673b03ca0c522ec843db48b8610b3abb103b8ca00e484d157dccb633f6e7ef6d4058af1589fe76992c14cdb175d29e61ab260c205196a9ca4441cf79345ef89d388d000c8b451c2d2a3515a54515852a3fd7b7ed7540aa4d3b802b519f23bf38d3bb8020b9721d31c9b32eece4680cab6682b9593e5e652f3cf62f4162344bb0e0e1a76d3d20ac94885f9e98f87de801efadb3633a58b8296ec609c874764b97db09401a3611763d4285c34bd6d2584de8d70b0c7b26e873a53bb6c11094b42c75ce6af24eaa74abbfd697a6d0dcf582836718f2fe9272f491d67b09edebd083374233ae673188215fd842d69e18b30912c311f015f30aa721aeb7d4fd70e336c4c739f7728df938772b511bc733856f4fbefe11eae4c4864082eca3c7d1fc4582619107fd3ee897d4aa7b096a812c334858bd9e7fc8da09fd4c57e5e2752b4cac20783285d9fe2d2242f2d401fa3abcd6c5f45a90c1d11ee239771b727a56d64a16bb7cd14af878ee8b5aa9b8fe2fd3949a3d7b7965005611eaf6af9af00b1353fc50b686e385059ae22981476a8d8d1c4099cc2af01978423ed667d1b444a94abfc58f0431c1c494f9177c0dca513f78e364c2afa048f9719da43ecaa8874193efd455b56eea7c8995cb0ecd1085d30186f9ba42528f5e99bb1e7ce36ffb2c7f034cbcb74f28878aae775e526cbce47e9852aaec90c5e73570b9aa239ce198b377b66b54fcaea592f2d3cf6b1e15a2d9f1adcdd3cd5625d9392b97a4bd161fc0a8695b115edcae73fca65594f1dfc3255c4dfaddf8a3829b98bf932bf8fcb02fd98fc7c2b9d1f02c5eae2746c1e01552fcc69cc17267547ff4c669808d7030d550fda07d082a743ed7a7f4ce83649d1d09afd446f2e5b6b0b7da2bd8d3e5b80fad7d2f43213f775cf64be83e0ad1a2b033b67ecbce5a13d7623a2a3d477bb6177e20da553bb93a6b9373cb5b5f33ed09c999cf24890b0daed0e213b28281a55af5e6f16d770fbbcad4c6f6b9ac7874a77609c3607ad450c1aec77faf2b37d46bacd255965d5225b7d0fb8112991917b69dcc187cbb886be550b36a1f15f66bffd96860a9db441b504634e87552f28cdc49531a2d342bd9b6906dbf91106675d3a304b5eb17129e8641b8c7b6e58b65a5ec5fa0fb0d32dc6a1c3d14e6d</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Please enter the password.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    <div class="post-body" itemprop="articleBody"><p>OT：除MAX-SAT和TSP外，分支定界和局部搜索算法还可用于解决其它问题，请为每种算法调研至少1种可以解决的问题，结合例子介绍算法的设计与分析。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">slide</a></p>
+<h1 id="分支定界和局部搜索算法">分支定界和局部搜索算法</h1>
+<h2 id="分支定界算法的应用">分支定界算法的应用</h2>
+<h3 id="问题引出小木棍">问题引出——小木棍</h3>
+<p>有一些同样长的小木棍，他把这些木棍随意砍成几段。现在，他想把小木棍拼接成原来的样子，但是却忘记了自己开始时有多少根木棍和它们的长度。 给出每段小木棍的长度，求原始木棍的最小可能长度。</p>
+<h3 id="问题分析形式化描述">问题分析——形式化描述</h3>
+<ul>
+<li>输入：<span class="math inline">\(\langle n, a_1, a_2, \cdots, a_n\rangle\)</span>。</li>
+<li>约束 <span class="math inline">\(\mathcal M(x)=\)</span> <span class="math display">\[
+  \left\lbrace \langle m,\lbrace S_1, S_2, \cdots, S_m\rbrace \rangle: \sum_{S_1}=\sum_{S_2}=\cdots=\sum_{S_m} \text{且 $\lbrace S_i\rbrace$ 构成 $\lbrace a_1, a_2, \cdots, a_n\rbrace$ 的一个划分}\right\rbrace.
+\]</span></li>
+<li>代价：<span class="math inline">\(m\)</span>。</li>
+<li>目标：最大化。（即最小化 <span class="math inline">\(sum/m\)</span>）</li>
+</ul>
+<h3 id="问题分析性质">问题分析——性质</h3>
+<ol type="1">
+<li>显然 <span class="math inline">\(m\mid \sum a_i\)</span>。</li>
+<li>可知 <span class="math inline">\(m\le n\)</span>，可以多项式时间枚举 <span class="math inline">\(m\)</span>，故 <span class="math inline">\(A=\sum a_i/m\)</span> 每组的和得以确定。则只需解决一个判定问题</li>
+</ol>
+<h3 id="问题分析回溯算法">问题分析——回溯算法</h3>
+<p>可以分组确定：先确定第一组的组成，再是第二组的组成。使用回溯算法，用 <span class="math inline">\(S(S_1, S_2, \cdots, S_{i-1}, \lbrace b_1, b_2, \cdots, b_t\rbrace)\)</span>，表示已经确定了前 <span class="math inline">\(i-1\)</span> 组，第 <span class="math inline">\(i\)</span> 组已经选定了 <span class="math inline">\(\lbrace b_1, b_2, \cdots, b_{t}\rbrace\subseteq S_i\)</span> 这些元素。则状态转移可以决定下一个 <span class="math inline">\(b_{t+1}\in S_i\)</span> 使得总和 <span class="math inline">\(\le A\)</span>。</p>
+<h3 id="问题分析分支定界">问题分析——分支定界</h3>
+<p>观察，可以 pre-compute 进行对搜索树的裁剪：</p>
+<ol type="1">
+<li>对于 <span class="math inline">\(b_1\)</span>，一定选择第一个当前未取过的，因为它一定要包含在某组内（该步不进行分支）。且在替代时从前往后尝试。</li>
+<li>将 <span class="math inline">\(a_i\)</span> 从大到小排序，在某次失败时跳过之后连续几个相同的 <span class="math inline">\(a_i\)</span>。</li>
+</ol>
+<h2 id="局部搜索算法最大团问题">局部搜索算法——最大团问题</h2>
+<p>最大团问题：求图中的最大团的阶。</p>
+<p>是很经典的 NP Complete。考虑使用局部搜索尝试获得 Local Optima</p>
+<h3 id="neibourhood">Neibourhood</h3>
+<p>每个可行解是一个团 <span class="math inline">\(V\subseteq G\)</span>。考虑在 <span class="math inline">\(V\)</span> 中加入一个顶点 <span class="math inline">\(x\)</span> 作为其非平凡邻居。</p>
+<ul>
+<li>但是 <span class="math inline">\(V\cup\lbrace x\rbrace\)</span> 不一定是团：<span class="math inline">\(x\)</span> 不一定和 <span class="math inline">\(V\)</span> 中所有点都有边。</li>
+<li>设 <span class="math inline">\(x\)</span> 的邻点是 <span class="math inline">\(N(x)\)</span>，则 <span class="math inline">\(V&#39;=(V\cap N(x))\cup\lbrace x\rbrace\)</span> 是团。定义为 <span class="math inline">\(V\)</span> 的邻居。</li>
+</ul>
+<h3 id="证明-neibourhood">证明 Neibourhood</h3>
+<ul>
+<li>自反性：定义为平凡邻居</li>
+<li>对称性：容易发现该定义是不对称的，但若将其视作有向图，则它是强连通的。</li>
+<li>可达性：每次加入目标团的一个顶点，显然可达。</li>
+</ul>
+
     </div>
 
     
@@ -296,7 +329,6 @@
               <a href="/tags/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" rel="tag"># 算法分析</a>
               <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag"># 计算机科学</a>
               <a href="/tags/%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" rel="tag"># 问题求解</a>
-              <a href="/tags/%E7%A7%81%E5%AF%86/" rel="tag"># 私密</a>
           </div>
 
         
@@ -308,6 +340,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/posts/aceb961b/" rel="next" title="问题求解（三） Open Topic 13 笔记">
+                  问题求解（三） Open Topic 13 笔记 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/11/问题求解（三）-Open-Topic-13-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">欧拉图在松弛修正算法中的应用</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Introduction</h2>
+<p class=" font-serif my-1">在某些松弛修正算法的分析中，欧拉图经常出现。本次报告选择了以下两个主题：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">在线斯坦纳树的贪心算法</li>
+<li class=" ml-8">Metric TSP 的启发式算法。包括 MST Heuristic 算法和改进的 Christofides 算法。</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">在线斯坦纳树</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Description</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><strong>提前给定</strong>：连通无向图 $G=\langle V, E\rangle$，非负权。</li>
+<li class=" ml-8"><strong>在线回答</strong>：依次给定 $t_1, t_2, \cdots, t_k$，在给定 $t_i(1\le i\le k)$ 后将其增量连接到 $i-1$ 时构造的子图。要求使得在 $k$ 次迭代后的子图边权和尽量小。</li>
+</ul>
+<p class=" font-serif my-1">容易发现是最小斯坦纳树问题的在线版本。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Assumptions</h2>
+<p class=" font-serif my-1">不失一般性地假设：</p>
+<ol>
+<li class=" ml-8">图 $G=\langle V, E\rangle$ 是完全图。</li>
+<li class=" ml-8">图 $G$ 中边权满足三角不等式(metric)。</li>
+</ol>
+<p class=" font-serif my-1">其中假设 1. 不失一般性，因为非完全图可补充无穷大的边；</p>
+<p class=" font-serif my-1">假设 2. 不失一般性，是由算法决定的。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">A greedy method</h2>
+<ol>
+<li class=" ml-8">一开始选择空树 $T_0$。</li>
+<li class=" ml-8">对于 $t_1$，令 $T_1=T_0$ 也为空树。</li>
+<li class=" ml-8">对于 $t_j(2\le j\le k)$，选择最小的边 $( t_i, t_j), i&lt;j$ 加入 $T_{j-1}$ 中得到 $T_j$。</li>
+<li class=" ml-8">$T=T_k$ 即为最终解，$cost(\text{GREEDY})=cost(T_k)$。</li>
+</ol>
+<p class=" font-serif my-1"/><div align="center">
+<img src="1.png" width="100%"/>
+<p class=" font-serif my-1"><span style="font-size:20px">(picture from [1])</span>
+</p></div>
+<p class=" font-serif my-1">直观地理解：每次将 $t_i$ 以最小代价“贴”到现存的树上去。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Instances</h2>
+<div align="center" style="display: flex">
+<div style="flex: 1">
+<img src="2.png" width="100%"/>
+</div>
+<div style="flex: 1.7">
+<img src="3.png" width="100%"/>
+</div>
+</div>
+
+<p class=" font-serif my-1">其中对于样例右，最优解为 $4$，但贪心算法求得的解为 $8$。</p>
+<p class=" font-serif my-1"><em>Theorem</em>: 该贪心算法最坏 performance ratio 为 $\Omega(\log k)$。</p>
+<p class=" font-serif my-1"><em>Theorem</em>: 对<strong>任何</strong>在线斯坦纳树的算法，最坏情况下的 performance ratio 都是 $\Omega(\log k)$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Algorithm analysis</h2>
+<p class=" font-serif my-1"><em>Theorem</em>: 该贪心算法的 performance ratio $&lt; 2\ln k$，从而该贪心算法渐进最优。</p>
+<p class=" font-serif my-1"><em>Proof</em>: 要证该定理，只需证明</p>
+<blockquote>
+<p class=" font-serif my-1"><em>Lemma</em>: 对任意 $p=1, 2, \cdots, k-1$，该贪心算法选择的 $T$ 中第 $p$ 大的边权不超过 $2OPT/p$，其中 $OPT$ 是全局最优解。</p>
+</blockquote>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Algorithm analysis(cont'd)</h2>
+<p class=" font-serif my-1">若该引理成立，则设 $T$ 中所有边按边权从大到小排为 $e_1, e_2, \cdots, e_{k-1}$，有</p>
+<p class=" font-serif my-1">$$
+e_p\le \frac{2OPT}{p}, p=1, 2, \cdots, k-1.
+$$</p>
+<p class=" font-serif my-1">故而</p>
+<p class=" font-serif my-1">$$
+cost(\text{GREEDY})=\sum_{p=1}^{k-1} e_p\le \sum_{p=1}^{k-1}\frac{2OPT}{p}&lt;2OPT\ln k.
+$$</p>
+<p class=" font-serif my-1">从而</p>
+<p class=" font-serif my-1">$$
+\alpha=\frac{cost(\text{GREEDY})}{OPT}&lt;2\ln k.
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Proof of the Lemma</h2>
+<p class=" font-serif my-1"><em>Lemma</em>: 对任意 $p=1, 2, \cdots, k-1$，该贪心算法选择的 $T$ 中第 $p$ 大的边权不超过 $2OPT/p$，其中 $OPT$ 是全局最优解。</p>
+<p class=" font-serif my-1"><em>Proof</em>:</p>
+<ol>
+<li class=" ml-8">设 $T^*$ 是全局最优解对应的斯坦纳树，$OPT=cost(T^*)$。</li>
+<li class=" ml-8">将 $T^*$ 所有边都复制一份，可以得到一个所有顶点都为偶点的图 $H$，故其具有欧拉回路 $C$，且 $cost(C)=2OPT$。</li>
+</ol>
+<div align="center" style="display: flex">
+<div style="flex: 1">
+<img src="4.png" width="80%"/>
+</div>
+<div style="flex: 1.2">
+<img src="5.png" width="80%"/>
+</div>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<p class=" font-serif my-1">3. 对给定的 $p\in \lbrace 1, 2, \cdots, k-1\rbrace$:</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">定义一个点 $t_j(j&gt;1)$ 的<strong>连通代价</strong>为在 GREEDY 中将 $t_j$ 与 $T_{j-1}$ 合并得到 $T_{j}$ 的新增代价（即权值最小的 $(t_i, t_j), i&lt;j$ 边）。</li>
+<li class=" ml-8">设连通代价最高的 $p$ 个依次为 $s_1, s_2, \cdots, s_{p}\subseteq \lbrace t_2, t_3, \cdots, t_k\rbrace$。不妨设连通代价 $w(s_j)$ 依次递减。 则该命题只需证明：$w(t_k)\le 2OPT/i$。</li>
+</ul>
+<p class=" font-serif my-1">4. 由于 $C$ 经过 $t_1, t_2, \cdots, t_k$ 中的每个点，故也经过 $s_1, s_2, \cdots, s_p$。可以将欧拉回路 $C$ 进行“裁剪”得到一个 $s_1, s_2, \cdots, s_p$ 的哈密尔顿圈 $C'$：由于图满足三角不等式，可将路径用其端点关联的边直接替代，且 $cost(C')\le cost(C)=2OPT$。</p>
+<p class=" font-serif my-1">5. $C'$ 中含有 $p$ 条边，故其最小边 $(s_i, s_j)$ 满足 $w((s_i, s_j))\le cost(C')/p\le 2OPT/p$.</p>
+<p class=" font-serif my-1">6. 不妨设 $i&lt;j$，则 $s_j$ 的连通代价不超过 $w((s_i,s_j))\le 2OPT/p$，从而命题得证。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Heuristic</h2>
+<p class=" font-serif my-1">可以发现采用的是“构造偶点图 $\to$ 得到欧拉回路 $\to$ 得到哈密尔顿圈”的分析方法。在 TSP 的近似算法中，可以再次发现这种想法的应用。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Reason of the 2nd. assumption</h2>
+<p class=" font-serif my-1">若某图不满足三角不等式，可现在其最短路径闭包上使用上述算法，并映射回原图。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">Metric TSP</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Description</h2>
+<p class=" font-serif my-1"><em>Definition(Metric TSP)</em>: 给定非负权无向连通图 $G=\langle V, E\rangle$，<strong>满足三角不等式</strong>，求最小化 $cost(H)$ 的哈密尔顿圈 $H$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Continue the same heuristic</h2>
+<p class=" font-serif my-1">在在线斯坦纳树的算法分析中直接出现了哈密尔顿圈！</p>
+<p class=" font-serif my-1">是否同样可以用欧拉回路来得到一个不错的 bound 呢？</p>
+<hr/>
+<p class=" font-serif my-1"><em>MST Heuristic</em>: 注意到，对于 $G=\langle V, E\rangle$ 的最小生成树 $T$，有</p>
+<p class=" font-serif my-1">$$
+cost(T)\le cost(H).
+$$</p>
+<p class=" font-serif my-1">其中 $H$ 为图 $T$ 任意哈密尔顿圈。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">MST Heuristic</h2>
+<p class=" font-serif my-1">算法流程：</p>
+<ol>
+<li class=" ml-8">求出 $G$ 的一棵最小生成树，可知 $cost(T)\le cost(H)=OPT$，$OPT$ 为问题最优解。</li>
+<li class=" ml-8">将 $T$ 中每条边复制一遍，得到全是偶点的图，可得经过所有点的欧拉回路 $C$，有 $cost(C)=2cost(T)\le 2OPT$。</li>
+<li class=" ml-8">裁剪 $C$ 得到哈密尔顿圈 $H'$，有 $cost(H')\le cost(C)\le 2OPT$。</li>
+</ol>
+<p class=" font-serif my-1">显然得到了近似率</p>
+<p class=" font-serif my-1">$$
+\alpha=\frac{cost(C)}{OPT}\le 2
+$$</p>
+<p class=" font-serif my-1">的算法。容易在 $O(n^2)$ 内实现。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Christofides's Algorithm</h2>
+<p class=" font-serif my-1">在最小生成树 $T$ 的基础上，无需将其所有边都复制一遍来得到欧拉回路。Christofides 算法使用了更好的松弛：</p>
+<p class=" font-serif my-1">算法流程：</p>
+<ol>
+<li class=" ml-8">仍求得一棵最小生成树 $T$，$cost(T)\le OPT$。</li>
+<li class=" ml-8">子图 $T$ 中 $\deg_T(u)$ 为奇数的点构成集合 $V_{odd}$，有 $|V_{odd}|$ 为偶数。</li>
+<li class=" ml-8">因为 $V_{odd}$ 的导出子图为完全图，故其存在完美匹配，记其最小权的为 $M$。</li>
+<li class=" ml-8">$\langle V, E[T]\cup E[M]\rangle$（允许重边）全为偶点，存在欧拉回路 $C$。</li>
+<li class=" ml-8">裁剪 $C$ 得到哈密尔顿圈 $H'$。</li>
+</ol>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Christofides's Algorithm - Analysis</h2>
+<p class=" font-serif my-1">对于图 $\langle V, E[T]\cup E[M]\rangle$，其 $E[T]$ 的部分显然有 $cost(T)\le OPT$。只需考虑 $cost(M)$ 和 $OPT$ 的大小关系。</p>
+<p class=" font-serif my-1"><em>Lemma</em>: 对于偶阶子图 $G'\subseteq_{g} G$，其最小权完美匹配 $M$ 满足 $cost(M)\le OPT/2$。</p>
+<p class=" font-serif my-1"><em>Proof</em>:</p>
+<ol>
+<li class=" ml-8">可将 OPT 对应的哈密尔顿圈 $H$ 裁剪至 $V[G']$ 上得到 $H[G']$，由 metric 可知 $cost(H[G'])\le OPT$。</li>
+<li class=" ml-8">$H[G‘]$ 含有偶数条边，交替构成两个匹配 $M_1, M_2$，有 $cost(M_1)+cost(M_2)\le cost(H[H'])\le OPT$。</li>
+<li class=" ml-8">不妨设较小的那个是 $M_1$，有 $M\le M_1\le OPT/2$。</li>
+</ol>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Christofides's Algorithm - Analysis (cont'd)</h2>
+<p class=" font-serif my-1">由 Lemma 可得，最后求得的 $H'$ 满足</p>
+<p class=" font-serif my-1">$$
+cost(H')\le cost(C)=cost(T)+cost(M)\le OPT+OPT/2=3OPT/2
+$$</p>
+<p class=" font-serif my-1">故近似率 $\alpha \le 3/2$。</p>
+<p class=" font-serif my-1">算法瓶颈在于一般图最大权匹配，时间复杂度 $O(n^3)$。</p>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Reference</h2>
+<p class=" font-serif my-1">[1] CS 261: A Second Course in Algorithms, note: <a href="https://timroughgarden.org/w16/w16.html">https://timroughgarden.org/w16/w16.html</a></p>
+<p class=" font-serif my-1">[2] Christofides, N. (1976). Worst-case analysis of a new heuristic for the travelling salesman problem.</p>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家!</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

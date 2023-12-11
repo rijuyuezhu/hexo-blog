@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/12/问题求解（三）-Open-Topic-14-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">近似算法的设计</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">“看灯”问题[1]</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">简介</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">给定 $N$ 盏灯，位置分别为 $x_1, x_2, \cdots, x_N$，满足 $1\le x_i\le V$。</li>
+<li class=" ml-8">再给定 $Q$ 个询问 $d_i, (1\le d_i\le V)$，对每个询问求出最小的 $v\in\lbrace 1, 2, \cdots, n\rbrace$ 使得在 $x_v+d_i$ 处存在另一盏灯。</li>
+<li class=" ml-8">设 $N$，$Q$，$V$ 为同一量级。</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">分析</h2>
+<p class=" font-serif my-1">该问题并非是难问题，存在朴素的 $O(QN)$ 的实现。但若对于编号的“最小”可以进行一定的宽松，可以获得复杂度更低的算法。</p>
+<p class=" font-serif my-1">考虑近似率为 $\alpha$ 的算法，即允许输出的答案 $v'$ 满足 $v\le v'\le \alpha v$，此时可以使用“区间划分”的思想对问题进行简化。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">下界的确定</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">假若我们已确保对询问 $d_i$，对任意 $v'&lt; k$，$v'$ 均不满足 $x_{v'}+d_i$ 处有灯，则最优解有下界 $k$。</li>
+<li class=" ml-8">此时，若编号在 $v\in [k,\lfloor \alpha k\rfloor]\cap \mathbb Z$ 区间内的点有满足条件的，则最优解满足 $v\in [k, \lfloor \alpha k\rfloor]$，从而 $v'=\lfloor \alpha k\rfloor$ 是原问题的一个满足近似率为 $\alpha$ 的解。</li>
+<li class=" ml-8">否则，则证明了所有编号在 $[1,\lfloor \alpha k\rfloor]$ 中的点都不满足条件，最优解有<strong>新的下界</strong> $\lfloor \alpha k\rfloor+1$.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">下界的确定</h2>
+<p class=" font-serif my-1">若不考虑下取整，重复 $t$ 次上述步骤，下界序列为：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">$low_1=1$;</li>
+<li class=" ml-8">$low_2=\alpha + 1$;</li>
+<li class=" ml-8">$low_3=\alpha(\alpha + 1) + 1$;</li>
+<li class=" ml-8">$\cdots$;</li>
+<li class=" ml-8">$low_t=\sum_{i=0}^{t-1}\alpha^i=\frac{\alpha^t-1}{\alpha-1}$.</li>
+</ul>
+<p class=" font-serif my-1">令 $low_t\le n$，有 $t\le\log_\alpha(\alpha(n-1)+1)$，故 $t=\Theta(\log_\alpha n)$. 于是至多进行 $\Theta(\log_\alpha n)$ 次该操作。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">询问的整体处理</h2>
+<p class=" font-serif my-1">于是，问题转化为了，对至多 $\Theta(\log_\alpha n)$ 段形如 $[L, R]$ 的编号区间，对每个询问 $d_i(1\le i\le Q)$，判断是否存在 $v\in [L, R]$ 使得 $x_v+d_i$ 存在另一盏灯。</p>
+<p class=" font-serif my-1">事实上，可以对所有 $d_i$ 一起处理：构造两个序列 $X_i$ 和 $Y_i$：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">$X_i=1$ 当且仅当存在 $v\in [L, R]$, $x_v=i$；否则为 $0$。</li>
+<li class=" ml-8">$Y_i=1$ 当且仅当存在 $v\in [1, N]$，$x_v=i$；否则为 $0$。</li>
+<li class=" ml-8">"存在多少对 $(x, y)$ 满足 $x\in [L, R], y\in [1, n], s.t. x+d=y$" 也可以形成一个序列 $Z_d$，计算方法为</li>
+</ul>
+<p class=" font-serif my-1">$$
+Z_d=\sum_{1\le i, j\le V, j-i=d}X_iY_j.
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">$Z_d$ 的快速计算</h2>
+<p class=" font-serif my-1">可以将 $X$ 序列翻转，变成加法卷积：</p>
+<p class=" font-serif my-1"><img src="2.png" width="60%"/></p>
+<p class=" font-serif my-1">其中，$i'=V-i+1, X_k' = X_{V+1-k}$。</p>
+<p class=" font-serif my-1">而加法卷积可以使用快速傅里叶算法在 $\Theta(V\log V)$ 时间内计算。之后对每个询问 $d_i$，只需判断 $Z_{d_i}$ 是否为 $0$ 即可。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法分析</h2>
+<p class=" font-serif my-1">最朴素的算法为 $O(QN)$；</p>
+<p class=" font-serif my-1">该算法在近似率为 $\alpha$ 的情况下，共至多运行 $O(\log_\alpha N)$ 轮区间 $[L, R]$ 的查询，单次复杂度为 $O(V\log V+Q)$，故总复杂度为 $O((V\log V+Q)\log_\alpha N)$。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">集合覆盖问题</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">问题描述</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">给定 $m$ 个集合 $S_1, S_2, \cdots, S_m$ 和 $k$，要求选定其中 $k$ 个 $S_{p_1}, S_{p_2}, \cdots, S_{p_k}$，最大化 $S_{p_1}\cup S_{p_2}\cup\cdots, S_{p_k}$。</li>
+<li class=" ml-8">该问题为 NPC。</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">贪心算法</h2>
+<p class=" font-serif my-1">对以下步骤进行 $k$ 轮：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">第 $i$ 轮，每次选择集合 $S_{p_i}$ 最大化新增的并集大小。</li>
+</ul>
+<p class=" font-serif my-1"><img src="1.png" width="80%"/></p>
+<p class=" font-serif my-1">如上图，可构造出近似率不高于 $\displaystyle 1-(1-\frac{1}{k})^k$ 的样例。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">(方便起见，此处近似率未取倒数，定义为 $\alpha=\text{Now-Sol}/OPT$)</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">近似率证明</h2>
+<p class=" font-serif my-1"><em>Theorem 1</em>: 该贪心算法的近似率恰为 $\displaystyle(1-(1-\frac{1}{k})^k)$，故该近似率估计是紧的。</p>
+<p class=" font-serif my-1">要证明 <em>Theorem 1</em>，先证明引理</p>
+<p class=" font-serif my-1"><em>Lemma</em>: 设贪心算法选择出前 $i-1$ 个集合为 $S_{p_1}, S_{p_2}, \cdots, S_{p_{i-1}}$，它们覆盖了 $l$ 个元素，则第 $i$ 轮选择的 $A_i$ 会覆盖至少</p>
+<p class=" font-serif my-1">$$
+    \frac{1}{k}(OPT-l)
+$$
+个新元素，$OPT$ 为最优解。</p>
+<p class=" font-serif my-1"><em>Proof</em>: 假设该轮贪心算法可以直接取走 $k$ 个集合，则可以立即取到 $OPT$ 个元素，获得至少 $OPT-l$ 个新元素。故这 $k$ 个中至少有一个集合有至少 $\frac{1}{k}(OPT-l)$ 个新元素。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">近似率证明</h2>
+<p class=" font-serif my-1"><em>Theorem 1</em>: 该贪心算法的近似率恰为 $\displaystyle(1-(1-\frac{1}{k})^k)$，故该近似率估计是紧的。</p>
+<p class=" font-serif my-1"><em>Proof</em>:</p>
+<p class=" font-serif my-1">设第 $i$ 轮共取了 $f_i$ 个元素，则有 $f_0=0$，且</p>
+<p class=" font-serif my-1">$$
+f_i\ge f_{i-1}+\frac{1}{k}(OPT-f_{i-1})=\frac{1}{k}OPT+(1-\frac{1}{k})f_{i-1}.
+$$</p>
+<p class=" font-serif my-1">解递推式有</p>
+<p class=" font-serif my-1">$$
+f_{i}\ge OPT+(1-\frac{1}{k})^k(f_0-OPT)=OPT\cdot (1-(1-\frac{1}{k})^k).
+$$</p>
+<p class=" font-serif my-1">故</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">近似率证明</h2>
+<p class=" font-serif my-1">$$
+\frac{f_i}{OPT}\ge 1-(1-\frac{1}{k})^k
+$$
+近似率为 $\displaystyle \alpha=1-(1-\frac{1}{k})^k$.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">总结</h2>
+<p class=" font-serif my-1"><em>Theorem 2</em>: 在某些复杂度假设下，不存在有更优近似率的多项式复杂度算法。</p>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考资料</h2>
+<p class=" font-serif my-1">[1] 2023 ICPC Hangzhou Regional Contest.</p>
+<p class=" font-serif my-1">[2] CS 261: A Second Course in Algorithms, note: <a href="https://timroughgarden.org/w16/w16.html">https://timroughgarden.org/w16/w16.html</a></p>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家!</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

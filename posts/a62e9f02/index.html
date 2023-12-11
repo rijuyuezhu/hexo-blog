@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Georgia:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：除MS和MAX-CUT外，近似算法还可用于解决其它问题，例如SCP（JH算法4.3.2.11）、SKP（JH算法4.3.4.1和4.3.4.2）等，请调研至少2种近似算法（其中至多1种来自上述例子，图上的优化问题不在调研范围内），结合例子介绍算法的设计与分析，重点阐述近似比的证明过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 14 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/a62e9f02/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：除MS和MAX-CUT外，近似算法还可用于解决其它问题，例如SCP（JH算法4.3.2.11）、SKP（JH算法4.3.4.1和4.3.4.2）等，请调研至少2种近似算法（其中至多1种来自上述例子，图上的优化问题不在调研范围内），结合例子介绍算法的设计与分析，重点阐述近似比的证明过程。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/a62e9f02/1.png">
+<meta property="article:published_time" content="2023-12-10T10:33:50.000Z">
+<meta property="article:modified_time" content="2023-12-11T01:42:49.114Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="算法分析">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="问题求解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/a62e9f02/1.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/a62e9f02/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/a62e9f02/","path":"posts/a62e9f02/","title":"问题求解（三） Open Topic 14 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 14 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%AE%97%E6%B3%95%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">近似算法的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%8B%E7%81%AF%E9%97%AE%E9%A2%981"><span class="nav-text">“看灯”问题[1]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E7%95%8C%E7%9A%84%E7%A1%AE%E5%AE%9A"><span class="nav-text">下界的确定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A2%E9%97%AE%E7%9A%84%E6%95%B4%E4%BD%93%E5%A4%84%E7%90%86"><span class="nav-text">询问的整体处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#z_d-%E7%9A%84%E5%BF%AB%E9%80%9F%E8%AE%A1%E7%AE%97"><span class="nav-text">\(Z_d\) 的快速计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">算法分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98"><span class="nav-text">集合覆盖问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95"><span class="nav-text">贪心算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%8E%87%E8%AF%81%E6%98%8E"><span class="nav-text">近似率证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%8E%87%E8%AF%81%E6%98%8E-1"><span class="nav-text">近似率证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/a62e9f02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 14 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 14 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-12-10 18:33:50" itemprop="dateCreated datePublished" datetime="2023-12-10T18:33:50+08:00">2023-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">课程笔记</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">问题求解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：除MS和MAX-CUT外，近似算法还可用于解决其它问题，例如SCP（JH算法4.3.2.11）、SKP（JH算法4.3.4.1和4.3.4.2）等，请调研至少2种近似算法（其中至多1种来自上述例子，图上的优化问题不在调研范围内），结合例子介绍算法的设计与分析，重点阐述近似比的证明过程。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">slide</a></p>
+<h1 id="近似算法的设计">近似算法的设计</h1>
+<h2 id="看灯问题1">“看灯”问题[1]</h2>
+<h3 id="简介">简介</h3>
+<ul>
+<li>给定 <span class="math inline">\(N\)</span> 盏灯，位置分别为 <span class="math inline">\(x_1, x_2, \cdots, x_N\)</span>，满足 <span class="math inline">\(1\le x_i\le V\)</span>。</li>
+<li>再给定 <span class="math inline">\(Q\)</span> 个询问 <span class="math inline">\(d_i, (1\le d_i\le V)\)</span>，对每个询问求出最小的 <span class="math inline">\(v\in\lbrace 1, 2, \cdots, n\rbrace\)</span> 使得在 <span class="math inline">\(x_v+d_i\)</span> 处存在另一盏灯。</li>
+<li>设 <span class="math inline">\(N\)</span>，<span class="math inline">\(Q\)</span>，<span class="math inline">\(V\)</span> 为同一量级。</li>
+</ul>
+<h3 id="分析">分析</h3>
+<p>该问题并非是难问题，存在朴素的 <span class="math inline">\(O(QN)\)</span> 的实现。但若对于编号的“最小”可以进行一定的宽松，可以获得复杂度更低的算法。</p>
+<p>考虑近似率为 <span class="math inline">\(\alpha\)</span> 的算法，即允许输出的答案 <span class="math inline">\(v&#39;\)</span> 满足 <span class="math inline">\(v\le v&#39;\le \alpha v\)</span>，此时可以使用“区间划分”的思想对问题进行简化。</p>
+<h3 id="下界的确定">下界的确定</h3>
+<ul>
+<li>假若我们已确保对询问 <span class="math inline">\(d_i\)</span>，对任意 <span class="math inline">\(v&#39;&lt; k\)</span>，<span class="math inline">\(v&#39;\)</span> 均不满足 <span class="math inline">\(x_{v&#39;}+d_i\)</span> 处有灯，则最优解有下界 <span class="math inline">\(k\)</span>。</li>
+<li>此时，若编号在 <span class="math inline">\(v\in [k,\lfloor \alpha k\rfloor]\cap \mathbb Z\)</span> 区间内的点有满足条件的，则最优解满足 <span class="math inline">\(v\in [k, \lfloor \alpha k\rfloor]\)</span>，从而 <span class="math inline">\(v&#39;=\lfloor \alpha k\rfloor\)</span> 是原问题的一个满足近似率为 <span class="math inline">\(\alpha\)</span> 的解。</li>
+<li>否则，则证明了所有编号在 <span class="math inline">\([1,\lfloor \alpha k\rfloor]\)</span> 中的点都不满足条件，最优解有<strong>新的下界</strong> <span class="math inline">\(\lfloor \alpha k\rfloor+1\)</span>.</li>
+</ul>
+<p>若不考虑下取整，重复 <span class="math inline">\(t\)</span> 次上述步骤，下界序列为：</p>
+<ul>
+<li><span class="math inline">\(low_1=1\)</span>;</li>
+<li><span class="math inline">\(low_2=\alpha + 1\)</span>;</li>
+<li><span class="math inline">\(low_3=\alpha(\alpha + 1) + 1\)</span>;</li>
+<li><span class="math inline">\(\cdots\)</span>;</li>
+<li><span class="math inline">\(low_t=\sum_{i=0}^{t-1}\alpha^i=\frac{\alpha^t-1}{\alpha-1}\)</span>.</li>
+</ul>
+<p>令 <span class="math inline">\(low_t\le n\)</span>，有 <span class="math inline">\(t\le\log_\alpha(\alpha(n-1)+1)\)</span>，故 <span class="math inline">\(t=\Theta(\log_\alpha n)\)</span>. 于是至多进行 <span class="math inline">\(\Theta(\log_\alpha n)\)</span> 次该操作。</p>
+<h3 id="询问的整体处理">询问的整体处理</h3>
+<p>于是，问题转化为了，对至多 <span class="math inline">\(\Theta(\log_\alpha n)\)</span> 段形如 <span class="math inline">\([L, R]\)</span> 的编号区间，对每个询问 <span class="math inline">\(d_i(1\le i\le Q)\)</span>，判断是否存在 <span class="math inline">\(v\in [L, R]\)</span> 使得 <span class="math inline">\(x_v+d_i\)</span> 存在另一盏灯。</p>
+<p>事实上，可以对所有 <span class="math inline">\(d_i\)</span> 一起处理：构造两个序列 <span class="math inline">\(X_i\)</span> 和 <span class="math inline">\(Y_i\)</span>：</p>
+<ul>
+<li><span class="math inline">\(X_i=1\)</span> 当且仅当存在 <span class="math inline">\(v\in [L, R]\)</span>, <span class="math inline">\(x_v=i\)</span>；否则为 <span class="math inline">\(0\)</span>。</li>
+<li><span class="math inline">\(Y_i=1\)</span> 当且仅当存在 <span class="math inline">\(v\in [1, N]\)</span>，<span class="math inline">\(x_v=i\)</span>；否则为 <span class="math inline">\(0\)</span>。</li>
+<li>"存在多少对 <span class="math inline">\((x, y)\)</span> 满足 <span class="math inline">\(x\in [L, R], y\in [1, n], s.t. x+d=y\)</span>" 也可以形成一个序列 <span class="math inline">\(Z_d\)</span>，计算方法为</li>
+</ul>
+<p><span class="math display">\[
+Z_d=\sum_{1\le i, j\le V, j-i=d}X_iY_j.
+\]</span></p>
+<h3 id="z_d-的快速计算"><span class="math inline">\(Z_d\)</span> 的快速计算</h3>
+<p>可以将 <span class="math inline">\(X\)</span> 序列翻转，变成加法卷积：</p>
+<p><span class="math display">\[
+\begin{align*}
+Z_d &amp;=\sum_{1\le i, j\le V, j-i=d}X_iY_j\\
+    &amp;=\sum_{1\le i, j\le V, j+(V-i+1)=d+V+1}X_{V+1-(V-i+1)}Y_j\\
+    &amp;=\sum_{1\le i, j\le V, j+i&#39;=d+V+1}X&#39;_{i&#39;}Y_j\\
+    &amp;=(X&#39;*Y)_{d+V+1}
+\end{align*}
+\]</span></p>
+<p>其中，<span class="math inline">\(i&#39;=V-i+1, X&#39;_k = X_{V+1-k}\)</span>。</p>
+<p>而加法卷积可以使用快速傅里叶算法在 <span class="math inline">\(\Theta(V\log V)\)</span> 时间内计算。之后对每个询问 <span class="math inline">\(d_i\)</span>，只需判断 <span class="math inline">\(Z_{d_i}\)</span> 是否为 <span class="math inline">\(0\)</span> 即可。</p>
+<h3 id="算法分析">算法分析</h3>
+<p>最朴素的算法为 <span class="math inline">\(O(QN)\)</span>；</p>
+<p>该算法在近似率为 <span class="math inline">\(\alpha\)</span> 的情况下，共至多运行 <span class="math inline">\(O(\log_\alpha N)\)</span> 轮区间 <span class="math inline">\([L, R]\)</span> 的查询，单次复杂度为 <span class="math inline">\(O(V\log V+Q)\)</span>，故总复杂度为 <span class="math inline">\(O((V\log V+Q)\log_\alpha N)\)</span>。</p>
+<h1 id="集合覆盖问题">集合覆盖问题</h1>
+<h2 id="问题描述">问题描述</h2>
+<ul>
+<li>给定 <span class="math inline">\(m\)</span> 个集合 <span class="math inline">\(S_1, S_2, \cdots, S_m\)</span> 和 <span class="math inline">\(k\)</span>，要求选定其中 <span class="math inline">\(k\)</span> 个 <span class="math inline">\(S_{p_1}, S_{p_2}, \cdots, S_{p_k}\)</span>，最大化 <span class="math inline">\(S_{p_1}\cup S_{p_2}\cup\cdots, S_{p_k}\)</span>。</li>
+<li>该问题为 NPC。</li>
+</ul>
+<h2 id="贪心算法">贪心算法</h2>
+<p>对以下步骤进行 <span class="math inline">\(k\)</span> 轮：</p>
+<ul>
+<li>第 <span class="math inline">\(i\)</span> 轮，每次选择集合 <span class="math inline">\(S_{p_i}\)</span> 最大化新增的并集大小。</li>
+</ul>
+<p><img src="1.png" witdh="80%"/></p>
+<p>如上图，可构造出近似率不高于 <span class="math inline">\(\displaystyle 1-(1-\frac{1}{k})^k\)</span> 的样例。</p>
+<ul>
+<li>(方便起见，此处近似率未取倒数，定义为 <span class="math inline">\(\alpha=\text{Now-Sol}/OPT\)</span>)</li>
+</ul>
+<h2 id="近似率证明">近似率证明</h2>
+<p><em>Theorem 1</em>: 该贪心算法的近似率恰为 <span class="math inline">\(\displaystyle(1-(1-\frac{1}{k})^k)\)</span>，故该近似率估计是紧的。</p>
+<p><em>Theorem 2</em>: 在某些复杂度假设下，不存在有更优近似率的多项式复杂度算法。</p>
+<p>要证明 <em>Theorem 1</em>，先证明引理</p>
+<p><em>Lemma</em>: 设贪心算法选择出前 <span class="math inline">\(i-1\)</span> 个集合为 <span class="math inline">\(S_{p_1}, S_{p_2}, \cdots, S_{p_{i-1}}\)</span>，它们覆盖了 <span class="math inline">\(l\)</span> 个元素，则第 <span class="math inline">\(i\)</span> 轮选择的 <span class="math inline">\(A_i\)</span> 会覆盖至少</p>
+<p><span class="math display">\[
+    \frac{1}{k}(OPT-l)
+\]</span> 个新元素，<span class="math inline">\(OPT\)</span> 为最优解。</p>
+<p><em>Proof</em>: 假设该轮贪心算法可以直接取走 <span class="math inline">\(k\)</span> 个集合，则可以立即取到 <span class="math inline">\(OPT\)</span> 个元素，获得至少 <span class="math inline">\(OPT-l\)</span> 个新元素。故这 <span class="math inline">\(k\)</span> 个中至少有一个集合有至少 <span class="math inline">\(\frac{1}{k}(OPT-l)\)</span> 个新元素。</p>
+<h3 id="近似率证明-1">近似率证明</h3>
+<p><em>Theorem 1</em>: 该贪心算法的近似率恰为 <span class="math inline">\(\displaystyle(1-(1-\frac{1}{k})^k)\)</span>，故该近似率估计是紧的。</p>
+<p><em>Proof</em>:</p>
+<p>设第 <span class="math inline">\(i\)</span> 轮共取了 <span class="math inline">\(f_i\)</span> 个元素，则有 <span class="math inline">\(f_0=0\)</span>，且</p>
+<p><span class="math display">\[
+f_i\ge f_{i-1}+\frac{1}{k}(OPT-f_{i-1})=\frac{1}{k}OPT+(1-\frac{1}{k})f_{i-1}.
+\]</span></p>
+<p>解递推式有</p>
+<p><span class="math display">\[
+f_{i}\ge OPT+(1-\frac{1}{k})^k(f_0-OPT)=OPT\cdot (1-(1-\frac{1}{k})^k).
+\]</span></p>
+<p>故</p>
+<p><span class="math display">\[
+\frac{f_i}{OPT}\ge 1-(1-\frac{1}{k})^k
+\]</span> 近似率为 <span class="math inline">\(\displaystyle \alpha=1-(1-\frac{1}{k})^k\)</span>.</p>
+<h1 id="参考资料">参考资料</h1>
+<p>[1] 2023 ICPC Hangzhou Regional Contest.</p>
+<p>[2] CS 261: A Second Course in Algorithms, note: <a target="_blank" rel="noopener" href="https://timroughgarden.org/w16/w16.html" class="uri">https://timroughgarden.org/w16/w16.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/a62e9f02/" title="问题求解（三） Open Topic 14 笔记">https://blog.rijuyuezhu.top/posts/a62e9f02/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" rel="tag"># 算法分析</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag"># 计算机科学</a>
+              <a href="/tags/%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3/" rel="tag"># 问题求解</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/aceb961b/" rel="prev" title="问题求解（三） Open Topic 13 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 13 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

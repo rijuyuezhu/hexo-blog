@@ -8,6 +8,184 @@
 ]]></content>
   </entry>
   <entry>
+    <title>问题求解（三） Open Topic 15 笔记</title>
+    <url>/posts/6a849f9c/</url>
+    <content><![CDATA[<p>OT：在独立、覆盖和支配的基础上，形成了很多扩展的优化问题，例如最小权完美匹配问题（Minimum-Weight Perfect Matching）、<a href="https://en.wikipedia.org/wiki/Connected_dominating_set">最小连通支配集问题</a>等，请调研至少2种问题（其中至多1种来自上述例子，二分图最大匹配问题等仅限制原始问题输入的问题不在调研范围内），讨论适用场景，形式化描述问题，为每种问题结合例子介绍至少1种算法的设计与分析。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">slide</a></p>
+<p>主要内容：</p>
+<ol type="1">
+<li>二分图最大权匹配；</li>
+<li>最小 <span class="math inline">\(k\)</span>-支配集。</li>
+</ol>
+<h1 id="二分图最大权匹配">二分图最大权匹配</h1>
+<h2 id="问题描述">问题描述</h2>
+<p>给定二分图 <span class="math inline">\(G=\langle X\cup Y, E\rangle\)</span> 和权值函数 <span class="math inline">\(w: E\to \mathbb R\)</span>（<strong>允许负权</strong>）。求匹配 <span class="math inline">\(I\subseteq E\)</span> 最大化</p>
+<p><span class="math display">\[
+cost(I)=\sum_{e\in I}w(e).
+\]</span></p>
+<h2 id="方法-1-最大费用最大流">方法 1: 最大费用最大流</h2>
+<p>在二分图的网络流建模上，为边 <span class="math inline">\(\langle u, v\rangle, u\in X, v\in Y\)</span> 添加代价 <span class="math inline">\(w(( u, v))\)</span>，为 <span class="math inline">\(\langle s, u\rangle, u\in X\)</span> 和 <span class="math inline">\(\langle v, t\rangle, v\in Y\)</span> 添加代价 <span class="math inline">\(0\)</span>。</p>
+<p>使用 SSP 求解最大费用的最大流，时间复杂度 <span class="math inline">\(O(nmf)\)</span>，其中 <span class="math inline">\(f=O(n)\)</span> 且 <span class="math inline">\(m=O(n^2)\)</span>，在稠密的二分图上，最坏是 <span class="math inline">\(O(n^4)\)</span> 的。</p>
+<h2 id="方法-2-km-算法">方法 2: KM 算法</h2>
+<p>KM 算法(Kuhn–Munkres Algorithm)可在 <span class="math inline">\(O(n^3)\)</span> 时间内解决二分图最大权匹配问题。</p>
+<h2 id="一类特殊二分图">一类特殊二分图</h2>
+<p>在运行 KM 算法之前，假设图 <span class="math inline">\(G\)</span> 满足以下性质：</p>
+<ol type="1">
+<li><span class="math inline">\(G\)</span> 是完全二分图。</li>
+<li><span class="math inline">\(G\)</span> 是平衡二分图。</li>
+</ol>
+<p>对<strong>任意二分图</strong>，可以在左部或右部补充顶点满足条件 <strong>2.</strong>；可以加入 <span class="math inline">\(0\)</span> 或 <span class="math inline">\(-\infty\)</span> 的边满足条件 <strong>1.</strong>。所以该假设是不影响一般性的。</p>
+<h2 id="顶标">顶标</h2>
+<ul>
+<li>对于左部任意一点 <span class="math inline">\(u\in X\)</span>，设置顶标 <span class="math inline">\(lx_u\)</span>；</li>
+<li>对于右部任意一点 <span class="math inline">\(v\in Y\)</span>，设置顶标 <span class="math inline">\(ly_v\)</span>。</li>
+</ul>
+<p><strong>要求</strong>：在算法运行的任意时刻，对任意边 <span class="math inline">\((u, v)\in E, u\in X, v\in Y\)</span> 有</p>
+<p><span class="math display">\[
+    lx_u+ly_v\ge w((u, v)).
+\]</span></p>
+<h2 id="相等子图">相等子图</h2>
+<p><strong>相等子图</strong> <span class="math inline">\(G&#39;=\langle V, E&#39;\rangle\)</span> 包含原图中的所有顶点，但仅包含原图中满足</p>
+<p><span class="math display">\[
+lx_u+ly_v=w((u, v))
+\]</span></p>
+<p>的边 <span class="math inline">\((u, v)\)</span>。可知相等子图由顶标序列决定。</p>
+<p><em>Property 1</em>: 若相等子图存在完美匹配，则该完美匹配的权就是顶标和 <span class="math inline">\(\sum_{u\in X}lx_u+\sum_{v\in Y}ly_v\)</span>.</p>
+<p><em>Property 2</em>: 若相等子图存在完美匹配，则该完美匹配就是原图的<strong>最大权</strong>完美匹配。</p>
+<p><em>Proof of Property 1</em>:</p>
+<p>设完美匹配 <span class="math inline">\(I\)</span>（恰有 <span class="math inline">\(|X|=|Y|=n\)</span> 条边）为 <span class="math inline">\(\lbrace (u_i, v_i): 1\le i\le n\rbrace\)</span>，其中 <span class="math inline">\(\lbrace u_i: 1\le i\le n\rbrace = X\)</span>，<span class="math inline">\(\lbrace v_i: 1\le i\le n\rbrace=Y\)</span> 且互不相同。由相等子图的性质知</p>
+<p><span class="math display">\[
+cost(I)=\sum_{i=1}^nw((u_i, v_i))=\sum_{i=1}^nlx_{u_i}+ly_{v_i}=\sum_{u\in X}lx_u+\sum_{v\in Y}ly_v.
+\]</span></p>
+<p><em>Proof of Property 2</em>:</p>
+<p>显然相等子图 <span class="math inline">\(G&#39;\)</span> 的完美匹配 <span class="math inline">\(I\)</span> 是原图的完美匹配。对任意原图 <span class="math inline">\(G\)</span> 的完美匹配 <span class="math inline">\(I&#39;=\lbrace (u_i&#39;, v_i&#39;): 1\le i\le n\rbrace\)</span>，有</p>
+<p><span class="math display">\[
+cost(I&#39;)=\sum_{i=1}^nw((u&#39;_i, v&#39;_i))\le \sum_{i=1}^nlx_{u_i}+ly_{v_i}=cost(I).
+\]</span></p>
+<p>故 <span class="math inline">\(I\)</span> 是 <span class="math inline">\(G\)</span> 的最大权匹配。</p>
+<h2 id="算法流程">算法流程</h2>
+<p>只需求得具有完美匹配的相等子图即可。</p>
+<p><em>Step 1</em>: 赋予符合条件的初始顶标 <span class="math inline">\(lx_u\gets\max_{v\in Y}\lbrace w((u, v))\rbrace\)</span>，<span class="math inline">\(ly_v\gets0\)</span>。</p>
+<p><em>Step 2</em>: 从一个未匹配点开始在<strong>相等子图</strong> <span class="math inline">\(G&#39;\)</span> 中增广，即只经过 <span class="math inline">\(lx_u+ly_v=w((u, v))\)</span> 的边 <span class="math inline">\((u, v)\)</span>。</p>
+<p><em>Step 3</em>: <strong>调整顶标</strong>，扩大相等子图 <span class="math inline">\(G&#39;\)</span>。重复 <em>Step 2</em> 和 <em>Step 3</em> 直至 <span class="math inline">\(G&#39;\)</span> 包含恰 <span class="math inline">\(n\)</span> 条边。</p>
+<h2 id="调整顶标">调整顶标</h2>
+<p>为了扩大相等子图 <span class="math inline">\(G&#39;\)</span>，在 <em>Step 2</em> 经过的交错树中，让左部点顶标全部减少 <span class="math inline">\(s\)</span>，让右部点顶标全部增加 <span class="math inline">\(s(s&gt; 0)\)</span>。</p>
+<p>调整后，对于原图中的所有边，观察它的约束：（记 <span class="math inline">\(u\)</span> 和 <span class="math inline">\(\hat u\)</span> 分别为 <span class="math inline">\(X\)</span> 中在交错树和不在交错树的任意顶点，<span class="math inline">\(v\)</span> 和 <span class="math inline">\(\hat v\)</span> 同理）</p>
+<ul>
+<li>边 <span class="math inline">\((u, v)\)</span> 有 <span class="math inline">\(lx&#39;_u+ly&#39;_v=lx_u-s+ly_v+s=lx_u+ly_v\)</span>，约束不变。</li>
+<li>边 <span class="math inline">\((\hat u, \hat v)\)</span> 有 <span class="math inline">\(lx&#39;_{\hat u}+ly&#39;_{\hat v}=lx_{\hat u}+ly_{\hat v}\)</span>，约束不变。</li>
+<li>边 <span class="math inline">\((u, \hat v)\)</span> 要求有 <span class="math inline">\(lx&#39;_u+ly&#39;_{\hat v}=lx_u-s+ly_{\hat v}\ge w((u, \hat v))\)</span>，有 <span class="math inline">\(s\le lx_u+ly_{\hat v}-w((u, \hat v))\)</span>。</li>
+<li>边 <span class="math inline">\((\hat u, v)\)</span> 有 <span class="math inline">\(lx&#39;_{\hat u}+ly&#39;_v=lx_{\hat u}+ly_v+s\)</span>，约束放松。</li>
+</ul>
+<p>综上，选择 <span class="math display">\[
+s=\min_{u\in X, \hat v\in Y}\lbrace lx_u+ly_{\hat v}-w((u, \hat v))\rbrace
+\]</span></p>
+<p>既可以满足约束，又可以使相应的 <span class="math inline">\(\hat v\)</span> 加入相等子图。</p>
+<h2 id="算法复杂性分析">算法复杂性分析</h2>
+<p>至多扩增 <span class="math inline">\(O(n)\)</span> 次相等子图，每次进行增广(BFS)并维护顶标时间为 <span class="math inline">\(O(n^2)\)</span>，总时间复杂度为 <span class="math inline">\(O(n^3)\)</span>。</p>
+<h1 id="最小-k-支配集">最小 <span class="math inline">\(k\)</span>-支配集</h1>
+<h2 id="问题描述-1">问题描述</h2>
+<p>图 <span class="math inline">\(G=\langle V, E\rangle\)</span> 的 <span class="math inline">\(k\)</span>-支配集是点集的子集 <span class="math inline">\(D_k\subseteq V\)</span>，使得去除 <span class="math inline">\(V\)</span> 中任意 <span class="math inline">\(k-1\)</span> 个顶点，剩余顶点或者在 <span class="math inline">\(D_k\)</span> 中，或者存在邻点在 <span class="math inline">\(D_k\)</span> 中。</p>
+<p>最小支配集是 <span class="math inline">\(k=1\)</span> 时的该问题的特例。该问题是 NPH 的。</p>
+<p>[2] (Foerster, 2013) 中给出了一种近似率为 <span class="math inline">\(\ln(\Delta+k)+1&lt;\ln(\Delta)+1.7&lt;\ln (n)+1.7\)</span> 的贪心算法。</p>
+<h2 id="算法介绍">算法介绍</h2>
+<p>对于某个 <span class="math inline">\(D\subseteq V\)</span>，定义某个顶点 <span class="math inline">\(v\in V\)</span> 在 <span class="math inline">\(k\)</span>-支配集中的<strong>度</strong> <span class="math inline">\(d_k(v, D)\)</span> 为</p>
+<p><span class="math display">\[
+d_k(v, D)=\begin{cases}
+\min(k, |N(v)\cap D|), &amp; \text{if } v\notin D;\\
+k, &amp; \text{if } v\in D.
+\end{cases}
+\]</span></p>
+<p>即表示 “还需在 <span class="math inline">\(D\)</span> 中补充 <span class="math inline">\(k- d_k(v, D)\)</span> 个 <span class="math inline">\(v\)</span> 的邻点才能使得 <span class="math inline">\(D\)</span> 在 <span class="math inline">\(v\)</span> 处成为 <span class="math inline">\(k\)</span>-支配集合法”。</p>
+<p>定义<strong>剩余代价</strong> <span class="math inline">\(a(G, D)\)</span> 为</p>
+<p><span class="math display">\[
+a(G, D)=\sum_{v\in V}[k-d_k(v, D)]=nk-\sum_{v\in V}d_k(v, D).
+\]</span></p>
+<p>则贪心算法则是依次迭代一系列 <span class="math inline">\(D^{(0)}, D^{(1)}, \cdots, D^{(i)}\)</span>，每次加入一个顶点，使得 <span class="math inline">\(a(G, D)\)</span> 下降最快。</p>
+<p><em>Step 1</em>: 令 <span class="math inline">\(D^{(0)}\gets\varnothing\)</span>，<span class="math inline">\(i\gets 0\)</span>。</p>
+<p><em>Step 2</em>:</p>
+<ul>
+<li>选择点 <span class="math inline">\(v\in V\setminus D^{(i)}\)</span> 使得 <span class="math inline">\(a(G, D^{(i)})-a(G, D^{(i)}\cup \lbrace v\rbrace)\)</span> 最大。</li>
+<li>令 <span class="math inline">\(D^{(i+1)}\gets D^{(i)}\cup \lbrace v\rbrace\)</span>，<span class="math inline">\(i\gets i+1\)</span>。</li>
+</ul>
+<p><em>Step 3</em>: 重复 <em>Step 2</em> 直至 <span class="math inline">\(a(G, D^{(i)})=0\)</span>，则此时 <span class="math inline">\(D_k=D^{(i)}\)</span> 是 <span class="math inline">\(k\)</span>-支配集。</p>
+<h2 id="算法分析">算法分析</h2>
+<p>该算法容易以 <span class="math inline">\(O(n(n+m))\)</span> 时间实现。为了分析近似率，我们使用以下数学结论：</p>
+<p><em>Lemma</em>: 若 <span class="math inline">\(r\in \mathbb N, r&gt;1\)</span>，且 <span class="math inline">\(b_1, b_2, \cdots, b_s\in \mathbb N\)</span> 满足</p>
+<p><span class="math display">\[
+    b_v\ge \frac{1}{r}(B_s-B_{v-1}), \forall v\in\lbrace 1, 2, \cdots, s\rbrace
+\]</span></p>
+<p>其中 <span class="math inline">\(B_k=\sum_{i=1}^kb_i\)</span> 为前缀和。</p>
+<p>则有结论 <span class="math inline">\(B_{\lambda}&gt;B_s-r\)</span>，对于</p>
+<p><span class="math display">\[
+\lambda &gt; \frac{\ln(\frac{B_s}{r})}{\ln(\frac{r}{r-1})}.
+\]</span></p>
+<h2 id="算法近似率">算法近似率</h2>
+<p><em>Theorem</em>: 设 <span class="math inline">\(r\)</span> 是最小 <span class="math inline">\(k\)</span>-支配集的代价（即 <span class="math inline">\(OPT\)</span>），则该贪心算法近似率为</p>
+<p><span class="math display">\[
+\frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1.
+\]</span></p>
+<p><em>Corollary 1</em>: 该算法近似率为 <span class="math inline">\(\ln (\Delta + k)+1\)</span>。</p>
+<p><em>Corollary 2</em>: 该算法近似率为 <span class="math inline">\(\ln(\Delta)+1.7&lt;\ln(n)+1.7\)</span>。</p>
+<p><em>Proof for corollary</em>: 用导数易证恒等式</p>
+<p><span class="math display">\[
+\frac{1}{\ln(\frac{r}{r-1})}\le r(1-\frac{1}{2r}), r\ge 0.
+\]</span></p>
+<p>故</p>
+<p><span class="math display">\[
+\frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1\le(1-\frac{1}{2r})\ln(\frac{nk}{r})+1&lt;\ln(\frac{nk}{r})+1
+\]</span></p>
+<p>因为 <span class="math inline">\(D_k\)</span> 中的每个点为 <span class="math inline">\(a(G, D_k)\)</span> 从 <span class="math inline">\(nk\)</span> 变化到 <span class="math inline">\(0\)</span> 至多有 <span class="math inline">\(\Delta+k\)</span> 的贡献（<span class="math inline">\(k\)</span> 为自己，<span class="math inline">\(1\)</span> 为每个邻点），故有</p>
+<p><span class="math display">\[
+    nk\le r(\Delta+k) \Leftrightarrow \frac{nk}{r}\le \Delta+k
+\]</span></p>
+<p>于是 <span class="math inline">\(\ln(\frac{nk}{r})+1\le \ln(\Delta+k)+1\)</span> 也为该算法近似率。</p>
+<p>当 <span class="math inline">\(k&gt;\Delta\)</span>，则唯一的 <span class="math inline">\(k\)</span>-支配集是 <span class="math inline">\(V\)</span>，贪心算法可得到最优解 <span class="math inline">\(r=|V|\)</span>；若考虑 <span class="math inline">\(k\le \Delta\)</span>，有</p>
+<p><span class="math display">\[
+\ln(\Delta+k)+1\le \ln(2\Delta)+1\le \ln(\Delta)+\ln 2 + 1 &lt; \ln(\Delta)+1.7
+\]</span></p>
+<p>也为该算法近似率。</p>
+<h2 id="定理的证明">定理的证明</h2>
+<p><em>Theorem</em>: 设 <span class="math inline">\(r\)</span> 是最小 <span class="math inline">\(k\)</span>-支配集的代价（即 <span class="math inline">\(OPT\)</span>），则该贪心算法近似率为</p>
+<p><span class="math display">\[
+\frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1.
+\]</span></p>
+<p><em>Proof</em>: 设某个最小 <span class="math inline">\(k\)</span>-支配集为 <span class="math inline">\(D^*_k\)</span>。在从 <span class="math inline">\(D^{(i-1)}\)</span> 构造 <span class="math inline">\(D^{(i)}\)</span> 的过程中，若取 <span class="math inline">\(D^{(i)}=D^{(i-1)}\cup D^*_k\)</span>，则 <span class="math inline">\(a(G, D^{(i)})=0\)</span>。故在 <span class="math inline">\(D^*_k\setminus D^{(i-1)}\)</span> 中至少存在一个顶点 <span class="math inline">\(u^{(i)}\)</span> 使得 <span class="math inline">\(a\)</span> 下降 <span class="math inline">\(a(G, D^{(i)})/|D^*_k|=a(G, D^{(i)})/r\)</span>。于是有</p>
+<p><span class="math display">\[
+a(G, D^{(i)})\le a(G, D^{(i-1)}\cup \lbrace u^{(i)}\rbrace)\le a(G, D^{(i-1)})\left(1-\frac{1}{r}\right)
+\]</span></p>
+<p>取 <span class="math inline">\(B_i=nk-a(G, D^{(i)})\)</span>，变形上式有</p>
+<p><span class="math display">\[
+B_i-B_{i-1}=\frac{1}{r}(nk-B_{i-1}).
+\]</span></p>
+<p>令 <span class="math inline">\(B_s=nk\)</span>，则由定理，在</p>
+<p><span class="math display">\[
+\lambda &gt; \frac{\ln(\frac{B_s}{r})}{\ln(\frac{r}{r-1})}=\frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}
+\]</span> 时有 <span class="math inline">\(B_{\lambda}&gt;B_s-r\)</span>，即 <span class="math inline">\(a(G, D^{(\lambda)})&lt;r\)</span>。再选至多 <span class="math inline">\(r-1\)</span> 个点即可使得 <span class="math inline">\(a(G, D^{(\lambda+r-1)})=0\)</span>。</p>
+<p>故最终答案可取</p>
+<p><span class="math display">\[
+|D_k|=\left\lfloor \frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}+1\right\rfloor+r-1=\left\lfloor \frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}\right\rfloor+r.
+\]</span></p>
+<p>故近似率</p>
+<p><span class="math display">\[
+\alpha=\frac{|D_k|}{r}\le \frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1
+\]</span></p>
+<h1 id="参考资料">参考资料</h1>
+<p>[1] https://blog.rijuyuezhu.top/posts/58a68c50/</p>
+<p>[2] Foerster, K. T. (2013, January). Approximating fault-tolerant domination in general graphs. In 2013 Proceedings of the Tenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO) (pp. 25-32). Society for Industrial and Applied Mathematics.</p>
+]]></content>
+      <categories>
+        <category>课程笔记</category>
+        <category>问题求解</category>
+      </categories>
+      <tags>
+        <tag>算法分析</tag>
+        <tag>计算机科学</tag>
+        <tag>问题求解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二分图最大权匹配（KM 算法） 学习笔记</title>
     <url>/posts/58a68c50/</url>
     <content><![CDATA[<p>移植自原博客 <a href="https://blog.csdn.net/qq_41996523/article/details/113245137" class="uri">https://blog.csdn.net/qq_41996523/article/details/113245137</a>。</p>

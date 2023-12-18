@@ -291,9 +291,11 @@ $$</p>
 <section>
  <div>
 <h2 class=" text-xl mt-2 pb-2 font-sans">顶标和相等子图</h2>
-<p class=" font-serif my-1"><strong>顶标</strong>：
-- 对于左部任意一点 $u\in X$，设置顶标 $lx_u$；
-- 对于右部任意一点 $v\in Y$，设置顶标 $ly_v$。</p>
+<p class=" font-serif my-1"><strong>顶标</strong>：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">对于左部任意一点 $u\in X$，设置顶标 $lx_u$；</li>
+<li class=" ml-8">对于右部任意一点 $v\in Y$，设置顶标 $ly_v$。</li>
+</ul>
 <p class=" font-serif my-1"><strong>要求</strong>：在算法运行的任意时刻，对任意边 $(u, v)\in E, u\in X, v\in Y$ 有</p>
 <p class=" font-serif my-1">$$
     lx_u+ly_v\ge w((u, v)).
@@ -429,7 +431,7 @@ $$</p>
 
 <section>
  <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">引理证明</h2>
+<h2 class=" text-xl mt-2 pb-2 font-sans">推论证明</h2>
 <p class=" font-serif my-1"><em>Proof for corollary 1</em>: 用导数易证恒等式</p>
 <p class=" font-serif my-1">$$
 \frac{1}{\ln(\frac{r}{r-1})}\le r(1-\frac{1}{2r}), r\ge 0.
@@ -446,7 +448,7 @@ $$</p>
 
 <section>
  <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">引理证明</h2>
+<h2 class=" text-xl mt-2 pb-2 font-sans">推论证明</h2>
 <p class=" font-serif my-1"><em>Proof for corollary 2</em>: 当 $k&gt;\Delta$，则唯一的 $k$-支配集是 $V$，贪心算法可得到最优解 $r=|V|$；若考虑 $k\le \Delta$，有</p>
 <p class=" font-serif my-1">$$
 \ln(\Delta+k)+1\le \ln(2\Delta)+1\le \ln(\Delta)+\ln 2 + 1 &lt; \ln(\Delta)+1.7
@@ -472,9 +474,9 @@ $$</p>
 <h2 class=" text-xl mt-2 pb-2 font-sans">定理的证明</h2>
 <p class=" font-serif my-1">取 $B_i=nk-a(G, D^{(i)})$，变形上式有</p>
 <p class=" font-serif my-1">$$
-B_i-B_{i-1}=\frac{1}{r}(nk-B_{i-1}).
+B_i-B_{i-1}\ge\frac{1}{r}(nk-B_{i-1}).
 $$</p>
-<p class=" font-serif my-1">令 $B_s=nk$，则由定理，在</p>
+<p class=" font-serif my-1">令 $B_s=nk$，则由 <em>Lemma</em>，在</p>
 <p class=" font-serif my-1">$$
 \lambda &gt; \frac{\ln(\frac{B_s}{r})}{\ln(\frac{r}{r-1})}=\frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}
 $$

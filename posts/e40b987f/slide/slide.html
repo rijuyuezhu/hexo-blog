@@ -266,7 +266,7 @@
 
 <section>
  <div>
-<h3>思路</h3>
+<h2 class=" text-xl mt-2 pb-2 font-sans">思路</h2>
 <p class=" font-serif my-1">若要对于 $G=\langle V, E\rangle$ 染色 $\lbrace 1, 2, \cdots, k\rbrace$，可以考虑枚举染色为 $k$ 的顶点子集（独立集） $S\subseteq V$。容易得到</p>
 <p class=" font-serif my-1">$$
 \chi (G)=1+\min_{S}\lbrace \chi(G-S)\rbrace
@@ -278,7 +278,7 @@ $$</p>
 
 <section>
  <div>
-<h3>若干结论</h3>
+<h2 class=" text-xl mt-2 pb-2 font-sans">若干结论</h2>
 <p class=" font-serif my-1"><em>Claim 1.</em> 对于任意图 $G$，其大小为 $r$ 的极大独立集数量不超过 $3^{r/3}$。</p>
 <p class=" font-serif my-1"><em>Claim 2.</em> 存在算法可以在 $O(mrk)$ 时间内生成所有大小为 $r$ 的极大独立集，$k$ 为大小为 $r$ 的极大独立集的数量。</p>
 <p class=" font-serif my-1">故对于所有的 $V'\subseteq V$，递推得到 $\chi(G[V'])$ 的时间之和线性于</p>

@@ -8,6 +8,45 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Install WeChat in Docker(DoChat) in Ubuntu</title>
+    <url>/posts/524dba85/</url>
+    <content><![CDATA[<p>WeChat is a useful software to communicate with others. Unfortunately, <a href="https://weixin.qq.com/">WeChat Official</a> does not provide Linux version. <a href="https://github.com/huan/docker-wechat">DoChat</a> is a great alternative.</p>
+<span id="more"></span>
+<h1 id="introduction">Introduction</h1>
+<p>Some methods to use WeChat in Linux are here:</p>
+<ul>
+<li>Use windows virtual machine (See <a href="/posts/5113700a/" title="Install Windows 11 virtual machine on Ubuntu">Install Windows 11 virtual machine on Ubuntu</a>. This method is quite heavy).</li>
+<li>Use <a href="https://www.ubuntukylin.com/applications/106-cn.html">WeChat for Ubuntu Kylin</a>. (The UI is quite ugly and few functionalities are supported)</li>
+<li>Use docker + wine + wechat on windows.</li>
+</ul>
+<p>And the project <a href="https://github.com/huan/docker-wechat">DoChat</a> provides the third method with painless installation scripts.</p>
+<h1 id="usage">Usage</h1>
+<h2 id="install-docker">1. Install docker</h2>
+<p>See <a href="https://www.runoob.com/docker/docker-tutorial.html">This tutorial</a> to install docker engine. For my <strong>Ubuntu</strong>, I can use</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ curl -fsSL https://test.docker.com -o test-docker.sh</span><br><span class="line">$ sudo sh test-docker.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Note: If you have installed docker desktop before, remember to uninstall it. See <a href="https://docs.docker.com/desktop/uninstall/">Docker offical doc</a> to uninstall. Pay particular attention to the modification of <code>$HOME/.docker/config.json</code>!</p>
+</blockquote>
+<h2 id="use-the-dochat">2. Use the DoChat</h2>
+<p>Refer to <a href="https://github.com/huan/docker-wechat">DoChat git repository</a>, use</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sL https://raw.githubusercontent.com/huan/docker-wechat/master/dochat.sh | bash</span><br></pre></td></tr></table></figure>
+<p>to run the DoChat.</p>
+<h2 id="some-improvement">3. Some improvement</h2>
+<p>The output of the program is quite annoying. What I prefer is to create a script for this, for example, <code>~/Program/wechat</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">curl -sL https://raw.githubusercontent.com/huan/docker-wechat/master/dochat.sh | bash 2&gt;/dev/null &gt;/dev/null &amp;</span><br></pre></td></tr></table></figure>
+<p>And after add <code>$HOME/Program</code> to <code>$PATH</code>, simply using <code>wechat</code> command could open the wechat clearly.</p>
+<h2 id="transferring-files.">4. Transferring files.</h2>
+<p>We can use <code>$HOME/DoChat/WeChat Files/</code> as a intermediary of the host and the guest. Binding a soft link to <code>$HOME/DoChat/WeChat Files/[WXID]/FileStorage/File/</code> is a good idea.</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>问题求解（三） Open Topic 16 笔记</title>
     <url>/posts/e40b987f/</url>
     <content><![CDATA[<p>OT：除米什拉-格赖斯算法和贪心算法外，边染色和点染色问题还有很多其它算法，请为每种问题调研至少1种精确算法（暴力算法不在调研范围内），结合例子介绍算法的设计与分析。</p>

@@ -19,6 +19,39 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Fix CS:APP Attack Lab Segmentation Fault on Newest Ubuntu 22.04</title>
+    <url>/posts/db646f34/</url>
+    <content><![CDATA[<p>In the 3rd Lab of CS:APP: <a href="https://csapp.cs.cmu.edu/3e/labs.html">Attack Lab</a>, the distributed binary <code>ctarget</code> is too old and it cannot normally run on today's Ubuntu 22.04. I tried to analyze the problem and raise a resolution for that.</p>
+<p><a href="https://stackoverflow.com/questions/77568098/csapp-attack-lab-phase1-segmentation-fault-on-ubuntu22-04">Related stack overflow question</a>.</p>
+<span id="more"></span>
+<h1 id="description">Description</h1>
+<p>When running <code>./ctarget -q</code> on my Ubuntu 22.04, it skips the input and raises a Segmentation Fault. Using gdb, I found that it is due to an instruction in <code>__vfprintf_internal</code> of my <code>glibc</code>, namely <code>movaps %xmm1, 0x10(%rsp)</code>. This instruction needs its memory operand <code>0x10(%rsp)</code> corresponding an address divisible by 16. I guess that due to the compiling of <code>ctarget</code> is on a old convention, where the size of function frame is not strictly required to be a multiple of 16. I tried to manually modify the low bits of <code>%rsp</code> through gdb, and it eliminates the SIGSEGV, confirming my guessing.</p>
+<h1 id="fix-the-problem">Fix the problem</h1>
+<p>In the <a href="https://stackoverflow.com/questions/77568098/csapp-attack-lab-phase1-segmentation-fault-on-ubuntu22-04">Stack overflow reply</a>, I try to add an interface to make <code>printf</code> family "adaptive" to the alignment of <code>%rsp</code>. But it does not work quite well throughout the experiment. Instead, in this blog, I will use a naive self-made version printf family and <code>LD_PRELOAD</code> to fix that.</p>
+<h2 id="get-self-made-printf.so">Get self-made <code>printf.so</code></h2>
+<p>First of all, we can find a naive printf implementation (For me, I use the programming homework in <a href="https://nju-projectn.github.io/ics-pa-gitbook/ics2023/">NJU PA</a>). Then we can compile it to be a shared library(suppose the source file is named <code>printf.c</code>):</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gcc -shared -fPIC -o printf.so printf.c</span><br></pre></td></tr></table></figure>
+<p>Notice that we shall provide interface <code>__printf_chk</code> and <code>__sprintf_chk</code>.</p>
+<p>I provide a compiled shared library here: <a href="printf.so">printf.so</a>.</p>
+<h2 id="use-the-ld_preload-to-substitute-the-default-glibc-shared-library">Use the <code>LD_PRELOAD</code> to substitute the default glibc shared library</h2>
+<p>Put <code>printf.so</code> in the same directory of <code>ctarget</code>, then use command</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ LD_PRELOAD=./printf.so ./ctarget -q</span><br></pre></td></tr></table></figure>
+<p>And it works!</p>
+<p>Also, to set <code>LD_PRELOAD</code> in gdb, we can use</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set environment LD_PRELOAD=./printf.so</span><br><span class="line">set args -q</span><br></pre></td></tr></table></figure>
+<p>Amazing! <code>ctarget</code> can be normally run on Ubuntu 22.04 now!</p>
+]]></content>
+      <categories>
+        <category>计算机系统</category>
+        <category>CS:APP</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>计算机科学</tag>
+        <tag>计算机系统</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Install WeChat in Docker(DoChat) in Ubuntu</title>
     <url>/posts/524dba85/</url>
     <content><![CDATA[<p>WeChat is a useful software to communicate with others. Unfortunately, <a href="https://weixin.qq.com/">WeChat Official</a> does not provide Linux version. <a href="https://github.com/huan/docker-wechat">DoChat</a> is a great alternative.</p>

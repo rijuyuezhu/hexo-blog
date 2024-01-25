@@ -42,13 +42,13 @@
 <p>Amazing! <code>ctarget</code> can be normally run on Ubuntu 22.04 now!</p>
 ]]></content>
       <categories>
-        <category>计算机系统</category>
+        <category>Computer System</category>
         <category>CS:APP</category>
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>计算机科学</tag>
-        <tag>计算机系统</tag>
+        <tag>Computer Science</tag>
+        <tag>Computer System</tag>
       </tags>
   </entry>
   <entry>
@@ -87,7 +87,7 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>docker</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -155,13 +155,13 @@ T(2k+1, 2m)&amp;=2T(k, m)+O(km)
 <p>[2] Schrijver, A. (1998). Bipartite edge coloring in O(Δm) time. SIAM Journal on Computing, 28(3), 841-846.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -333,13 +333,13 @@ B_i-B_{i-1}=\frac{1}{r}(nk-B_{i-1}).
 <p>[2] Foerster, K. T. (2013, January). Approximating fault-tolerant domination in general graphs. In 2013 Proceedings of the Tenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO) (pp. 25-32). Society for Industrial and Applied Mathematics.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -412,11 +412,11 @@ B_i-B_{i-1}=\frac{1}{r}(nk-B_{i-1}).
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>学习笔记</category>
+        <category>Note</category>
       </categories>
       <tags>
         <tag>XCPC</tag>
-        <tag>计算机科学</tag>
+        <tag>Computer Science</tag>
       </tags>
   </entry>
   <entry>
@@ -522,13 +522,13 @@ f_{i}\ge OPT+(1-\frac{1}{k})^k(f_0-OPT)=OPT\cdot (1-(1-\frac{1}{k})^k).
 <p>[2] CS 261: A Second Course in Algorithms, note: <a href="https://timroughgarden.org/w16/w16.html" class="uri">https://timroughgarden.org/w16/w16.html</a></p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -675,13 +675,13 @@ cost(H&#39;)\le cost(C)=cost(T)+cost(M)\le OPT+OPT/2=3OPT/2
 <p>[2] Christofides, N. (1976). Worst-case analysis of a new heuristic for the travelling salesman problem.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -733,13 +733,13 @@ cost(H&#39;)\le cost(C)=cost(T)+cost(M)\le OPT+OPT/2=3OPT/2
 </ul>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -869,13 +869,13 @@ T(n)=\tilde O(\min\lbrace n^{2/3}, m^{1/2}\rbrace\cdot m\log U).
 <p>[4] https://oi-wiki.org/graph/flow/max-flow/</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -998,13 +998,13 @@ T(n)=\tilde O(\min\lbrace n^{2/3}, m^{1/2}\rbrace\cdot m\log U).
 <p>[3] https://liujiacai.net/blog/2014/10/12/lambda-calculus-introduction/</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1100,13 +1100,13 @@ w_{G}=a_{11}a_{12}\cdots a_{1n}\#a_{21}a_{22}\cdots a_{2n}\#\cdots\# a_{n1}a_{n2
 </ul>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1242,13 +1242,13 @@ f(x)=g(x)+h(x)
 <p>[3] Chang, R. S., &amp; Shing-Jiuan, L. (1997). The minimum labeling spanning trees. Information Processing Letters, 63(5), 277-282.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1311,7 +1311,7 @@ f(x)=g(x)+h(x)
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>计算机科学</tag>
+        <tag>Computer Science</tag>
       </tags>
   </entry>
   <entry>
@@ -1445,13 +1445,13 @@ d(u, v)=\min_{x\in C(G_l)} \lbrace d(u, x) + d(x, v)\rbrace.
 <p>[5] Henzinger, M. R., Klein, P., Rao, S., &amp; Subramanian, S. (1997). Faster shortest-path algorithms for planar graphs. journal of computer and system sciences, 55(1), 3-23.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1596,13 +1596,13 @@ d(u, v)=\min_{x\in C(G_l)} \lbrace d(u, x) + d(x, v)\rbrace.
 </section>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1663,13 +1663,13 @@ d(u, v)=\min_{x\in C(G_l)} \lbrace d(u, x) + d(x, v)\rbrace.
 </section>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1792,13 +1792,13 @@ journal = {Reliable Computing}
 </section>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1870,13 +1870,13 @@ O(b^0\cdot d+b^1\cdot (d-1)+\cdots+b^{d-1}\cdot 1)=O(b^d). (b&gt;1)
 </section>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -1947,13 +1947,13 @@ O(b^0\cdot d+b^1\cdot (d-1)+\cdots+b^{d-1}\cdot 1)=O(b^d). (b&gt;1)
 </section>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -2033,7 +2033,7 @@ O(b^0\cdot d+b^1\cdot (d-1)+\cdots+b^{d-1}\cdot 1)=O(b^d). (b&gt;1)
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>docker</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -2349,12 +2349,12 @@ G[0]\equiv \sqrt{F[0]}\pmod p​
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>学习笔记</category>
+        <category>Note</category>
       </categories>
       <tags>
-        <tag>数学</tag>
-        <tag>计算机科学</tag>
-        <tag>生成函数与多项式</tag>
+        <tag>Maths</tag>
+        <tag>Computer Science</tag>
+        <tag>Generation Function</tag>
       </tags>
   </entry>
   <entry>
@@ -2383,8 +2383,8 @@ G[0]\equiv \sqrt{F[0]}\pmod p​
         <category>Web</category>
       </categories>
       <tags>
-        <tag>Web开发</tag>
-        <tag>git</tag>
+        <tag>Web</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -2508,13 +2508,13 @@ G[0]\equiv \sqrt{F[0]}\pmod p​
 </section>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -2626,13 +2626,13 @@ S=\sum_{i=0}^{p-1}d(a_i, a_{i+1})+\sum_{i=0}^{q-1}d(b_i, b_{i+1})+d(b_q, n)
 <p>本文以双调欧几里得旅行商问题为例, 讲解了其中的动态规划的设计方法, 并进行优化, 最后得到了 <span class="math inline">\(O(n^2)\)</span> 时间复杂度, <span class="math inline">\(O(n)\)</span> 空间复杂度的算法. 并且对变种问题展开讨论, 得到了 <span class="math inline">\(O(n\log n)\)</span> 时间复杂度的算法.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -2735,11 +2735,10 @@ t^{k}=t^{n/t}, (t\in \mathbb N^+)
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>题解</category>
+        <category>Tutorial</category>
       </categories>
       <tags>
         <tag>XCPC</tag>
-        <tag>题解</tag>
       </tags>
   </entry>
   <entry>
@@ -2939,13 +2938,13 @@ t^{k}=t^{n/t}, (t\in \mathbb N^+)
 <p>Knuth 介绍了很多算法分析里的常用方法, 包括定量分析, 计数技巧, 生成函数等等. 这些工具可帮助我们完成算法分析.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -3076,12 +3075,12 @@ f(n)=\sum_{i=0}^n(-1)^{n-i}\begin{Bmatrix}n \\ i\end{Bmatrix}g(i)
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>学习笔记</category>
+        <category>Note</category>
       </categories>
       <tags>
-        <tag>数学</tag>
-        <tag>计算机科学</tag>
-        <tag>斯特林数</tag>
+        <tag>Maths</tag>
+        <tag>Computer Science</tag>
+        <tag>Stirling Number</tag>
       </tags>
   </entry>
   <entry>
@@ -3102,12 +3101,12 @@ f(n)=\sum_{i=0}^n(-1)^{n-i}\begin{Bmatrix}n \\ i\end{Bmatrix}g(i)
 <p>里面较为详细地讲述了前端的常用工具和语言.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>其他</category>
+        <category>Course Note</category>
+        <category>Others</category>
       </categories>
       <tags>
-        <tag>计算机科学</tag>
-        <tag>Web开发</tag>
+        <tag>Computer Science</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -3152,13 +3151,13 @@ f(n)=\sum_{i=0}^n(-1)^{n-i}\begin{Bmatrix}n \\ i\end{Bmatrix}g(i)
 <p>演示文稿: 详见 <a href="1.pdf">Slide</a>.</p>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>问题求解</category>
+        <category>Course Note</category>
+        <category>Problem Solving</category>
       </categories>
       <tags>
-        <tag>算法分析</tag>
-        <tag>计算机科学</tag>
-        <tag>问题求解</tag>
+        <tag>Algorithm Analysis</tag>
+        <tag>Computer Science</tag>
+        <tag>Problem Solving</tag>
       </tags>
   </entry>
   <entry>
@@ -3848,12 +3847,12 @@ I_{n+1}=\dfrac{1}{2na^2}\left(\dfrac{x}{(x^2+a^2)^n}+(2n-1)I_n\right).
 </details>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>微积分</category>
+        <category>Course Note</category>
+        <category>Calculus</category>
       </categories>
       <tags>
-        <tag>微积分</tag>
-        <tag>数学</tag>
+        <tag>Calculus</tag>
+        <tag>Maths</tag>
       </tags>
   </entry>
   <entry>
@@ -4764,12 +4763,12 @@ x^3+y^2-2xy=0
 </ol>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>微积分</category>
+        <category>Course Note</category>
+        <category>Calculus</category>
       </categories>
       <tags>
-        <tag>微积分</tag>
-        <tag>数学</tag>
+        <tag>Calculus</tag>
+        <tag>Maths</tag>
       </tags>
   </entry>
   <entry>
@@ -4840,13 +4839,13 @@ x^3+y^2-2xy=0
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>学习笔记</category>
+        <category>Note</category>
       </categories>
       <tags>
         <tag>XCPC</tag>
         <tag>tarjan</tag>
-        <tag>图论</tag>
-        <tag>连通性</tag>
+        <tag>Graph Theory</tag>
+        <tag>Connectivity</tag>
       </tags>
   </entry>
   <entry>
@@ -4931,11 +4930,10 @@ x^3+y^2-2xy=0
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>题解</category>
+        <category>Tutorial</category>
       </categories>
       <tags>
         <tag>XCPC</tag>
-        <tag>题解</tag>
       </tags>
   </entry>
   <entry>
@@ -4990,11 +4988,10 @@ x^3+y^2-2xy=0
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>题解</category>
+        <category>Tutorial</category>
       </categories>
       <tags>
         <tag>XCPC</tag>
-        <tag>题解</tag>
       </tags>
   </entry>
   <entry>
@@ -5607,12 +5604,12 @@ k!=k(k-1)!&lt;k\cdot e\cdot \left(\dfrac{k-1}{2}\right)^{k-1}=e\cdot \left(\dfra
 </details>
 ]]></content>
       <categories>
-        <category>课程笔记</category>
-        <category>微积分</category>
+        <category>Course Note</category>
+        <category>Calculus</category>
       </categories>
       <tags>
-        <tag>微积分</tag>
-        <tag>数学</tag>
+        <tag>Calculus</tag>
+        <tag>Maths</tag>
       </tags>
   </entry>
   <entry>
@@ -5673,11 +5670,10 @@ k!=k(k-1)!&lt;k\cdot e\cdot \left(\dfrac{k-1}{2}\right)^{k-1}=e\cdot \left(\dfra
 ]]></content>
       <categories>
         <category>XCPC</category>
-        <category>题解</category>
+        <category>Tutorial</category>
       </categories>
       <tags>
         <tag>XCPC</tag>
-        <tag>题解</tag>
       </tags>
   </entry>
 </search>

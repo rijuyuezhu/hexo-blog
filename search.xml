@@ -54,7 +54,7 @@
 <p>But in <a href="https://github.com/qemu/qemu/blob/master/accel/tcg/tcg-accel-ops-mttcg.c">Qemu-master</a>, it is:</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> EXCP_HALTED:</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Usually cpu-&gt;halted is set, but may have already been</span></span><br><span class="line"><span class="comment">     * reset by another thread by the time we arrive here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
 <p>Thus the failure might be a bug inside qemu.</p>
-<p>However, even using the newest version of qemu (v8.2.2) fails to solve the problem mentioned above: we still needs to use <code>-smp "$(smp),cores=1,sockets=$(smp)</code> to run multiple CPUs in AM; and even though using tcg instead of kvm will not crash like above, it seems that the program still does not run normally: the order of the execution of the four CPU never changes!</p>
+<p>However, even using the newest version of qemu (v8.2.2) fails to solve the problem mentioned above: we still needs to use <code>-smp "$(smp),cores=1,sockets=$(smp)</code> to run multiple CPUs in AM; and even though using tcg instead of kvm will not crash like above, it seems that the program still does not run normally: sometimes the <em>spinlock testcase</em> fails!</p>
 ]]></content>
       <categories>
         <category>Course Note</category>

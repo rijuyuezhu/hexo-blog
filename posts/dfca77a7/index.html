@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：距离索引（Distance Oracle）是一种用于查询精确或近似距离的数据结构，请调研至少1种精确距离索引和1种近似距离索引，讨论适用场景，结合例子介绍索引构造算法和距离查询算法的设计与分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 7 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/dfca77a7/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：距离索引（Distance Oracle）是一种用于查询精确或近似距离的数据结构，请调研至少1种精确距离索引和1种近似距离索引，讨论适用场景，结合例子介绍索引构造算法和距离查询算法的设计与分析。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/2.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/4.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/5.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/6.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/7.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/8.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/9.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/10.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/11.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/12.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/13.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/14.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/15.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/16.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/17.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/18.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/19.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/20.png">
+<meta property="article:published_time" content="2023-10-15T05:46:45.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.587Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/dfca77a7/1.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/dfca77a7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/dfca77a7/","path":"posts/dfca77a7/","title":"问题求解（三） Open Topic 7 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 7 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#distance-oracle%E7%A9%BA%E9%97%B4%E4%B8%8E%E6%97%B6%E9%97%B4%E7%9A%84%E6%9D%83%E8%A1%A1"><span class="nav-text">Distance
+Oracle——空间与时间的权衡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E4%BA%8E%E4%B8%80%E8%88%AC%E6%97%A0%E5%90%91%E9%9D%9E%E8%B4%9F%E6%9D%83%E5%9B%BE%E7%9A%84-stretch-2-%E7%9A%84-do"><span class="nav-text">适用于一般无向非负权图的
+stretch &lt; 2 的 DO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#do-%E7%9A%84%E5%8E%86%E5%8F%B2%E5%8F%91%E7%8E%B0"><span class="nav-text">DO 的历史发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E8%B4%A1%E7%8C%AE"><span class="nav-text">论文贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3"><span class="nav-text">主要思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%9A%84%E7%BB%93%E6%9E%84%E6%80%A7%E9%A2%84%E5%A4%84%E7%90%86---degree-bounded"><span class="nav-text">图的结构性预处理 - degree
+bounded</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%AE%9A%E4%B9%89"><span class="nav-text">基础定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#landmark-%E9%9B%86-l-%E9%80%89%E5%8F%96"><span class="nav-text">landmark 集 \(L\) 选取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">算法预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E4%B8%BB%E8%BF%87%E7%A8%8B"><span class="nav-text">算法主过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#s-%E5%88%B0-t-%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="nav-text">\(s\) 到 \(t\) 的最短路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stretch-%E5%88%86%E6%9E%90"><span class="nav-text">stretch 分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B3%E9%9D%A2%E5%9B%BE%E7%9A%84%E4%B8%80%E7%A7%8D-exact-do"><span class="nav-text">平面图的一种 Exact DO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fn-%E5%88%86%E7%A6%BB%E6%80%A7"><span class="nav-text">\(f(n)\) 分离性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A2%E9%97%AE"><span class="nav-text">询问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/dfca77a7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 7 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 7 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-15 13:46:45" itemprop="dateCreated datePublished" datetime="2023-10-15T13:46:45+08:00">2023-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：<a target="_blank" rel="noopener" href="https://doi.org/10.1145/2530531">距离索引</a>（Distance
+Oracle）是一种用于查询精确或近似距离的数据结构，请调研至少1种精确距离索引和1种近似距离索引，讨论适用场景，结合例子介绍索引构造算法和距离查询算法的设计与分析。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">Slide</a></p>
+<h1 id="distance-oracle空间与时间的权衡">Distance
+Oracle——空间与时间的权衡</h1>
+<h2 id="简介">简介</h2>
+<p>未加说明的定义见 [1] (Sommer, 2014)。</p>
+<p>Distance oracle 是一种距离 stretch，空间 space 和单次查询时间 query
+time 的权衡的艺术。</p>
+<h1
+id="适用于一般无向非负权图的-stretch-2-的-do">适用于一般无向非负权图的
+stretch &lt; 2 的 DO</h1>
+<h2 id="do-的历史发现">DO 的历史发现</h2>
+<p><img src="1.png" /></p>
+<h2 id="论文贡献">论文贡献</h2>
+<p>[2] (Agarwal, 2014) 提供了三种满足 stretch <span
+class="math inline">\(\alpha\in(1, 2]\)</span> 的 DO。</p>
+<p><img src="2.png" /></p>
+<p>我们主要讨论第一个成果：</p>
+<p><em>Result:</em> 对于平均度为 <span
+class="math inline">\(\mu=2m/n\)</span> 的图，对任意 <span
+class="math inline">\(1\le \alpha \le n\)</span>，存在 stretch 为 <span
+class="math inline">\(O(1+1/k)\)</span>，询问时间 <span
+class="math inline">\(T=O((\alpha \mu)^k)\)</span>，空间为 <span
+class="math inline">\(S=O(m+n^2/\alpha)\)</span> 的 DO。</p>
+<p>约束方程：</p>
+<p><span class="math display">\[
+    S\times T^{1/k}=O(n^2)
+\]</span></p>
+<h2 id="主要思想">主要思想</h2>
+<ul>
+<li><p>经典的 landmark 法：选一个 landmark 集 <span
+class="math inline">\(L\)</span>，对所有点存储到它们的距离。</p></li>
+<li><p>合理地选择多级 landmark，使得<strong>估计距离</strong> <span
+class="math inline">\(\delta(s, t)\)</span>
+和实际距离的误差尽量小。</p></li>
+<li><p>和 Agarwal
+的之前的成果相比：创新性地使用了<strong>双向</strong>方法来处理询问。</p>
+<p>正是由于双向的优化，在不影响 space 和 construction time
+的前提下，query time 得到了大幅优化：</p></li>
+</ul>
+<p><img src="3.png" /></p>
+<h2 id="图的结构性预处理---degree-bounded">图的结构性预处理 - degree
+bounded</h2>
+<p><em>Theorem:</em> 任何 <span class="math inline">\(n\)</span> 点
+<span class="math inline">\(m\)</span> 边的图都可以转化为不超过 <span
+class="math inline">\(2n\)</span> 点，所有点度数不超过 <span
+class="math inline">\(\lceil \mu + 2\rceil\)</span> 的图。（<span
+class="math inline">\(\mu\)</span> 是原图的平均度数，为 <span
+class="math inline">\(2m/n\)</span>）。</p>
+<p><em>Construction:</em> 在新图 <span
+class="math inline">\(G&#39;\)</span> 中，将所有点 <span
+class="math inline">\(u\)</span> 转化为 <span
+class="math inline">\(t_u=\lceil \deg(u)/\mu\rceil\)</span> 个点 <span
+class="math inline">\(u_1, u_2, \cdots, u_{t_u}\)</span>。将原图中 <span
+class="math inline">\(u\)</span> 的邻点分成 <span
+class="math inline">\(t_u\)</span> 组，每组不超过 <span
+class="math inline">\(\mu\)</span> 个，在新图中连到这 <span
+class="math inline">\(t_u\)</span> 个点上。最后将这 <span
+class="math inline">\(t_u\)</span> 个点在新图中用零边连成链。</p>
+<p><img src="4.png" /></p>
+<p><img src="5.png" /></p>
+<h2 id="基础定义">基础定义</h2>
+<p>若选定了 landmark 集 <span
+class="math inline">\(L\)</span>，则对于任意一点 <span
+class="math inline">\(v\in V\)</span>：</p>
+<p><span class="math inline">\(l(v)\)</span>：距离 <span
+class="math inline">\(v\)</span> 最近的 <span
+class="math inline">\(L\)</span> 中顶点；<span
+class="math inline">\(r_v\)</span>：<span
+class="math inline">\(v\)</span> 和 <span
+class="math inline">\(l(v)\)</span> 之间的距离。</p>
+<p><img src="6.png" /></p>
+<p><span class="math inline">\(B(v)\)</span>：所有到 <span
+class="math inline">\(v\)</span> 距离<strong>小于</strong> <span
+class="math inline">\(r(v)\)</span> 的点的集合。</p>
+<p><img src="7.png" /></p>
+<p><span class="math inline">\(B^*(v)\)</span>：在 <span
+class="math inline">\(B(v)\)</span> 中或与 <span
+class="math inline">\(B(v)\)</span> 中顶点相邻的点的集合。</p>
+<p><img src="8.png" /></p>
+<p>迭代定义：</p>
+<p><span class="math display">\[
+    \Gamma_i^*(v)=\bigcup_{w\in \Gamma^*_{i-1}(v)} B^*(w);\quad
+\Gamma_i(v)=\bigcup_{w\in \Gamma^*_{i-1}(v)} B(w)
+\]</span> 且 <span class="math inline">\(\Gamma_0^*(v)=v,
+\Gamma_0(v)=\varnothing\)</span>.</p>
+<h2 id="landmark-集-l-选取">landmark 集 <span
+class="math inline">\(L\)</span> 选取</h2>
+<p><em>Theorem:</em> 对于最大度 <span
+class="math inline">\(\Delta(G)=\mu\)</span> 的图 <span
+class="math inline">\(G\)</span>，对任意 <span
+class="math inline">\(1\le \alpha\le n\)</span>，存在 landmark 集 <span
+class="math inline">\(L\)</span> 大小为 <span
+class="math inline">\(\tilde O(n/\alpha)\)</span>，满足对任意 <span
+class="math inline">\(v\in V\)</span>，<span
+class="math inline">\(|B(v)|=O(\alpha)\)</span> 从而 <span
+class="math inline">\(|B^*(v)|=O(\alpha\mu)\)</span>, WHP。</p>
+<p>证明：[4] (Alon &amp; Spencer, 2016).</p>
+<h2 id="算法预处理">算法预处理</h2>
+<p>对每个点 <span
+class="math inline">\(v\)</span>，使用一个哈希表存储到所有 <span
+class="math inline">\(|L|=\tilde O(n/\alpha)\)</span> 个 landmark
+的距离，以及 <span class="math inline">\(l(v)\)</span> 和 <span
+class="math inline">\(r_v\)</span>。</p>
+<p>每个点使用 Perfect hashing，空间为 <span class="math inline">\(\tilde
+O(n/\alpha)\)</span>。故算法总空间 <span class="math inline">\(\tilde
+O(m+n^2/\alpha)\)</span>。</p>
+<h2 id="算法主过程">算法主过程</h2>
+<p>对于 <span class="math inline">\(s\)</span> 和 <span
+class="math inline">\(t\)</span> 的查询，分为三部分。(Candidate distance
+意为，只从 e.g. <span class="math inline">\(\Gamma_k^*(s)\)</span>
+内部更新的距离)</p>
+<p><img src="9.png" /></p>
+<h2 id="s-到-t-的最短路"><span class="math inline">\(s\)</span> 到 <span
+class="math inline">\(t\)</span> 的最短路</h2>
+<p>在 <span class="math inline">\(s\)</span> 到 <span
+class="math inline">\(t\)</span> 的最短路中，我们考虑 <span
+class="math inline">\(\Gamma^*_i\)</span> 的递归表现：</p>
+<p><img src="10.png" /></p>
+<p><img src="11.png" /></p>
+<p><img src="12.png" /></p>
+<p><img src="13.png" /></p>
+<p>以下性质对于 <span class="math inline">\(s\)</span> 和 <span
+class="math inline">\(t\)</span> 是对称的，故只证 <span
+class="math inline">\(s\)</span>.</p>
+<p><em>Property 1.</em> 在 Query 的 1.2. 行后，可以得出所有 <span
+class="math inline">\(s\)</span> 到 <span
+class="math inline">\(w_j^s(0\le j\le k)\)</span> 的距离，也就是求得的
+Candidate distance。</p>
+<p><em>Property 2.</em> 设 <span class="math inline">\(r^s\)</span> 是
+<span class="math inline">\(\min_{0\le j&lt;k}r_{w^s_j}\)</span>，则
+<span class="math inline">\(d(s, w_i^s)\ge i\cdot r^s\)</span>。</p>
+<p><img src="14.png" /></p>
+<p><em>Property 3.</em> 若 <span class="math inline">\(w_k^t\notin
+\Gamma^*_k(s)\)</span>（即两向的迭代不交），则 <span
+class="math inline">\(d(s, t)\ge 2k\min\lbrace r^s,
+r^t\rbrace\)</span>.</p>
+<p><em>Property 4.</em> query 算法得到的估计距离 <span
+class="math inline">\(\delta(s, t)\le d(s, t)+2\min\lbrace r^s,
+r^t\rbrace\)</span>.</p>
+<ul>
+<li>这是因为第 5. 行使用更新的 <span
+class="math inline">\(d&#39;_s(w)+d(w, l(w))+d(l(w), t)\le d(s,
+t)+2r^s\)</span>，<span class="math inline">\(w\)</span> 选择使得 <span
+class="math inline">\(r_{w^s_j}\)</span> 取得 <span
+class="math inline">\(r^s\)</span> 的 <span
+class="math inline">\(w^s_j\)</span>：</li>
+</ul>
+<p><img src="15.png" /></p>
+<h2 id="stretch-分析">stretch 分析</h2>
+<ol type="1">
+<li>当 <span class="math inline">\(w_k^t\in \Gamma_k^*(s)\)</span>
+时，可以得到 <span class="math inline">\(\delta(s, t)=d(s,
+t)\)</span>，此时得到准确值。</li>
+<li>当 <span class="math inline">\(w_k^t\notin \Gamma_k^*(s)\)</span>
+时，由 <em>Property 3.</em> 有 <span class="math inline">\(d(s, t)\ge
+2k\min\lbrace r^s, r^t\rbrace\)</span>；由 <em>Property 4.</em> 有 <span
+class="math inline">\(\delta(s, t)\le d(s, t)+2\min\lbrace r^s,
+r^t\rbrace\)</span>。从而</li>
+</ol>
+<p><span class="math display">\[
+    \delta(s, t)\le d(s, t)+2\min\lbrace r^s, r^t\rbrace \le d(s,
+t)+2\cdot d(s, t)/(2k).
+\]</span></p>
+<p>进而</p>
+<p><span class="math display">\[
+\dfrac{\delta(s, t)}{d(s, t)}\le 1+1/k.
+\]</span></p>
+<p>即 stretch 为 <span class="math inline">\(1+1/k\)</span>.</p>
+<p>由上知，该算法空间为 <span class="math inline">\(\tilde
+O(m+n^2/\alpha)\)</span>。由于每次 query 要进行 <span
+class="math inline">\(O(|\Gamma^*_k|)\)</span> 范围的计算 Cadidate
+distance 和枚举，而每个点 <span class="math inline">\(v\)</span> 的
+<span
+class="math inline">\(|B^*(v)|=O(\alpha\mu)\)</span>，故最终单次询问复杂度为
+<span class="math inline">\(O((\alpha\mu)^k)\)</span>.</p>
+<h1 id="平面图的一种-exact-do">平面图的一种 Exact DO</h1>
+<h2 id="概述">概述</h2>
+<p>[3] (Djidjev, 1996) 给出了平面图（确切地说，<span
+class="math inline">\(O(\sqrt n)\)</span> 分离图）上的一种 construction
+time <span class="math inline">\(O(S)\)</span>, space <span
+class="math inline">\(S=O(S)\)</span>, query time <span
+class="math inline">\(T=O(n^2/S)\)</span> 的 DO。</p>
+<p>满足约束</p>
+<p><span class="math display">\[
+    S\times T=O(n^2).
+\]</span></p>
+<p>以下只展示 <span class="math inline">\(S=O(n\sqrt n)\)</span>，<span
+class="math inline">\(T=O(\sqrt n)\)</span>
+的构建方法，其余范围是它的推论。</p>
+<p><img src="16.png" /></p>
+<h2 id="fn-分离性"><span class="math inline">\(f(n)\)</span> 分离性</h2>
+<p>称一类图 <span class="math inline">\(\mathcal G_{f(n)}\)</span> 具有
+<span class="math inline">\(f(n)\)</span> 分离性，即对 <span
+class="math inline">\(G\in \mathcal G_{f(n)}\)</span>，存在大小为 <span
+class="math inline">\(O(f(n))\)</span> 的 <span
+class="math inline">\(C\)</span>，使得 <span
+class="math inline">\(G-C\)</span> 的每个连通分支的大小均不超过 <span
+class="math inline">\(\alpha n\)</span>，其中 <span
+class="math inline">\(\alpha&lt;1\)</span> 为常数。</p>
+<p><em>Theorem(平面分离定理):</em> 平面图 <span
+class="math inline">\(\subseteq \mathcal G_{\sqrt n}\)</span>。</p>
+<h2 id="预处理">预处理</h2>
+<p>通过递归构造 <span class="math inline">\(O(\sqrt n)\)</span>
+seperator，形成一棵 <span class="math inline">\(O(\log n)\)</span>
+深度的树。</p>
+<p><img src="17.png" /></p>
+<p><img src="18.png" /></p>
+<p><img src="19.png" /></p>
+<p>转化为树，树中的每个顶点代表原图中一个 <span
+class="math inline">\(O(\sqrt n)\)</span> seperator，即为：</p>
+<p><img src="20.png" /></p>
+<p>再预处理：树中每个顶点（即一个 <span class="math inline">\(O(\sqrt
+n)\)</span> seperator <span
+class="math inline">\(C(G_x)\)</span>）代表的原图中每个顶点计算到 <span
+class="math inline">\(G_x\)</span> 中的每个顶点的距离）。</p>
+<ul>
+<li>使用 [5] (Henzinger et.al, 1997) 的方法可以在平面图中 <span
+class="math inline">\(O(|G|)\)</span> 进行 SSSP。</li>
+<li>计算一个大小为 <span class="math inline">\(n_x\)</span> 的<span
+class="math inline">\(C(G_x)\)</span> 的信息需要 <span
+class="math inline">\(O(n_x\sqrt {n_x})\)</span>
+的预处理时间和算法总空间。</li>
+</ul>
+<p>预处理时间/算法总空间共计</p>
+<p><span class="math display">\[
+f(n)=\sum_{i}f(n_i)+O(n\sqrt {n}), \text{where } \sum_{i}n_i=n, n_i\le
+\alpha n.
+\]</span></p>
+<p>解得 <span class="math inline">\(f(n)=O(n\sqrt
+n)\)</span>。故预处理时间，空间均为 <span class="math inline">\(O(n\sqrt
+n)\)</span>。</p>
+<h2 id="询问">询问</h2>
+<p>对于 <span class="math inline">\(u,
+v\)</span>，找到在树中它们所在的顶点，设它们的 LCA 为 <span
+class="math inline">\(C(G_l)\)</span>。输出答案为</p>
+<p><span class="math display">\[
+d(u, v)=\min_{x\in C(G_l)} \lbrace d(u, x) + d(x, v)\rbrace.
+\]</span></p>
+<p>这是因为 <span class="math inline">\(C(G_l)\)</span> 中一定有顶点在
+<span class="math inline">\(u, v\)</span>
+的最短路上（它是割集）。单次询问时间 <span class="math inline">\(O(\sqrt
+n)\)</span>。</p>
+<h2 id="总结">总结</h2>
+<p>于是，我们得到了平面图（或一般地，<span
+class="math inline">\(\mathcal G_{\sqrt n}\)</span>）预处理和空间均为
+<span class="math inline">\(O(n\sqrt n)\)</span>，单次询问时间为 <span
+class="math inline">\(O(\sqrt n)\)</span> 的 DO。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] Sommer, C. (2014). Shortest-path queries in static networks. ACM
+Computing Surveys (CSUR), 46(4), 1-31.</p>
+<p>[2] Agarwal, R. (2014). The space-stretch-time tradeoff in distance
+oracles. In Algorithms-ESA 2014: 22th Annual European Symposium,
+Wroclaw, Poland, September 8-10, 2014. Proceedings 21 (pp. 49-60).
+Springer Berlin Heidelberg.</p>
+<p>[3] Djidjev, H. N. (1996, June). Efficient algorithms for shortest
+path queries in planar digraphs. In International Workshop on
+Graph-Theoretic Concepts in Computer Science (pp. 151-165). Berlin,
+Heidelberg: Springer Berlin Heidelberg.</p>
+<p>[4] Alon, N., &amp; Spencer, J. H. (2016). The probabilistic method.
+John Wiley &amp; Sons.</p>
+<p>[5] Henzinger, M. R., Klein, P., Rao, S., &amp; Subramanian, S.
+(1997). Faster shortest-path algorithms for planar graphs. journal of
+computer and system sciences, 55(1), 3-23.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/dfca77a7/" title="问题求解（三） Open Topic 7 笔记">https://blog.rijuyuezhu.top/posts/dfca77a7/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/13607739/" rel="prev" title="问题求解（三） Open Topic 6 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 6 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/972c44eb/" rel="next" title="ICS PA memory leak issue due to lib readline bug">
+                  ICS PA memory leak issue due to lib readline bug <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

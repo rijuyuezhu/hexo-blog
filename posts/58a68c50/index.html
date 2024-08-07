@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="移植自原博客 https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_41996523&#x2F;article&#x2F;details&#x2F;113245137。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分图最大权匹配（KM 算法） 学习笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/58a68c50/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="移植自原博客 https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_41996523&#x2F;article&#x2F;details&#x2F;113245137。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-12T10:45:21.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.617Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="XCPC">
+<meta property="article:tag" content="Computer Science">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/58a68c50/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/58a68c50/","path":"posts/58a68c50/","title":"二分图最大权匹配（KM 算法） 学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>二分图最大权匹配（KM 算法） 学习笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E5%9B%BE%E6%9C%80%E5%A4%A7%E6%9D%83%E5%8C%B9%E9%85%8Dkm%E7%AE%97%E6%B3%95-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-text">二分图最大权匹配（KM算法）
+学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#km-%E7%AE%97%E6%B3%95"><span class="nav-text">KM 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-text">算法流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E9%A1%B6%E6%A0%87"><span class="nav-text">调整顶标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81dfs"><span class="nav-text">代码(Dfs)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/58a68c50/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="二分图最大权匹配（KM 算法） 学习笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          二分图最大权匹配（KM 算法） 学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-12-12 18:45:21" itemprop="dateCreated datePublished" datetime="2023-12-12T18:45:21+08:00">2023-12-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/XCPC/" itemprop="url" rel="index"><span itemprop="name">XCPC</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/XCPC/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>移植自原博客 <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41996523/article/details/113245137"
+class="uri">https://blog.csdn.net/qq_41996523/article/details/113245137</a>。</p>
+<span id="more"></span>
+<h1 id="二分图最大权匹配km算法-学习笔记">二分图最大权匹配（KM算法）
+学习笔记</h1>
+<h2 id="学习资料">学习资料</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/suxxsfe/xiong-ya-li-suan-fa">匈牙利与KM算法</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://oi-wiki.org/graph/graph-matching/bigraph-weight-match/">二分图最大权匹配——OI
+Wiki</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/SingerCoder/solution-p6577">题解
+P6577【模板】二分图最大权完美匹配</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhltao/p/12549489.html"
+class="uri">https://www.cnblogs.com/zhltao/p/12549489.html</a></p>
+<h2 id="km-算法">KM 算法</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6577">P6577
+【模板】二分图最大权完美匹配</a></p>
+<p>KM算法用来求一类特殊二分图的最大权完美匹配。这个特殊指：</p>
+<ol type="1">
+<li><strong>每对</strong>左右部点间都有边。</li>
+<li>左右部的节点数量相同。</li>
+</ol>
+<p>其实没有关系。我们只要这样做，就可以推至普适情况：</p>
+<ol type="1">
+<li>原来没有边的左右部点间连权值为 <span
+class="math inline">\(0\)</span> / <span
+class="math inline">\(-\infty\)</span>的边（通常直接用邻接矩阵实现。连
+<span class="math inline">\(0\)</span> 还是连 <span
+class="math inline">\(-\infty\)</span>
+取决于是否要求一定要完美匹配）。</li>
+<li>往少的那一部补一些点使之相等。</li>
+</ol>
+<p>所以我们说，KM算法适用于普遍的二分图的<strong>最大权匹配</strong>。</p>
+<h2 id="定义">定义</h2>
+<p><strong>顶标</strong></p>
+<p>我们给每个节点设置一个 “顶标”。为了方便，左部节点的顶标叫做 <span
+class="math inline">\(lx_i\)</span>，右部节点的顶标叫做 <span
+class="math inline">\(ly_i\)</span>。</p>
+<blockquote>
+<p>顶标的性质：</p>
+<p>任意时刻，对于图中任意一条边 <span
+class="math inline">\((u,v,w)\)</span>，有 <span
+class="math inline">\(lx_u+ly_v\ge w\)</span>。</p>
+</blockquote>
+<p><strong>相等子图</strong></p>
+<p>相等子图
+<strong>包括原二分图中的所有节点（即一个生成子图）</strong>，而边集却是原图中满足
+<span class="math inline">\(lx_u+ly_v=w\)</span> 的边 <span
+class="math inline">\((u,v,w)\)</span> 构成的。也就是把那些 <span
+class="math inline">\(lx_u+ly_v=w\)</span>
+的边搞出来的一个生成子图。</p>
+<blockquote>
+<p>相等子图的性质：</p>
+<ol type="1">
+<li>相等子图若存在完美匹配，则完美匹配的权和就是顶标和。</li>
+<li>相等子图若存在完美匹配，则同时也是原图的最大权完美匹配。</li>
+</ol>
+</blockquote>
+<p>于是我们只要增广一个相等子图，使之具有完美匹配即可。</p>
+<h2 id="算法流程">算法流程</h2>
+<ol type="1">
+<li>赋予一个顶标初始值，比如 <span
+class="math inline">\(lx_u=\max\{w|(u,v,w)\},ly_i=0\)</span>。</li>
+<li>选一个未匹配点，从它那里开始在<strong>相等子图</strong>中增广。</li>
+<li>调整顶标，给在交错树中的左部的节点减去一个值，给在交错树中的右部的节点加上一个值。这是为了让更多的节点加进相等子图。</li>
+</ol>
+<p>我们详细地说说“调整顶标”。</p>
+<h3 id="调整顶标">调整顶标</h3>
+<p>比如我们要进行调整的变化值为 <span
+class="math inline">\(a\)</span>，即让所有在交错树中的点的 <span
+class="math inline">\(lx_u\)</span> 减 <span
+class="math inline">\(a\)</span>，<span
+class="math inline">\(ly_v\)</span> 加 <span
+class="math inline">\(a\)</span>。</p>
+<p>于是：</p>
+<p>若假设 <span class="math inline">\(u,v\)</span>
+分别是交错树上任意的两个左、右部点，<span
+class="math inline">\(u&#39;,v&#39;\)</span>
+分别是交错树外任意的两个左、右节点。</p>
+<ol type="1">
+<li><span class="math inline">\((u, v)\)</span> 仍在交错树上。</li>
+<li><span class="math inline">\((u&#39;,v&#39;)\)</span>
+仍不在交错树上。</li>
+<li><span class="math inline">\((u,v&#39;)\)</span>
+由于顶标和减少，<strong>有可能</strong> 进入相等子图。</li>
+<li><span class="math inline">\((u&#39;,v)\)</span>
+顶标和增加，更不可能进入相等子图。</li>
+</ol>
+<p>所以我们要增广，关键看第3种情况。</p>
+<p>为了维护顶标的性质，并且让第3种情况的边加入， <span
+class="math inline">\(a\)</span> 值应选择为：</p>
+<p><span
+class="math inline">\(a=\min\{(lx_u+ly_{v&#39;}-w)|\forall(u,v&#39;,w)\}\)</span>。</p>
+<p>于是，我们可以先写出个dfs版本的KM算法。可惜的是，它的时间复杂度可能卡到
+<span class="math inline">\(O(n^4)\)</span>，无法通过模板题。</p>
+<h2 id="代码dfs">代码(Dfs)</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">char</span> In[<span class="number">1</span> &lt;&lt; <span class="number">20</span>], *ss = In, *tt = In;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> getchar() (ss == tt &amp;&amp; (tt = (ss = In) + fread(In, 1, 1 &lt;&lt; 20, stdin), ss == tt) ? EOF : *ss++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	ll x = <span class="number">0</span>, f = <span class="number">1</span>; <span class="type">char</span> ch = <span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">for</span>(; ch &lt; <span class="string">&#x27;0&#x27;</span> || ch &gt; <span class="string">&#x27;9&#x27;</span>; ch = <span class="built_in">getchar</span>()) <span class="keyword">if</span>(ch == <span class="string">&#x27;-&#x27;</span>) f = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span>(; ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>; ch = <span class="built_in">getchar</span>()) x = x * <span class="number">10</span> + <span class="built_in">int</span>(ch - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">return</span> x * f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAXN = <span class="number">505</span>;</span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="type">int</span> n, m, match[MAXN], vx[MAXN], vy[MAXN];</span><br><span class="line">ll e[MAXN][MAXN], slack[MAXN], lx[MAXN], ly[MAXN];</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u)</span> </span>&#123;</span><br><span class="line">	vx[u] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> v = <span class="number">1</span>; v &lt;= n; v++) <span class="keyword">if</span>(!vy[v]) &#123;</span><br><span class="line">		<span class="keyword">if</span>(lx[u] + ly[v] == e[u][v]) &#123;</span><br><span class="line">			vy[v] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(!match[v] || <span class="built_in">dfs</span>(match[v])) &#123;</span><br><span class="line">				match[v] = u;</span><br><span class="line">				<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> slack[v] = <span class="built_in">min</span>(slack[v], lx[u] + ly[v] - e[u][v]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">KM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) lx[i] = -INF, ly[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) lx[i] = <span class="built_in">max</span>(lx[i], e[i][j]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) vx[j] = vy[j] = <span class="number">0</span>, slack[j] = INF;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">dfs</span>(i)) <span class="keyword">break</span>;</span><br><span class="line">			ll d = INF;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) <span class="keyword">if</span>(!vy[j]) d = <span class="built_in">min</span>(d, slack[j]);</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(vx[j]) lx[j] -= d;</span><br><span class="line">				<span class="keyword">if</span>(vy[j]) ly[j] += d;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	n = <span class="built_in">read</span>(), m = <span class="built_in">read</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) e[i][j] = -INF;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">		<span class="type">int</span> u = <span class="built_in">read</span>(), v = <span class="built_in">read</span>(); ll w = <span class="built_in">read</span>();</span><br><span class="line">		e[u][v] = <span class="built_in">max</span>(e[u][v], w);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">KM</span>();</span><br><span class="line">	ll ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) ans += lx[i] + ly[i];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, match[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么怎么办呢？只要换用bfs写法就好啦。这样就不会每次从头增广。</p>
+<p>时间复杂度 <span class="math inline">\(O(n^3)\)</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">char</span> In[<span class="number">1</span> &lt;&lt; <span class="number">20</span>], *ss = In, *tt = In;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> getchar() (ss == tt &amp;&amp; (tt = (ss = In) + fread(In, 1, 1 &lt;&lt; 20, stdin), ss == tt) ? EOF : *ss++)</span></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	ll x = <span class="number">0</span>, f = <span class="number">1</span>; <span class="type">char</span> ch = <span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">for</span>(; ch &lt; <span class="string">&#x27;0&#x27;</span> || ch &gt; <span class="string">&#x27;9&#x27;</span>; ch = <span class="built_in">getchar</span>()) <span class="keyword">if</span>(ch == <span class="string">&#x27;-&#x27;</span>) f = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span>(; ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>; ch = <span class="built_in">getchar</span>()) x = x * <span class="number">10</span> + <span class="built_in">int</span>(ch - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">return</span> x * f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAXN = <span class="number">505</span>;</span><br><span class="line"><span class="type">const</span> ll INF = <span class="number">0x3f3f3f3f3f3f3f3f</span>ll;</span><br><span class="line"><span class="type">int</span> n, m, vx[MAXN], vy[MAXN], px[MAXN], py[MAXN], pre[MAXN];</span><br><span class="line">ll e[MAXN][MAXN], lx[MAXN], ly[MAXN], slack[MAXN];</span><br><span class="line">queue&lt;<span class="type">int</span>&gt; que;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">aug</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(v) &#123;</span><br><span class="line">		<span class="type">int</span> t = px[pre[v]];</span><br><span class="line">		px[pre[v]] = v;</span><br><span class="line">		py[v] = pre[v];</span><br><span class="line">		v = t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(<span class="type">int</span> s)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) vx[i] = vy[i] = <span class="number">0</span>, slack[i] = INF;</span><br><span class="line">	que = <span class="built_in">queue</span>&lt;<span class="type">int</span>&gt;();</span><br><span class="line">	que.<span class="built_in">push</span>(s);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">while</span>(que.<span class="built_in">size</span>()) &#123;</span><br><span class="line">			<span class="type">int</span> u = que.<span class="built_in">front</span>(); que.<span class="built_in">pop</span>();</span><br><span class="line">			vx[u] = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> v = <span class="number">1</span>; v &lt;= n; v++) <span class="keyword">if</span>(!vy[v]) &#123;</span><br><span class="line">				<span class="keyword">if</span>(lx[u] + ly[v] - e[u][v] &lt; slack[v]) &#123;</span><br><span class="line">					slack[v] = lx[u] + ly[v] - e[u][v];</span><br><span class="line">					pre[v] = u;</span><br><span class="line">					<span class="keyword">if</span>(slack[v] == <span class="number">0</span>) &#123;</span><br><span class="line">						vy[v] = <span class="number">1</span>;</span><br><span class="line">						<span class="keyword">if</span>(!py[v]) &#123;<span class="built_in">aug</span>(v); <span class="keyword">return</span> ;&#125;</span><br><span class="line">						<span class="keyword">else</span> que.<span class="built_in">push</span>(py[v]);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		ll d = INF;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="keyword">if</span>(!vy[i]) d = <span class="built_in">min</span>(d, slack[i]);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(vx[i]) lx[i] -= d;</span><br><span class="line">			<span class="keyword">if</span>(vy[i]) ly[i] += d;</span><br><span class="line">			<span class="keyword">else</span> slack[i] -= d;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="keyword">if</span>(!vy[i]) &#123;</span><br><span class="line">			<span class="keyword">if</span>(slack[i] == <span class="number">0</span>) &#123;</span><br><span class="line">				vy[i] = <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">if</span>(!py[i]) &#123;<span class="built_in">aug</span>(i); <span class="keyword">return</span> ;&#125;</span><br><span class="line">				<span class="keyword">else</span> que.<span class="built_in">push</span>(py[i]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">KM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) lx[i] = -INF, ly[i] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) lx[i] = <span class="built_in">max</span>(lx[i], e[i][j]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">bfs</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	n = <span class="built_in">read</span>(); m = <span class="built_in">read</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j++) e[i][j] = -INF;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">		<span class="type">int</span> u = <span class="built_in">read</span>(), v = <span class="built_in">read</span>(); ll w = <span class="built_in">read</span>();</span><br><span class="line">		e[u][v] = <span class="built_in">max</span>(e[u][v], w);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">KM</span>();</span><br><span class="line">	ll ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) ans += lx[i] + ly[i];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, py[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/58a68c50/" title="二分图最大权匹配（KM 算法） 学习笔记">https://blog.rijuyuezhu.top/posts/58a68c50/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/XCPC/" rel="tag"># XCPC</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/a62e9f02/" rel="prev" title="问题求解（三） Open Topic 14 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 14 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/6a849f9c/" rel="next" title="问题求解（三） Open Topic 15 笔记">
+                  问题求解（三） Open Topic 15 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

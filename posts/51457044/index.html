@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：请调研并阐述面向点连通度或边连通度的门格尔定理的至少2种证明方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 4 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/51457044/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：请调研并阐述面向点连通度或边连通度的门格尔定理的至少2种证明方法。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/51457044/2.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/51457044/1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/51457044/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/51457044/4.png">
+<meta property="article:published_time" content="2023-09-25T09:21:41.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.583Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/51457044/2.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/51457044/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/51457044/","path":"posts/51457044/","title":"问题求解（三） Open Topic 4 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 4 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%A8%E6%A0%BC%E5%B0%94%E5%AE%9A%E7%90%86"><span class="nav-text">门格尔定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%BD%92%E7%BA%B3%E8%AF%81%E6%98%8E%E9%97%A8%E6%A0%BC%E5%B0%94%E5%AE%9A%E7%90%86%E7%82%B9%E7%89%88%E6%9C%AC1"><span class="nav-text">利用归纳证明门格尔定理（点版本）1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E5%AE%9A%E7%90%86%E7%9B%B4%E6%8E%A5%E8%AF%81%E6%98%8E"><span class="nav-text">用最大流最小割定理直接证明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E8%BE%B9%E7%89%88%E6%9C%AC"><span class="nav-text">证明边版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E7%82%B9%E7%89%88%E6%9C%AC"><span class="nav-text">证明点版本</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/51457044/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 4 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 4 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-09-25 17:21:41" itemprop="dateCreated datePublished" datetime="2023-09-25T17:21:41+08:00">2023-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：请调研并阐述面向点连通度或边连通度的门格尔定理的至少2种证明方法。</p>
+<span id="more"></span>
+<p><a href="4.pdf">Slide</a>.</p>
+<h1 id="门格尔定理">门格尔定理</h1>
+<p><strong>门格尔定理(顶点版本)</strong> 对于图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span> 和两个不相邻的顶点
+<span class="math inline">\(u, v\in V\)</span>，使 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 不连通至少需要从 <span
+class="math inline">\(G\)</span> 中删除的顶点数量（<span
+class="math inline">\(u\)</span>-<span class="math inline">\(v\)</span>
+最小点割集大小）等于 <span class="math inline">\(G\)</span>
+中两两无公共内顶点的 <span class="math inline">\(u\)</span>-<span
+class="math inline">\(v\)</span> 路的数量。</p>
+<p><strong>门格尔定理(边版本)</strong> 对于图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span> 和两个顶点 <span
+class="math inline">\(u, v\in V\)</span>，使 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 不连通至少需要从 <span
+class="math inline">\(G\)</span> 中删除的边数量（<span
+class="math inline">\(u\)</span>-<span class="math inline">\(v\)</span>
+最小边割集大小）等于 <span class="math inline">\(G\)</span>
+中两两无公共边的 <span class="math inline">\(u\)</span>-<span
+class="math inline">\(v\)</span> 路的数量。</p>
+<h1
+id="利用归纳证明门格尔定理点版本1">利用归纳证明门格尔定理（点版本）<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></h1>
+<p>对 <span class="math inline">\(m=\epsilon(G)\)</span>
+进行归纳。假设图 <span class="math inline">\(G\)</span> 有大小为 <span
+class="math inline">\(k\)</span> 的最小点割集 <span
+class="math inline">\(S\)</span>，显然有 <span
+class="math inline">\(u\)</span>-<span class="math inline">\(v\)</span>
+不交路的数量 <span class="math inline">\(\le k\)</span>。只需证明其等于
+<span class="math inline">\(k\)</span>。</p>
+<ul>
+<li>当 <span class="math inline">\(m=0\)</span>
+时，对于空图显然成立。</li>
+<li>如果对于 <span class="math inline">\(\epsilon(G)\le m-1\)</span>
+的图都成立，则对于 <span class="math inline">\(G\)</span> 满足 <span
+class="math inline">\(\epsilon(G)=m\)</span> 的图，我门证明上述命题。当
+<span class="math inline">\(k\le 1\)</span>，结论显然成立，只考虑 <span
+class="math inline">\(k\ge 2\)</span>。分为以下几种情况：</li>
+</ul>
+<ol type="1">
+<li>若存在 <span class="math inline">\(S\)</span> 且存在 <span
+class="math inline">\(x\in S\)</span> 使得 <span
+class="math inline">\(x\)</span> 与 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 均相邻，那么图 <span
+class="math inline">\(G- x\)</span> 有大小为 <span
+class="math inline">\(k-1\)</span> 的点割集 <span
+class="math inline">\(S\setminus \lbrace x\rbrace\)</span>，且 <span
+class="math inline">\(\epsilon(G-x)&lt;m\)</span>。由归纳假设，<span
+class="math inline">\(G-x\)</span> 有 <span
+class="math inline">\(k-1\)</span> 条 <span
+class="math inline">\(u\)</span>-<span class="math inline">\(v\)</span>
+不交路，则在 <span class="math inline">\(G\)</span> 中，加上 <span
+class="math inline">\(\langle u, x, v\rangle\)</span>，有 <span
+class="math inline">\(k\)</span> 条 <span
+class="math inline">\(u\)</span>-<span class="math inline">\(v\)</span>
+不交路。</li>
+</ol>
+<p><img src="2.png" /> 2. 若存在 <span
+class="math inline">\(S\)</span>，满足 <span
+class="math inline">\(S\)</span> 中既存在和 <span
+class="math inline">\(u\)</span> 不相邻的顶点 <span
+class="math inline">\(v&#39;\)</span>，也存在和 <span
+class="math inline">\(v\)</span> 不相邻的顶点 <span
+class="math inline">\(u\)</span>，那么如图，可以简单地拆成两个图并运用归纳假设。</p>
+<p><img src="1.png" /></p>
+<p>（图片来源<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>）</p>
+<ol start="3" type="1">
+<li>则剩下的情况是，对于<strong>所有</strong>的 <span
+class="math inline">\(S\)</span>，要么全部顶点只和 <span
+class="math inline">\(u\)</span> 相邻不和 <span
+class="math inline">\(v\)</span> 相邻，要么全部顶点只和 <span
+class="math inline">\(v\)</span> 相邻不和 <span
+class="math inline">\(u\)</span> 相邻。不妨设是第一种。设 <span
+class="math inline">\(u\)</span> 到 <span
+class="math inline">\(v\)</span> 的最短路径是 <span
+class="math inline">\(\langle u, x, y, \cdots, v\rangle\)</span>，记
+<span class="math inline">\(e=(x, y)\)</span>。设 <span
+class="math inline">\(G&#39;=G-e\)</span> 的最小点割集 <span
+class="math inline">\(Z\)</span>，显然 <span
+class="math inline">\(k-1\le |Z|\le k\)</span>。只需证明 <span
+class="math inline">\(|Z|=k\)</span> 并利用归纳假设（因为 <span
+class="math inline">\(\epsilon(G&#39;)&lt;m\)</span>）即可。用反证法，假设
+<span class="math inline">\(|Z|=k-1\)</span>，则 <span
+class="math inline">\(Z\cup\lbrace x\rbrace\)</span> 和 <span
+class="math inline">\(Z\cup\lbrace y\rbrace\)</span> 均是 <span
+class="math inline">\(G\)</span> 的两个最小分割集，于是均与 <span
+class="math inline">\(u\)</span> 相邻，与最短路矛盾。故 <span
+class="math inline">\(|Z|=k\)</span>，利用归纳假设，<span
+class="math inline">\(G-e\)</span> 有 <span
+class="math inline">\(k\)</span> 条 <span
+class="math inline">\(u\)</span>-<span class="math inline">\(v\)</span>
+不交路，从而 <span class="math inline">\(G\)</span> 也有 <span
+class="math inline">\(k\)</span> 条，证毕。</li>
+</ol>
+<p><img src="3.png" /></p>
+<h1 id="用最大流最小割定理直接证明">用最大流最小割定理直接证明</h1>
+<h2 id="证明边版本">证明边版本</h2>
+<p>如何建模？</p>
+<ul>
+<li><span class="math inline">\(u\)</span> 作为源点，<span
+class="math inline">\(v\)</span>
+作为汇点，把所有无向边当作两条方向相反的弧，容量为 1。</li>
+<li>一条 <span class="math inline">\(u\)</span>-<span
+class="math inline">\(v\)</span> 路对应 <span
+class="math inline">\(1\)</span> 流量，因为边的容量为 <span
+class="math inline">\(1\)</span>，保证了边不重复。</li>
+<li>最小割是显然的。</li>
+</ul>
+<h2 id="证明点版本">证明点版本</h2>
+<p>如何建模？</p>
+<ul>
+<li><span class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 仍然作为源汇点，把其他每个点 <span
+class="math inline">\(x\)</span> 拆成入点 <span
+class="math inline">\(x_{in}\)</span> 和出点 <span
+class="math inline">\(x_{out}\)</span> 两个点。对于原图的有向边 <span
+class="math inline">\((x, y)\)</span>,在 <span
+class="math inline">\(x_{out}\)</span> 和 <span
+class="math inline">\(y_{in}\)</span> 间连有向边，容量为 <span
+class="math inline">\(\infty\)</span>；在 <span
+class="math inline">\(x_{in}\)</span> 和 <span
+class="math inline">\(x_{out}\)</span> 之间连容量为 <span
+class="math inline">\(1\)</span> 的边。<span
+class="math inline">\(u\)</span> 则作为 <span
+class="math inline">\(u_{out}\)</span>、<span
+class="math inline">\(v\)</span> 作为 <span
+class="math inline">\(v_{in}\)</span> 建图。</li>
+<li>一条 <span class="math inline">\(u\)</span>-<span
+class="math inline">\(v\)</span> 路对应 <span
+class="math inline">\(1\)</span> 流量，因为点内部的边容量为 <span
+class="math inline">\(1\)</span>，保证了点不重复。</li>
+<li>最小割：只能在点的入点和出点之间割开，相当于把点割去。</li>
+</ul>
+<p><img src="4.png" /></p>
+<p>（图片来源<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>）</p>
+<!-- @book{chartrand2013first,
+  title={A first course in graph theory},
+  author={Chartrand, Gary and Zhang, Ping},
+  year={2013},
+  publisher={Courier Corporation}
+} -->
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Chartrand, G., &amp; Zhang, P. (2013). A first course in
+graph theory. Courier Corporation.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Chartrand, G., &amp; Zhang, P. (2013). A first course in
+graph theory. Courier Corporation.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li
+id="fn3"><p>https://www.cs.princeton.edu/~wayne/cs423/lectures/max-flow-applications<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/51457044/" title="问题求解（三） Open Topic 4 笔记">https://blog.rijuyuezhu.top/posts/51457044/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/5b80795d/" rel="prev" title="问题求解（三） Open Topic 3 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 3 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/13607739/" rel="next" title="问题求解（三） Open Topic 6 笔记">
+                  问题求解（三） Open Topic 6 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

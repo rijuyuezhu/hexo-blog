@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="A memory leak issue which might be confusing for students struggling with ICS Project (aka, PA) of Nanjing University.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ICS PA memory leak issue due to lib readline bug">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/972c44eb/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="A memory leak issue which might be confusing for students struggling with ICS Project (aka, PA) of Nanjing University.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-22T11:56:43.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.587Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/972c44eb/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/972c44eb/","path":"posts/972c44eb/","title":"ICS PA memory leak issue due to lib readline bug"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ICS PA memory leak issue due to lib readline bug | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#notification"><span class="nav-text">Notification</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bug-summary"><span class="nav-text">Bug Summary</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-environment"><span class="nav-text">The environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reproduce-the-bug"><span class="nav-text">Reproduce the bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#research-the-source-repo-of-lib-readline"><span class="nav-text">Research the source
+repo of lib readline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-the-bugbonus"><span class="nav-text">Find the bug(Bonus)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#acknowledgement"><span class="nav-text">Acknowledgement</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/972c44eb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ICS PA memory leak issue due to lib readline bug | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ICS PA memory leak issue due to lib readline bug
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-22 19:56:43" itemprop="dateCreated datePublished" datetime="2023-10-22T19:56:43+08:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>A memory leak issue which might be confusing for students struggling
+with ICS Project (aka, <a
+target="_blank" rel="noopener" href="https://nju-projectn.github.io/ics-pa-gitbook/">PA</a>) of Nanjing
+University.</p>
+<span id="more"></span>
+<h1 id="notification">Notification</h1>
+<p>The issue mentioned in this article has been discovered by the
+developer community for a while(And probabily been fixed so far). But
+for freshmen in this field, such as students taking NJU ICS course, this
+is not well-known and may cause serious confusion. <a
+target="_blank" rel="noopener" href="https://github.com/top-mind"><strong>Geng
+Tiancheng(top-mind)</strong></a> discovered this during his implementing
+of PA(<a target="_blank" rel="noopener" href="https://github.com/NJU-ProjectN/nemu/issues/77">GitHub
+issue page</a>). And he delegated me, <a
+target="_blank" rel="noopener" href="https://github.com/rijuyuezhu"><strong>Wenrui
+Huang(rijuyuezhu)</strong></a>, to write a blog recording the issue, in
+order to help students who meet the same situation.</p>
+<h1 id="bug-summary">Bug Summary</h1>
+<h2 id="the-environment">The environment</h2>
+<p>All the tests are based on the environment listed below.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux &lt;hostname&gt; 6.2.0-34-generic #34~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep  7 13:12:03 UTC 2 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line"></span><br><span class="line">$ gcc -v</span><br><span class="line">Using built-in specs.</span><br><span class="line">COLLECT_GCC=/usr/bin/gcc</span><br><span class="line">COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper</span><br><span class="line">OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa</span><br><span class="line">OFFLOAD_TARGET_DEFAULT=1</span><br><span class="line">Target: x86_64-linux-gnu</span><br><span class="line">Configured with: ../src/configure -v --with-pkgversion=&#x27;Ubuntu 11.4.0-1ubuntu1~22.04&#x27; --with-bugurl=file:///usr/share/doc/gcc-11/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-11 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-11-XeT9lY/gcc-11-11.4.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-11-XeT9lY/gcc-11-11.4.0/debian/tmp-gcn/usr --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2</span><br><span class="line">Thread model: posix</span><br><span class="line">Supported LTO compression algorithms: zlib zstd</span><br><span class="line">gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)</span><br><span class="line"></span><br><span class="line">$ apt show libreadline8</span><br><span class="line">Package: libreadline8</span><br><span class="line">Version: 8.1.2-1</span><br><span class="line">Priority: important</span><br><span class="line">Section: libs</span><br><span class="line">Source: readline</span><br><span class="line">Origin: Ubuntu</span><br><span class="line">Maintainer: Ubuntu Developers &lt;ubuntu-devel-discuss@lists.ubuntu.com&gt;</span><br><span class="line">Original-Maintainer: Matthias Klose &lt;doko@debian.org&gt;</span><br><span class="line">Bugs: https://bugs.launchpad.net/ubuntu/+filebug</span><br><span class="line">Installed-Size: 472 kB</span><br><span class="line">Depends: readline-common, libc6 (&gt;= 2.33), libtinfo6 (&gt;= 6)</span><br><span class="line">Task: minimal, server-minimal</span><br><span class="line">Download-Size: 153 kB</span><br><span class="line">APT-Manual-Installed: no</span><br><span class="line">APT-Sources: https://mirror.nju.edu.cn/ubuntu jammy/main amd64 Packages</span><br><span class="line">Description: GNU readline and history libraries, run-time libraries</span><br><span class="line"> The GNU readline library aids in the consistency of user interface</span><br><span class="line"> across discrete programs that need to provide a command line</span><br><span class="line"> interface.</span><br><span class="line"> .</span><br><span class="line"> The GNU history library provides a consistent user interface for</span><br><span class="line"> recalling lines of previously typed input.</span><br></pre></td></tr></table></figure>
+<h2 id="overview">Overview</h2>
+<p>When following the instruction of PA gitbook: <span
+style="color: red">PA1 ~ 监视点 ~ sanitizer - 一种底层的assert</span>,
+(<a
+target="_blank" rel="noopener" href="https://nju-projectn.github.io/ics-pa-gitbook/ics2023/1.6.html#调试工具与原理">find
+the page in ICS2023</a>), students turn on the functionality of address
+sanitizer. This tools help to provide basic examinations of array access
+out of bounds as well as memory leaks.</p>
+<p>However, though this tool helps a lot dealing with memory leak issues
+caused by the students(for example, non-matching <code>malloc</code> and
+<code>free</code>), some of the students will meet strange memory leak
+fault that <strong>indicating there is an issue in the lib
+readline</strong>, like the message below:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">=================================================================</span><br><span class="line">==2277358==ERROR: LeakSanitizer: detected memory leaks</span><br><span class="line"></span><br><span class="line">Direct leak of 32 byte(s) in 1 object(s) allocated from:</span><br><span class="line">    #0 0x7f9b452b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145</span><br><span class="line">    #1 0x7f9b45c5dbac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)</span><br><span class="line"></span><br><span class="line">SUMMARY: AddressSanitizer: 32 byte(s) leaked in 1 allocation(s).</span><br><span class="line">make: *** [/&lt;path&gt;/ics2023/nemu/scripts/native.mk:38: run] Error 1</span><br></pre></td></tr></table></figure>
+<p>So what happened? In fact, <strong>there is indeed a bug in lib GNU
+readline</strong>.</p>
+<h2 id="reproduce-the-bug">Reproduce the bug</h2>
+<p>Compile your nemu, then <code>make run</code>, and input a
+meaningless string, like: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">(nemu) abc&lt;CR&gt;</span><br><span class="line">Unknown command &#x27;abc&#x27;.</span><br></pre></td></tr></table></figure> where &lt;CR&gt; means the enter
+key.</p>
+<p>After that, input another meaningless and <strong>do not press
+&lt;CR&gt;</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">(nemu) abc&lt;CR&gt;</span><br><span class="line">Unknown command &#x27;abc&#x27;.</span><br><span class="line">(nemu) xyz</span><br></pre></td></tr></table></figure>
+<p>And press <strong>up arrow</strong> instead. This recovers the last
+history and the string that show now becomes</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">(nemu) abc&lt;CR&gt;</span><br><span class="line">Unknown command &#x27;abc&#x27;.</span><br><span class="line">(nemu) abc</span><br></pre></td></tr></table></figure>
+<p>Simply enter &lt;CR&gt;, then input <code>q</code> and enter
+&lt;CR&gt; again: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">(nemu) abc</span><br><span class="line">Unknown command &#x27;abc&#x27;.</span><br><span class="line">(nemu) abc</span><br><span class="line">Unknown command &#x27;abc&#x27;.</span><br><span class="line">(nemu) q</span><br><span class="line">=================================================================</span><br><span class="line">==2286531==ERROR: LeakSanitizer: detected memory leaks</span><br><span class="line"></span><br><span class="line">Direct leak of 32 byte(s) in 1 object(s) allocated from:</span><br><span class="line">    #0 0x7f73104b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145</span><br><span class="line">    #1 0x7f7310f5fbac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)</span><br><span class="line"></span><br><span class="line">Indirect leak of 402 byte(s) in 21 object(s) allocated from:</span><br><span class="line">    #0 0x7f73104b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145</span><br><span class="line">    #1 0x7f7310f5fbac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)</span><br><span class="line"></span><br><span class="line">SUMMARY: AddressSanitizer: 434 byte(s) leaked in 22 allocation(s).</span><br><span class="line">make: *** [/&lt;path&gt;/ics2023/nemu/scripts/native.mk:38: run] Error 1</span><br></pre></td></tr></table></figure></p>
+<p>We learn that this issue is related to the history functionality of
+<code>readline</code> lib. However, because the shared library is not
+compiled with flag <code>-g</code>, and gdb also cannot find the
+position of memory leak, the debug process may be hard, even though we
+know it is the library readline to blame.</p>
+<h2 id="research-the-source-repo-of-lib-readline">Research the source
+repo of lib readline</h2>
+<p>It is great that readline is open-source, and we can easily obtain
+the source code of the library. Links are as follows:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://savannah.gnu.org/projects/readline/">The GNU
+Readline library - Summary</a></li>
+<li><a target="_blank" rel="noopener" href="https://savannah.gnu.org/git/?group=readline">The GNU
+Readline library - Git Repositories</a></li>
+</ul>
+<p>Clone the source code, and we enter the project folder to have a
+look:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> readline</span><br><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">aclocal.m4     compat.c       display.c       history.h      m4           parens.c        readline.c      rlshell.h     shlib       undo.c</span><br><span class="line">ansi_stdlib.h  complete.c     doc             history.pc.in  macro.c      parse-colors.c  readline.h      rlstdc.h      signals.c   USAGE</span><br><span class="line">bind.c         config.h       emacs_keymap.c  histsearch.c   Makefile     parse-colors.h  readline.pc     rltty.c       stamp-h     util.c</span><br><span class="line">callback.c     config.h.in    examples        input.c        Makefile.<span class="keyword">in</span>  patchlevel      readline.pc.in  rltty.h       support     vi_keymap.c</span><br><span class="line">CHANGELOG      config.log     funmap.c        INSTALL        MANIFEST     posixdir.h      README          rltypedefs.h  tcap.h      vi_mode.c</span><br><span class="line">CHANGES        config.status  histexpand.c    isearch.c      mbutil.c     posixjmp.h      rlconf.h        rlwinsize.h   terminal.c  xfree.c</span><br><span class="line">chardefs.h     configure      histfile.c      keymaps.c      misc.c       posixselect.h   rldefs.h        savestring.c  text.c      xmalloc.c</span><br><span class="line">colors.c       configure.ac   histlib.h       keymaps.h      NEWS         posixstat.h     rlmbutil.h      search.c      tilde.c     xmalloc.h</span><br><span class="line">colors.h       COPYING        history.c       kill.c         nls.c        posixtime.h     rlprivate.h     shell.c       tilde.h</span><br></pre></td></tr></table></figure>
+<p>and we can see git log:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git log --oneline --graph</span><br><span class="line">* 7274faa (HEAD -&gt; master, origin/master, origin/HEAD) Readline-8.2 patch 1: fix crash when readline is started with an invalid locale specification</span><br><span class="line">* f7a382f (tag: readline-8.2) readline-8.2 distribution sources and documentation</span><br><span class="line">* 5263c0d Readline-8.1 patch 2: fix redisplay of some characters &gt; 128 in certain single-byte encodings</span><br><span class="line">* 9ba3434 Readline-8.1 patch 1: fix version comparisons in startup files</span><br><span class="line">* cf3c762 (tag: readline-8.1) Readline-8.1 distribution sources and documentation</span><br><span class="line">* c5ad6be problems restoring the history file are not signaled correctly to the calling application</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Some developer reports that the bug is fixed in the version
+<code>readline-8.2</code>, and let us verify that. Switch to the
+<code>readline-8.2</code> tag and compile the lib (according to
+<code>README</code>)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout readline-8.2</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<p>The readline lib provides some examples, and we can use that for our
+bug reproduction.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> examples</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<p>We can use, for example, <code>rltest</code> for test. But to detect
+memory leak, we need some tools. <a
+target="_blank" rel="noopener" href="https://valgrind.org/">Valgrind</a> is a very powerful tool for
+such a need. Run <code>rltest</code> with valgrind:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ valgrind ./rltest</span><br><span class="line">==2341346== Memcheck, a memory error detector</span><br><span class="line">==2341346== Copyright (C) 2002-2022, and GNU GPL&#x27;d, by Julian Seward et al.</span><br><span class="line">==2341346== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info</span><br><span class="line">==2341346== Command: ./rltest</span><br><span class="line">==2341346==</span><br><span class="line">readline$</span><br></pre></td></tr></table></figure>
+<p>Remember what to do to reproduce the bug? First input random string
+and enter &lt;CR&gt;, then input random string and enter up arrow, and
+finally enter &lt;CR&gt; and quit the program(We can use Ctrl-C
+here):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ valgrind ./rltest</span><br><span class="line">==2341346== Memcheck, a memory error detector</span><br><span class="line">==2341346== Copyright (C) 2002-2022, and GNU GPL&#x27;d, by Julian Seward et al.</span><br><span class="line">==2341346== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info</span><br><span class="line">==2341346== Command: ./rltest</span><br><span class="line">==2341346==</span><br><span class="line">readline$ abc</span><br><span class="line">abc</span><br><span class="line">readline$ abc</span><br><span class="line">abc  # Note: this string is initially not abc, but turns to abc after entering up arrow</span><br><span class="line">^C</span><br><span class="line">==2341346==</span><br><span class="line">==2341346== &lt;Some other info&gt;</span><br><span class="line">==2341346==</span><br><span class="line">==2341346== LEAK SUMMARY:</span><br><span class="line">==2341346==    definitely lost: 0 bytes in 0 blocks</span><br><span class="line">==2341346==    indirectly lost: 0 bytes in 0 blocks</span><br><span class="line">==2341346==      possibly lost: 0 bytes in 0 blocks</span><br><span class="line">==2341346==    still reachable: 222,888 bytes in 271 blocks</span><br><span class="line">==2341346==         suppressed: 0 bytes in 0 blocks</span><br><span class="line">==2341346== Rerun with --leak-check=full to see details of leaked memory</span><br><span class="line">==2341346==</span><br><span class="line">==2341346== For lists of detected and suppressed errors, rerun with: -s</span><br><span class="line">==2341346== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)</span><br></pre></td></tr></table></figure>
+<p>We find that the memory lost is zero, so the bug is fixed in
+<code>readline-8.2</code>.</p>
+<p>And we checkout the former version:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout HEAD~</span><br><span class="line">Previous HEAD position was f7a382f readline-8.2 distribution sources and documentation</span><br><span class="line">HEAD is now at 5263c0d Readline-8.1 patch 2: fix redisplay of some characters &gt; 128 in certain single-byte encodings</span><br></pre></td></tr></table></figure>
+<p>And do the same test as above, we get info like:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">==2355120== LEAK SUMMARY:</span><br><span class="line">==2355120==    definitely lost: 32 bytes in 1 blocks</span><br><span class="line">==2355120==    indirectly lost: 66 bytes in 3 blocks</span><br><span class="line">==2355120==      possibly lost: 0 bytes in 0 blocks</span><br><span class="line">==2355120==    still reachable: 198,179 bytes in 249 blocks</span><br><span class="line">==2355120==         suppressed: 0 bytes in 0 blocks</span><br><span class="line">==2355120== Rerun with --leak-check=full to see details of leaked memory</span><br><span class="line">==2355120==</span><br><span class="line">==2355120== For lists of detected and suppressed errors, rerun with: -s</span><br><span class="line">==2355120== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)</span><br></pre></td></tr></table></figure>
+<p>We find that in this version, there exists memory leak issues.</p>
+<h2 id="find-the-bugbonus">Find the bug(Bonus)</h2>
+<p>Why does this problem happen? Use powerful <code>git diff</code> and
+gdb(you can add flags you want in the project <code>Makefile</code>) to
+find the bug!</p>
+<p>You can follow the instruction of README to install the latest
+version of <code>readline</code> to eliminate the bug, or do not fix it
+and avoid such a usage. I prefer the latter to keep the stablity of
+package dependencies.</p>
+<h1 id="acknowledgement">Acknowledgement</h1>
+<p>Thanks <a target="_blank" rel="noopener" href="https://github.com/top-mind"><strong>Geng
+Tiancheng(top-mind)</strong></a> for discovering the bug and telling it
+to me at the first time, as well as delegating me to complete such a
+blog.</p>
+<p>Thanks <a target="_blank" rel="noopener" href="https://github.com/sashimi-yzh"><strong>Zihao
+Yu(sashimi-yzh)</strong></a> for providing the awesome PA
+experiment.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/972c44eb/" title="ICS PA memory leak issue due to lib readline bug">https://blog.rijuyuezhu.top/posts/972c44eb/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/dfca77a7/" rel="prev" title="问题求解（三） Open Topic 7 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 7 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/6ea650b/" rel="next" title="问题求解（三） Open Topic 8 笔记">
+                  问题求解（三） Open Topic 8 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

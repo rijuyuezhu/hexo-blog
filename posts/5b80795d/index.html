@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：请调研教材中未介绍过的至少2种哈密尔顿路或哈密尔顿圈的存在性的必要条件或充分条件，讨论条件的适用场景，并阐述证明过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 3 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/5b80795d/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：请调研教材中未介绍过的至少2种哈密尔顿路或哈密尔顿圈的存在性的必要条件或充分条件，讨论条件的适用场景，并阐述证明过程。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/2.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/4.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/5.png">
+<meta property="article:published_time" content="2023-09-19T02:52:28.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.580Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/5b80795d/1.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/5b80795d/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/5b80795d/","path":"posts/5b80795d/","title":"问题求解（三） Open Topic 3 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 3 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%88%E5%AF%86%E5%B0%94%E9%A1%BF%E5%9B%BE%E7%9A%84%E5%85%85%E5%88%86%E4%B8%94%E6%88%96%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-text">哈密尔顿图的充分且&#x2F;或必要条件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%93%88%E5%AF%86%E5%B0%94%E9%A1%BF%E5%9B%BE%E4%B8%8E%E7%8B%AC%E7%AB%8B%E9%9B%86"><span class="nav-text">一、哈密尔顿图与独立集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%93%88%E5%AF%86%E5%B0%94%E9%A1%BF%E5%9B%BE%E7%9A%84%E4%B8%80%E4%B8%AA%E5%85%85%E5%88%86%E6%9D%A1%E4%BB%B6"><span class="nav-text">二、哈密尔顿图的一个充分条件</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/5b80795d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 3 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 3 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-09-19 10:52:28" itemprop="dateCreated datePublished" datetime="2023-09-19T10:52:28+08:00">2023-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：请调研教材中未介绍过的至少2种哈密尔顿路或哈密尔顿圈的存在性的必要条件或充分条件，讨论条件的适用场景，并阐述证明过程。</p>
+<span id="more"></span>
+<p><a href="3.pdf">slide</a></p>
+<h1 id="哈密尔顿图的充分且或必要条件">哈密尔顿图的充分且/或必要条件</h1>
+<h2 id="一哈密尔顿图与独立集">一、哈密尔顿图与独立集</h2>
+<p>在 Anatoly D.Plotnikov 的一篇论文<a href="#fn1" class="footnote-ref"
+id="fnref1"
+role="doc-noteref"><sup>1</sup></a>中给出了判断一个图是否是哈密尔顿图的一个充要条件。他提出了利用图的独立集的性质来判断哈密尔顿图。</p>
+<p><strong>Def 1.(<span
+class="math inline">\(k\)</span>-连通图)</strong> 对于 <span
+class="math inline">\(G=\langle V, E\rangle\)</span>，若 <span
+class="math inline">\(|V|\ge k+1\)</span> 且对任意 <span
+class="math inline">\(V&#39;\subseteq V\)</span> 且 <span
+class="math inline">\(|V&#39;|\le k-1\)</span>，<span
+class="math inline">\(G-V&#39;\)</span> 仍连通，则称 <span
+class="math inline">\(G\)</span> 是 <span
+class="math inline">\(k\)</span>-连通图。</p>
+<ul>
+<li><span
+class="math inline">\(1\)</span>-连通图：即非平凡的连通图。</li>
+<li><span
+class="math inline">\(2\)</span>-连通图：不含割点的连通图。</li>
+</ul>
+<p><strong>Theorem 1.</strong> 图 <span class="math inline">\(G\)</span>
+是哈密尔顿图的必要条件是 <span class="math inline">\(G\)</span> 是 <span
+class="math inline">\(2\)</span>-连通图。</p>
+<p>但这不是充要条件，比如 <span class="math inline">\(\Theta\)</span>
+图。（<span class="math inline">\(\Theta\)</span> 图：两个度数至少为
+<span class="math inline">\(3\)</span>
+的点，之间通过至少三条路径相连，每条路径长度至少为 <span
+class="math inline">\(2\)</span>。若每条路径长度恰为 <span
+class="math inline">\(2\)</span>，则称为简化 <span
+class="math inline">\(\Theta\)</span> 图）。</p>
+<p><img src="1.png" /></p>
+<p><strong>Theorem 2.</strong> 一个 <span
+class="math inline">\(2\)</span>-连通图是非哈密尔顿图的必要条件是有
+<span class="math inline">\(\Theta\)</span> 图作为它的子图。</p>
+<blockquote>
+<p>证明：设 <span class="math inline">\(G\)</span> 是一个 <span
+class="math inline">\(2\)</span>-连通图且不是哈密尔顿图，则 <span
+class="math inline">\(G\)</span> 中最长圈 <span
+class="math inline">\(L\)</span> 的长度小于 <span
+class="math inline">\(\upsilon(G)\)</span>，由于 <span
+class="math inline">\(G\)</span> 连通，故存在 <span
+class="math inline">\((u, v)\in E\)</span> 满足 <span
+class="math inline">\(u\in L\)</span> 且 <span
+class="math inline">\(v\in L\)</span>。设 <span
+class="math inline">\(u&#39;\)</span> 和 <span
+class="math inline">\(u&#39;&#39;\)</span> 是 <span
+class="math inline">\(L\)</span> 上与 <span
+class="math inline">\(u\)</span> 相邻的两点，容易知道 <span
+class="math inline">\(u&#39;\)</span> 和 <span
+class="math inline">\(u&#39;&#39;\)</span> 与 <span
+class="math inline">\(v\)</span> 之间均没有边相邻（否则可以把 <span
+class="math inline">\(v\)</span> 放进去获得一个更大的圈）。由于 <span
+class="math inline">\(G\)</span> 双连通，删去 <span
+class="math inline">\(G\)</span> 后 <span
+class="math inline">\(v\)</span> 也应该与 <span
+class="math inline">\(L\)</span> 上其他点连通，故存在 <span
+class="math inline">\(w\in L\)</span> 是 <span
+class="math inline">\(v\)</span> 到 <span
+class="math inline">\(L\)</span> 上某一条路径的第一个在 <span
+class="math inline">\(L\)</span> 上的点，则如图，已然形成 <span
+class="math inline">\(\Theta\)</span> 图。</p>
+</blockquote>
+<p><img src="2.png" /></p>
+<p><strong>Theorem 3.</strong> 任何是 <span
+class="math inline">\(2\)</span>-连通图的非哈密尔顿图都可以收缩成 <span
+class="math inline">\(\Theta\)</span> 图（进一步可以收缩为简化 <span
+class="math inline">\(\Theta\)</span> 图）<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>证明略，见原论文。</p>
+<p><strong>Def 2.</strong> 图 <span class="math inline">\(G\)</span>
+的独立集是点集 <span class="math inline">\(X\subseteq V\)</span> 满足
+<span class="math inline">\(G[X]\)</span> 是空图。称点集 <span
+class="math inline">\(\mathcal S(X)\subseteq V\)</span> 是独立集 <span
+class="math inline">\(X\)</span> 的一个分割（seperating <span
+class="math inline">\(X\)</span>），当且仅当 <span
+class="math inline">\(\mathcal S(X)\cap X=\varnothing\)</span> 且在
+<span class="math inline">\(G-\mathcal S(X)\)</span> 中 <span
+class="math inline">\(X\)</span> 中任意两点不连通。</p>
+<p><img src="3.png" /></p>
+<p><strong>Theorem 4.</strong> 图 <span class="math inline">\(G\)</span>
+是哈密尔顿图的充要条件是对于 <span class="math inline">\(G\)</span>
+任意的独立集 <span class="math inline">\(X\)</span>，对其任何一个分割
+<span class="math inline">\(\mathcal S(X)\)</span> 都有 <span
+class="math inline">\(|X|\le | \mathcal S(X)|\)</span>。</p>
+<blockquote>
+<p>证明：</p>
+<p><strong>必要性</strong>，任取一个 <span
+class="math inline">\(G\)</span> 的独立集 <span
+class="math inline">\(X\)</span>，设它的<strong>最小</strong>分割是
+<span class="math inline">\(\hat{\mathcal S}(X)\)</span>。用反证法，设
+<span class="math inline">\(|X|&gt; |\mathcal
+S(X)|\)</span>。在哈密尔顿圈中看这些点：</p>
+</blockquote>
+<p><img src="4.png" /></p>
+<blockquote>
+<p>由于每个点都在圈上，故 <span class="math inline">\(X\)</span>
+均在圈上。为了把圈上相邻的 <span class="math inline">\(X\)</span>
+点分开，在每两个 <span class="math inline">\(X\)</span>
+点之间必须插入至少一个 <span class="math inline">\(\mathcal
+S(X)\)</span> 点，故 <span class="math inline">\(|\mathcal
+S(X)|\)</span> 至少需要 <span class="math inline">\(\ge
+|X|\)</span>，与假设矛盾。必要性成立。</p>
+<p><strong>充分性</strong>，若对 <span class="math inline">\(G\)</span>
+的任意独立集 <span class="math inline">\(X\)</span> 及其任何一个分割
+<span class="math inline">\(\mathcal S(X)\)</span> 都有 <span
+class="math inline">\(|X|\le |\mathcal S(X)|\)</span>，假设 <span
+class="math inline">\(G\)</span> 不是哈密尔顿图。分以下三种情况：</p>
+<ol type="1">
+<li>若 <span class="math inline">\(X\)</span>
+不连通，则在两个连通分支中选择两个 <span
+class="math inline">\(X\)</span>，而 <span
+class="math inline">\(\mathcal S(X)\)</span> 可以为空，则 <span
+class="math inline">\(2=|X|\le |\mathcal
+S(X)|=0\)</span>，不满足前提条件。</li>
+<li>若 <span class="math inline">\(X\)</span> 连通但有割点 <span
+class="math inline">\(v\)</span>，则在 <span
+class="math inline">\(G-v\)</span> 的两个连通分支中选择两个 <span
+class="math inline">\(X\)</span>，选择 <span
+class="math inline">\(\mathcal S(X)=\lbrace v\rbrace\)</span>，则 <span
+class="math inline">\(2=|X|\le |\mathcal
+S(X)|=1\)</span>，不满足前提条件。</li>
+<li>则 <span class="math inline">\(X\)</span> 是 <span
+class="math inline">\(2\)</span>-连通图且不是哈密尔顿图，则 <span
+class="math inline">\(X\)</span> 必然可以归约到 <span
+class="math inline">\(\Theta\)</span> 图（进而可以归约到简化 <span
+class="math inline">\(\Theta\)</span> 图），而在简化 <span
+class="math inline">\(\Theta\)</span> 图中可以如图选择 <span
+class="math inline">\(|X|=3\)</span> 但 <span
+class="math inline">\(|\mathcal
+S(X)|=2\)</span>，同样可以对应到到原图中，与假设矛盾。</li>
+</ol>
+</blockquote>
+<p><img src="3.png" /></p>
+<blockquote>
+<p>综上，充分性成立。</p>
+</blockquote>
+<h2 id="二哈密尔顿图的一个充分条件">二、哈密尔顿图的一个充分条件</h2>
+<p>在 M.Sohel Rahman 和 M.Kaykobad 的一篇论文<a href="#fn3"
+class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>中，提到了如下结论：</p>
+<p>用 <span class="math inline">\(d_G(u)\)</span> 表示在图 <span
+class="math inline">\(G\)</span> 中 <span
+class="math inline">\(u\)</span> 的度数。</p>
+<p><strong>Theorem 5.</strong> 若 <span class="math inline">\(G=\langle
+V, E\rangle\)</span> 是一个 <span class="math inline">\(n\)</span>
+阶连通图，<span class="math inline">\(P\)</span> 是图中的最长路，长度为
+<span class="math inline">\(k\)</span>，端点为 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span>。用 <span
+class="math inline">\(\delta(u, v)\)</span> 表示 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 之间的距离。则：</p>
+<ol type="1">
+<li>若 <span class="math inline">\(\delta(u, v)=1\)</span>，则 <span
+class="math inline">\(P\)</span> 是一条在哈密尔顿圈中的哈密尔顿路；</li>
+<li>若 <span class="math inline">\(\delta(u, v)\ge 3\)</span>，则 <span
+class="math inline">\(d_P(u)+d_P(v)\le k-\delta(u, v)+2\)</span>；</li>
+<li>若 <span class="math inline">\(\delta(u, v)=2\)</span>，则要么 <span
+class="math inline">\(d_P(u)+d_P(v)\le k\)</span>，要么 <span
+class="math inline">\(P\)</span> 是一条在哈密尔顿圈中的哈密尔顿路。</li>
+</ol>
+<p>接下来来证明 <strong>Theorem 5.</strong>。先证明一个引理，以下指代
+<span class="math inline">\(G\)</span> 和 <span
+class="math inline">\(P\)</span> 都是在 <strong>Theorem 5.</strong>
+的基础上。</p>
+<p><strong>Lemma 1.</strong> 若 <span class="math inline">\(P\)</span>
+被包含在某个圈 <span class="math inline">\(C\)</span> 内，则 <span
+class="math inline">\(P\)</span> 是一条哈密尔顿路，<span
+class="math inline">\(G\)</span> 是哈密尔顿图。</p>
+<blockquote>
+<p>证明：首先，易知 <span class="math inline">\(V[P]=V[C]\)</span>，否则
+<span class="math inline">\(P\)</span> 显然可以变得更长。设 <span
+class="math inline">\(P=\langle u=u_0, u_1, u_2, \cdots,
+u_k=v\rangle\)</span>，则 <span class="math inline">\(C=\langle u=u_0,
+u_1, u_2, \cdots, u_k, u_0=u\rangle\)</span>，假设 <span
+class="math inline">\(P\)</span> 不为哈密尔顿路，则 <span
+class="math inline">\(k&lt;n-1\)</span>，由于 <span
+class="math inline">\(G\)</span> 是连通图，存在 <span
+class="math inline">\((x, y)\in E\)</span> 满足 <span
+class="math inline">\(x\in V[P]\)</span> 且 <span
+class="math inline">\(y\in V[G-P]\)</span>，设 <span
+class="math inline">\(x=u_i\)</span>，则有一条长度为 <span
+class="math inline">\(k+1\)</span> 的路径 <span
+class="math inline">\(P&#39;=\langle y, x=u_i, u_{i+1}, \cdots, u_k,
+u_0, \cdots, u_{i-1}\rangle\)</span>，矛盾。故 <span
+class="math inline">\(P\)</span> 是哈密尔顿路，<span
+class="math inline">\(C\)</span> 是哈密尔顿圈，<span
+class="math inline">\(G\)</span> 是哈密尔顿图。</p>
+</blockquote>
+<p><strong>Theorem 5.</strong></p>
+<blockquote>
+<p>证明：</p>
+<ol type="1">
+<li>当 <span class="math inline">\(\delta(u, v)=1\)</span>，则 <span
+class="math inline">\(C=P+(u, v)\)</span> 是一个包含 <span
+class="math inline">\(P\)</span> 的圈，由 <strong>Lemma
+1.</strong>得证。</li>
+<li>当 <span class="math inline">\(\delta(u, v)\ge 3\)</span> 时，设与
+<span class="math inline">\(u\)</span> 相邻的顶点集为 <span
+class="math inline">\(N_P(u)\)</span>，与 <span
+class="math inline">\(v\)</span> 相邻的顶点集为 <span
+class="math inline">\(N_P(v)\)</span>，可知 <span
+class="math inline">\(\forall x\in N_P(u), y\in N_P(v)\)</span>，满足
+<span class="math inline">\(\delta(x, y)\ge \delta(u,
+v)-2\)</span>。容易知道 <span
+class="math inline">\(|N_P(u)|+|N_P(v)|+\delta(x, y)\le k\)</span>，故
+<span class="math inline">\(d_P(u)+d_P(v)\le k-\delta(u,
+v)+2\)</span>。</li>
+</ol>
+</blockquote>
+<p><img src="5.png" /></p>
+<blockquote>
+<ol start="3" type="1">
+<li>若 <span class="math inline">\(\delta(u, v)=2\)</span>，且 <span
+class="math inline">\(d_P(u)+d_P(v)\ge k+1=|V[P]|\)</span>，把 <span
+class="math inline">\(P\)</span> 写成 <span
+class="math inline">\(P=\langle v=w_1, w_2, \cdots, w_{|V[P]|-1},
+w_{|V[P]|}=u \rangle\)</span>。我们尝试找出两条相交的边 <span
+class="math inline">\((v, w_{i+1})\)</span> 和 <span
+class="math inline">\((w_i, u)\)</span>，这样可以构造出一个环 <span
+class="math inline">\(C=\langle w_1, w_{i+1}, w_{i+2}, \cdots,
+w_{|V[P]-1|}, w_{|V[P]|}, w_i, w_{i-1}, \cdots, w_2,
+w_1\rangle\)</span>，于是由引理 1 得证。是否存在这样的 <span
+class="math inline">\(i\)</span> 呢？设 <span
+class="math inline">\(S=\lbrace i: (v, w_{i+1})\in E\rbrace, T=\lbrace
+i: (w_i, u)\in E\rbrace\)</span>，可知 <span
+class="math inline">\(|S|=d_P(u), |T|=d_P(v), |S\cup T|\le
+|V[P]|-1\)</span>，故 <span class="math display">\[
+\begin{aligned}
+|S\cap T|=&amp;|S|+|T|-|S\cup T|\\
+\ge &amp;d_P(u)+d_P(v)-(|V[P]|-1)\\
+\ge &amp;|V[P]|-(|V[P]|-1)\\
+=&amp;1
+\end{aligned}
+\]</span></li>
+</ol>
+</blockquote>
+<p><strong>Theorem 6.</strong> 若 <span class="math inline">\(G=\langle
+V, E\rangle\)</span> 是一个 <span class="math inline">\(n\)</span>
+阶连通图，且对于所有不相邻的两点 <span class="math inline">\(u, v\in
+V\)</span>，有 <span class="math inline">\(d(u)+d(v)+\delta(u, v)\ge
+n+1\)</span>，则 <span class="math inline">\(G\)</span>
+有哈密尔顿路。</p>
+<p>证明略。</p>
+<!--@article{article,
+author = {Plotnikov, Anatoly},
+year = {1998},
+month = {01},
+pages = {199-202},
+title = {One criterion of existence of a Hamiltonian cycle},
+journal = {Reliable Computing}
+}-->
+<!--@article{hoede1978characterization,
+  title={On characterization of hamiltonian graphs},
+  author={Hoede, Cornelis and Veldman, Henk Jan},
+  journal={Journal of Combinatorial Theory, Series B},
+  volume={25},
+  number={1},
+  pages={47--53},
+  year={1978},
+  publisher={Academic Press}
+}-->
+<!--@article{rahman2005hamiltonian,
+  title={On Hamiltonian cycles and Hamiltonian paths},
+  author={Rahman, M Sohel and Kaykobad, Mohammad},
+  journal={Information Processing Letters},
+  volume={94},
+  number={1},
+  pages={37--41},
+  year={2005},
+  publisher={Elsevier}
+}-->
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Plotnikov, Anatoly. (1998). One criterion of existence
+of a Hamiltonian cycle. Reliable Computing. 199-202.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Hoede, C., &amp; Veldman, H. J. (1978). On
+characterization of hamiltonian graphs. Journal of Combinatorial Theory,
+Series B, 25(1), 47-53.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Rahman, M. S., &amp; Kaykobad, M. (2005). On Hamiltonian
+cycles and Hamiltonian paths. Information Processing Letters, 94(1),
+37-41.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/5b80795d/" title="问题求解（三） Open Topic 3 笔记">https://blog.rijuyuezhu.top/posts/5b80795d/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/972a79c3/" rel="prev" title="问题求解（三） Open Topic 2 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 2 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/51457044/" rel="next" title="问题求解（三） Open Topic 4 笔记">
+                  问题求解（三） Open Topic 4 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

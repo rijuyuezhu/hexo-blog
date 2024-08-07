@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT 题目：图在计算机和人工智能研究中有很多应用，例如程序分析中的控制流图、信息检索中的网页链接图、知识表示中的知识图谱等，请调研至少2种应用（其中至多1种来自上述例子），描述应用场景，讨论用图建模的方式，形式化描述问题并概述现有解决方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 1 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/19a57e20/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT 题目：图在计算机和人工智能研究中有很多应用，例如程序分析中的控制流图、信息检索中的网页链接图、知识表示中的知识图谱等，请调研至少2种应用（其中至多1种来自上述例子），描述应用场景，讨论用图建模的方式，形式化描述问题并概述现有解决方案。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/19a57e20/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/19a57e20/4.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/19a57e20/5.png">
+<meta property="article:published_time" content="2023-08-31T08:06:24.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.570Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/19a57e20/3.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/19a57e20/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/19a57e20/","path":"posts/19a57e20/","title":"问题求解（三） Open Topic 1 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 1 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="nav-text">一、编译系统的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 编译系统的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BB%BA%E6%A8%A1"><span class="nav-text">1.2 编译系统的建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gnu-make-%E7%9A%84%E6%A0%B8%E5%BF%83%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">1.3 GNU Make 的核心工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gnu-make-%E7%9A%84%E6%99%BA%E8%83%BD%E5%8C%96%E7%BC%96%E8%AF%91%E6%8E%A7%E5%88%B6"><span class="nav-text">1.4 GNU Make 的智能化编译控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-text">1.5 编译系统的本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%81%8F%E5%BA%8F%E5%85%B3%E7%B3%BB"><span class="nav-text">1.6 其他偏序关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-1"><span class="nav-text">1.7 扩展 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-2"><span class="nav-text">1.8 扩展 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%8C%B9%E9%85%8D"><span class="nav-text">二、正则表达式的匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%BB%8B%E7%BB%8D"><span class="nav-text">2.1 正则表达式和自动机介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="nav-text">2.2 自动机相关算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">2.3 其他自动机相关的应用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/19a57e20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 1 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 1 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-08-31 16:06:24" itemprop="dateCreated datePublished" datetime="2023-08-31T16:06:24+08:00">2023-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT 题目：图在计算机和人工智能研究中有很多应用，例如程序分析中的<a
+target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/Control-flow_graph">控制流图</a>、信息检索中的<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Webgraph">网页链接图</a>、知识表示中的<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Knowledge_graph">知识图谱</a>等，请调研至少2种应用（其中至多1种来自上述例子），描述应用场景，讨论用图建模的方式，形式化描述问题并概述现有解决方案。</p>
+<span id="more"></span>
+<p><a href="1.pdf">Slide</a></p>
+<p>以两个问题入手，分别是：编译系统的构建，以及正则表达式的匹配。</p>
+<h1 id="一编译系统的构建">一、编译系统的构建</h1>
+<h2 id="编译系统的概念">1.1 编译系统的概念</h2>
+<p>当一个项目有着单独一个源文件，编译它是容易的；但是当一个项目有着多个源文件，编译会变得复杂：编译有了先后顺序，有了依赖关系，而且编译需要更多的时间。此时，可以使用一些编译系统来组织和优化编译。<a
+target="_blank" rel="noopener" href="https://www.gnu.org/software/make/">GNU Make</a>
+是一种常见的编译系统。它使用特殊的语法来描述了依赖关系，并且有着智能化的编译控制系统，只编译确实需要编译的文件。</p>
+<h2 id="编译系统的建模">1.2 编译系统的建模</h2>
+<p>如果把编译系统中的每个需要编译的文件视作有向图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span>
+中的一个顶点，而边则定义为依赖关系：若编译顶点 <span
+class="math inline">\(u\)</span> 需要用到顶点 <span
+class="math inline">\(v\)</span> 产生的库文件，则 <span
+class="math inline">\(u\)</span> 依赖于 <span
+class="math inline">\(v\)</span>，则有 <span class="math inline">\((u,
+v)\in E\)</span>。这样，编译系统就被建模为一个有向图。</p>
+<p>这个有向图有什么特征呢？它不能有环。因为若存在环 <span
+class="math inline">\(u_1\to u_2\to \cdots u_k\to
+u_1\)</span>，则对于环上任意一点，不妨是 <span
+class="math inline">\(u_1\)</span>，要编译它，它依赖于 <span
+class="math inline">\(u_2\)</span> 的结果，进一步依赖于 <span
+class="math inline">\(u_3\)</span> 的结果...依次类推，它依赖于 <span
+class="math inline">\(u_1\)</span>
+的结果，故依赖它需要用到它自己的结果，这是不现实的。</p>
+<p>因此，这个图是一个<strong>有向无环图</strong>(directed acyclic graph,
+DAG)，它有着很好的性质：在上面动态规划没有后效性（存在拓扑序）。</p>
+<p>例如，对于以下一个简单的项目：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/home/rijuyuezhu/Playground</span><br><span class="line"> ├──a.c</span><br><span class="line"> ├──a.h</span><br><span class="line"> ├──main.c</span><br><span class="line"> ├──main.h</span><br><span class="line"> └──Makefile</span><br></pre></td></tr></table></figure>
+<p>其中 Makefile 为</p>
+<figure class="highlight make"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">main: main.o a.o</span></span><br><span class="line">	gcc main.o a.o -o main</span><br><span class="line"></span><br><span class="line"><span class="section">main.o: main.c main.h</span></span><br><span class="line">	gcc -c main.c</span><br><span class="line"></span><br><span class="line"><span class="section">a.o: a.c a.h main.h</span></span><br><span class="line">	gcc -c a.c</span><br></pre></td></tr></table></figure>
+<p>其依赖关系图为</p>
+<p><img src="3.png" /></p>
+<h2 id="gnu-make-的核心工作原理">1.3 GNU Make 的核心工作原理</h2>
+<p>GNU Make
+根据给定的依赖关系，构建出一个有向无环图，在编译时，先依次编译它依赖的顶点（从它出发可以直接到达的顶点），再编译它自己。</p>
+<blockquote>
+<p>形式化的问题描述即为：给定 DAG <span class="math inline">\(G=\langle
+G, E\rangle\)</span> 和 <span class="math inline">\(u\in
+V\)</span>，要求按照正确的编译顺序（依赖顺序）得到 <span
+class="math inline">\(u.result\)</span>。</p>
+</blockquote>
+<p>使用动态规划，可以避免重复编译。此处使用记忆化搜索的方式是高效的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">is_compiled = [<span class="number">0</span>] * N</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make</span>(<span class="params">u</span>):</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> is_compiled[u]:</span><br><span class="line">    <span class="keyword">for</span> v such that (u, v) <span class="keyword">in</span> E:</span><br><span class="line">      make(v)</span><br><span class="line">    u.result = call_compiler_to_compile([v: <span class="keyword">for</span> v such that (u, v) <span class="keyword">in</span> E])</span><br><span class="line">    is_compiled[u] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>时间复杂度 <span class="math inline">\(O(n+m)\)</span>。</p>
+<h2 id="gnu-make-的智能化编译控制">1.4 GNU Make 的智能化编译控制</h2>
+<p>当某个顶点所有的依赖顶点的编译结果的时间戳都未比当前顶点编译结果的时间戳晚，那么说明当前顶点的编译结果已经是最新的了，不需要重新编译。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">is_compiled = [<span class="number">0</span>] * N</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make</span>(<span class="params">u</span>):</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> is_compiled[u]:</span><br><span class="line">    need_to_compile = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> v such that (u, v) <span class="keyword">in</span> E:</span><br><span class="line">      make(v)</span><br><span class="line">      <span class="keyword">if</span> v.result.time &gt; u.result.time:</span><br><span class="line">        need_to_compile = <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> need_to_compile:</span><br><span class="line">      u.result = call_compiler_to_compile([v: <span class="keyword">for</span> v such that (u, v) <span class="keyword">in</span> E])</span><br><span class="line">    is_compiled[u] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>在多次编译中有很大的优化效果。</p>
+<h2 id="编译系统的本质">1.5 编译系统的本质</h2>
+<p>它的图论本质就是<strong>使用有向无环图表达偏序关系</strong>。依赖的本质是偏序关系（反自反性、反对称性、传递性）</p>
+<h2 id="其他偏序关系">1.6 其他偏序关系</h2>
+<p>例如，软件包管理器管理软件依赖、to do list
+进行事情先修条件的组织等，以及更数学的集合的包含关系等，动态规划的状态依赖等都是一种偏序关系，可以使用
+DAG 进行建模求解。</p>
+<p>如果是全序关系，那么其实可以使用线性表（链）维护。链和树是特殊的图。</p>
+<h2 id="扩展-1">1.7 扩展 1</h2>
+<p><strong>思考题</strong>：刚刚提到的依赖管理和网络链接图、函数调用关系图（若
+<code>A()</code> 调用 <code>B()</code>，建边
+<code>A-&gt;B</code>）有什么本质区别？</p>
+<blockquote>
+<p>答：正如函数递归可以自己调用自己、或者相互递归调用，后两种关系得到的图可能含有有向环，和
+DAG 具有许多不同的性质）</p>
+</blockquote>
+<h2 id="扩展-2">1.8 扩展 2</h2>
+<p>除了依赖关系，使用图可以维护更多的关系：比如用有向边代表有向信息；用无向边代表双向信息（例如社交网络中的好友关系）；用带权边代表边独属的信息（例如知识图谱中的不同种类的信息）。</p>
+<h2 id="二正则表达式的匹配">二、正则表达式的匹配</h2>
+<h2 id="正则表达式和自动机介绍">2.1 正则表达式和自动机介绍</h2>
+<p>正则表达式可以用来查找替换识别固定格式的字符串<a href="#fn1"
+class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>。它使用特殊语法来描述字符串的格式：例如用
+<code>[nz]ju</code> 可以匹配 <code>nju</code> 和
+<code>zju</code>，<code>wt+qj</code> 可以匹配 <code>wtqj</code>,
+<code>wttqj</code>, 可以有任意多个 <code>t</code>。</p>
+<p>如果问求一好好学了的话，同学们知道可以用<strong>非确定性有限状态自动机(NFA)</strong>来进行正则表达式（最基础功能，等价与正则语言的）的匹配，比如把匹配到了正则表达式第
+<span class="math inline">\(i\)</span> 个字符作为第 <span
+class="math inline">\(i\)</span> 个状态。还可以通过进一步的算法将 NFA
+转化为 DFA。</p>
+<p>有限状态自动机由五大部分组成：<span
+class="math inline">\(\Sigma\)</span> 输入字母表；<span
+class="math inline">\(S\)</span> 是状态的非空有限集合；<span
+class="math inline">\(S_0\)</span> 是初始状态集合；<span
+class="math inline">\(\delta\)</span> 是状态转移函数；<span
+class="math inline">\(F\)</span>
+是终态集合。这种数学模型可以通过图论建模：对于 <span
+class="math inline">\(S\)</span> 中的每个元素（即一个状态），都对应于图
+<span class="math inline">\(G\)</span> 中的一个顶点；状态转移函数 <span
+class="math inline">\(\delta(u, c), c\in \Sigma\)</span> 定义了所有从
+<span class="math inline">\(u\)</span>
+出发的边。有限状态自动机匹配一个字符串 <span
+class="math inline">\(s_0s_1s_2\cdots
+s_m\)</span>，看是否存在一个状态列表 <span class="math inline">\(\langle
+u_0, u_1, \cdots ,u_{m+1}\rangle\)</span>，使得 <span
+class="math inline">\(u_0\in S_0\)</span>, <span
+class="math inline">\(\delta(u_0, s_0)=u_1\)</span>, <span
+class="math inline">\(\delta(u_1, s_1)=u_2\)</span>, ...， <span
+class="math inline">\(\delta(u_m, s_m)=u_{m+1}\)</span>, <span
+class="math inline">\(u_{m+1}\in F\)</span>。如果是 NFA，允许 <span
+class="math inline">\(\varepsilon\)</span>
+移动。于是，就可以把正则表达式转化为 NFA 来进行字符串匹配。对于长度为
+<span class="math inline">\(n\)</span> 的正则表达式去匹配长度为 <span
+class="math inline">\(m\)</span> 的字符串，时间复杂度 <span
+class="math inline">\(O(nm)\)</span>；如果进一步转化为 DFA，时间复杂度
+<span class="math inline">\(O(m)\)</span>，但是需要的空间可能是 <span
+class="math inline">\(O(2^n)\)</span> 的。</p>
+<p>例如，正则表达式 <code>[nz]ju</code> 构造的状态机为</p>
+<p><img src="4.png" /></p>
+<p>正则表达式 <code>wt+qj</code> 构造的状态机为</p>
+<p><img src="5.png" /></p>
+<h2 id="自动机相关算法">2.2 自动机相关算法</h2>
+<p>有限状态自动机是一个特殊的图，可以用特殊的算法来进行处理。例如，由于
+DFA 和 NFA 的等价性，存在算法将 NFA 转化为 DFA；DFA
+最小化相关算法可以优化 DFA 的存储。另外，由于 FSA 的特殊性，可以在 FSA
+上进行动态规划（无后效性来自于，考虑字符串的匹配位数 <span
+class="math inline">\(i\)</span>，则顶点的状态只依赖与 <span
+class="math inline">\(i-1\)</span> 时所有顶点的状态）。</p>
+<p>比如，用 NFA 进行字符串匹配时，就可以使用动态规划，用 <span
+class="math inline">\(f[i, j], 1\le i\le m, 1\le j\le n\)</span>
+表示匹配字符串的前 <span class="math inline">\(i\)</span>
+个字符是否可以到达自动机的状态 <span
+class="math inline">\(j\)</span>。状态转移方程由 <span
+class="math inline">\(f[i-1, \cdot]\)</span> 转移到 <span
+class="math inline">\(f[i, \cdot]\)</span>。转移方程略，需要注意 NFA
+可能的 <span class="math inline">\(\varepsilon\)</span> 转移。</p>
+<h2 id="其他自动机相关的应用">2.3 其他自动机相关的应用</h2>
+<p>例如，现代计算机是一个有限状态自动机，可以利用
+<code>&lt;存储器值1, 存储器值2, ..., 存储器值m&gt;</code>
+（包括计数器，寄存器，缓存，RAM
+等）的二进制序列来编码自动机的每一个状态；而匹配的字符串则是外界输入。因为现代计算机的内存是有限的，没有无限长的纸带，所以不等价与确定性图灵机。</p>
+<p>再例如，在数字逻辑与计算机组成课里，对于时序逻辑电路的设计，使用了确定性有限状态自动机来建模状态的切换。从这个角度，时序逻辑电路也是一个状态机（但是并不是返回
+Y/N，而是每次转移都有输出）。</p>
+<p>当然，自动机用得最多的可能还是在字符串理论中，很多算法依赖于一些特殊的自动机（如
+Aho–Corasick algorithm，Suffix
+automaton）等等。这些算法在字符串问题中应用广泛。</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"
+class="uri">https://zh.wikipedia.org/zh-hans/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/19a57e20/" title="问题求解（三） Open Topic 1 笔记">https://blog.rijuyuezhu.top/posts/19a57e20/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/5113700a/" rel="prev" title="Install Windows 11 virtual machine on Ubuntu">
+                  <i class="fa fa-angle-left"></i> Install Windows 11 virtual machine on Ubuntu
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/972a79c3/" rel="next" title="问题求解（三） Open Topic 2 笔记">
+                  问题求解（三） Open Topic 2 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

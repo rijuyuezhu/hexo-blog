@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：在DFS和BFS的基础上，形成了很多扩展的搜索算法，例如词典序BFS、双向搜索、最佳优先搜索等，请调研至少2种扩展搜索算法（其中至多1种来自上述例子），讨论适用场景，结合例子介绍算法的设计与分析，与DFS或BFS比较异同并分析优劣。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 2 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/972a79c3/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：在DFS和BFS的基础上，形成了很多扩展的搜索算法，例如词典序BFS、双向搜索、最佳优先搜索等，请调研至少2种扩展搜索算法（其中至多1种来自上述例子），讨论适用场景，结合例子介绍算法的设计与分析，与DFS或BFS比较异同并分析优劣。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/972a79c3/2.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/972a79c3/1.png">
+<meta property="article:published_time" content="2023-09-10T13:37:31.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.573Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/972a79c3/2.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/972a79c3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/972a79c3/","path":"posts/972a79c3/","title":"问题求解（三） Open Topic 2 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 2 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%94%B9%E9%80%A0-bfs"><span class="nav-text">一步步改造 BFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bfs-%E6%9C%AC%E8%BA%AB%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98-5"><span class="nav-text">BFS 本身可以解决的问题 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-01-bfs"><span class="nav-text">扩展： 0&#x2F;1 BFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%9A%84%E6%90%9C%E7%B4%A2%E9%97%AE%E9%A2%98"><span class="nav-text">两种不同的搜索问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%8A%A0%E6%B7%B1-iddfs1-2-6"><span class="nav-text">迭代加深 IDDFS2 3 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E4%BB%A3%E4%BB%B7%E6%90%9C%E7%B4%A2%E7%9A%84%E7%AE%97%E6%B3%95dijkstra-3-4"><span class="nav-text">一致代价搜索的算法(Dijkstra) 5 6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dijkstra-%E5%86%8D%E5%8A%A0%E9%80%9F---a-7"><span class="nav-text">Dijkstra 再加速 - A* 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida-8"><span class="nav-text">IDA* 8</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/972a79c3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 2 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 2 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-09-10 21:37:31" itemprop="dateCreated datePublished" datetime="2023-09-10T21:37:31+08:00">2023-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：在DFS和BFS的基础上，形成了很多扩展的搜索算法，例如<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Lexicographic_breadth-first_search">词典序BFS</a>、<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bidirectional_search">双向搜索</a>、<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Best-first_search">最佳优先搜索</a>等，请调研至少2种扩展搜索算法（其中至多1种来自上述例子），讨论适用场景，结合例子介绍算法的设计与分析，与DFS或BFS比较异同并分析优劣。</p>
+<span id="more"></span>
+<p><a href="2.pdf">slide</a></p>
+<h1 id="一步步改造-bfs">一步步改造 BFS</h1>
+<h2 id="bfs-本身可以解决的问题-5">BFS 本身可以解决的问题 <a href="#fn1"
+class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></h2>
+<p>首先分析 BFS
+本身可以解决的问题，主要是无权图上的最短路问题。为了方便起见，我们只考虑两点
+<span class="math inline">\(s\)</span> 和 <span
+class="math inline">\(t\)</span> 之间的最短路问题。设 <span
+class="math inline">\(g(u)\)</span> 表示从 <span
+class="math inline">\(s\)</span> 到 <span
+class="math inline">\(u\)</span> 的距离。BFS
+的算法正确性的核心在于所维护的队列的 <span
+class="math inline">\(g(u)\)</span>
+单调不减性。实际上，对于一切的<strong>一致代价搜索</strong>，s正确性的根本保证在于它维护了一个优先队列。</p>
+<blockquote>
+<p>一致代价搜索(UCS)：</p>
+<p>定理：在<strong>非负权图</strong>中，维护一个优先队列（一开始只有
+<span class="math inline">\(s\)</span>），关键词是 <span
+class="math inline">\(g(u)\)</span>。每次取出其中关键词最小的点，然后更新其邻点的距离，若更新则入队（注意：不影响原队列中的关键词），第一次
+<span class="math inline">\(t\)</span> 出队时，<span
+class="math inline">\(g(t)\)</span> 的值就是最小值。</p>
+<p>证明：这是很容易的。首先要注意到，当一个点出队后，它的值不会再改变了（剩下的点的
+<span class="math inline">\(dist\)</span> 都 <span
+class="math inline">\(\ge\)</span> 它）。其次，由于是第一次 <span
+class="math inline">\(t\)</span> 出队，故之前出队的点都不是 <span
+class="math inline">\(t\)</span>，其中可能有与 <span
+class="math inline">\(t\)</span> 相邻的点 <span
+class="math inline">\(u\)</span>，这些状态也会在队列中被考虑。由于 这个
+<span class="math inline">\(t\)</span> 的状态是队列中所有 <span
+class="math inline">\(t\)</span> 状态中最小的，所以是最优的。</p>
+</blockquote>
+<p>在无权图上，BFS
+得到的队列其实就是一个优先队列（增加，且只有两种值保证了这一点），保证了算法的正确性。</p>
+<p>很多问题可以抽象成无权图的最短路问题，比如编辑距离问题、游戏寻路问题（比如使用三角形网格建模，可以构造出无权图）等。</p>
+<h2 id="扩展-01-bfs">扩展： 0/1 BFS</h2>
+<p>如果图中有两种边，一种权为 <span
+class="math inline">\(0\)</span>，一种权为 <span
+class="math inline">\(1\)</span>，这个时候可以稍微扩展一下，从 <span
+class="math inline">\(1\)</span> 边到达的邻点放到队尾，从 <span
+class="math inline">\(0\)</span> 边到达的邻点放到队头，这样得到的队列和
+BFS 的队列是一模一样的。</p>
+<p>在问题中扩展零边是很方便的，比如铁路换乘方案选择中（如果考虑的是站数，也就是无权图），如果可以加入零边，可以对换乘站的处理变得更优雅：每个线路网构成一个子图，换乘站拆成好几个点，这几个点之间用零边连接。</p>
+<blockquote>
+<p>思考题：用原来的 BFS 真的不能够处理有零边的图吗？</p>
+<p>事实上是可以的。先只考虑零边，找到图中所有的连通分支，每个连通分支内点之间的距离都是
+<span class="math inline">\(0\)</span>，看作一个点构成新图，然后再考虑
+<span class="math inline">\(1\)</span> 边进行 BFS。</p>
+</blockquote>
+<h2 id="两种不同的搜索问题">两种不同的搜索问题</h2>
+<p>第一种，图比较小，这时我们往往可以直接得知图的全貌（比如点数 <span
+class="math inline">\(n\)</span>、边数 <span
+class="math inline">\(m\)</span>
+和图的结构），这时往往可以搜寻整个图，得到关于 <span
+class="math inline">\(n\)</span> 和 <span
+class="math inline">\(m\)</span> 的算法，比如我们熟知的：BFS 和 DFS
+的时间、空间复杂度都是 <span class="math inline">\(O(n+m)\)</span>。e.g.
+常见的寻路问题等。</p>
+<p>第二种，图很大（甚至无限大），常常是无法得知图的全貌的，比如由大型迷宫建模而成的图，比如由各种搜索问题建模而成的图。这时，我们用另一种方法描述复杂度：图的分支因子
+<span class="math inline">\(b\)</span> 和搜索所需的层数 <span
+class="math inline">\(d\)</span>。比如，在这样的描述中，BFS
+的时间、空间复杂度都是 <span
+class="math inline">\(O(1+b+b^2+\cdots+b^d)=O(b^d)\)</span>，而 DFS
+无法满足完备性和最优性，如果额外限定只搜索 <span
+class="math inline">\(d\)</span> 层就返回，那么时间是 <span
+class="math inline">\(O(b^d)\)</span>，但空间是 <span
+class="math inline">\(O(d)\)</span> 的。e.g. <span
+class="math inline">\(n\)</span>
+皇后问题、竖式填写等一些经典搜索问题，还有超大迷宫的寻路问题，每次可以扩展的分支数
+<span class="math inline">\(b\)</span> 一般是有上界的，但是点数 <span
+class="math inline">\(n\)</span> 可能很大。</p>
+<p>e.g.竖式填写</p>
+<p><img src="2.png" /></p>
+<h2 id="迭代加深-iddfs1-2-6">迭代加深 IDDFS<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> <a href="#fn4" class="footnote-ref"
+id="fnref4" role="doc-noteref"><sup>4</sup></a></h2>
+<p>看起来 BFS 的时间和空间都是 <span
+class="math inline">\(O(b^d)\)</span>，都是较低的，但是实际上，空间往往比时间更不能忍受。</p>
+<p>取 <span class="math inline">\(b=10\)</span>，计算机运算速度是 <span
+class="math inline">\(1000\text{ nodes/s}\)</span>，内存消耗是 <span
+class="math inline">\(1000\text{ bytes/s}\)</span>，计算得</p>
+<p><img src="1.png" /></p>
+<p>(from <a target="_blank" rel="noopener" href="https://yey.world/2020/03/06/COMP90054-02/"
+class="uri">https://yey.world/2020/03/06/COMP90054-02/</a>)</p>
+<p>比如 depth 为 <span class="math inline">\(12\)</span> 时，<span
+class="math inline">\(13\)</span> days
+是可以忍受的，甚至有很多优化的方法，比如算法上利用剪支、利用并发等，但 1
+PB 的内存是极其困难的。</p>
+<p>这时可以考虑迭代加深 IDDFS，第一次只搜到 <span
+class="math inline">\(d=1\)</span> 的结点就返回，第二次 <span
+class="math inline">\(d=2\)</span>
+就返回，依次类推多次迭代，直到找到目标顶点。容易发现，每次有意义的搜索就是在“返回层”，而在“返回层”之前的搜索都是重复的。于是，它的一次迭代也就相当于进行了一次
+BFS 的扩展，和 BFS 是等价的。</p>
+<p>接下来分析时间和空间复杂度。</p>
+<p>时间上，第 <span class="math inline">\(1\)</span> 层算了 <span
+class="math inline">\(d\)</span> 次，第 <span
+class="math inline">\(2\)</span> 层算了 <span
+class="math inline">\(d-1\)</span> 次，依次类推，第 <span
+class="math inline">\(d\)</span> 层算了 <span
+class="math inline">\(1\)</span> 次，其中第 <span
+class="math inline">\(i\)</span> 层有 <span
+class="math inline">\(b^{i-1}\)</span> 个节点，总代价为</p>
+<p><span class="math display">\[
+O(b^0\cdot d+b^1\cdot (d-1)+\cdots+b^{d-1}\cdot 1)=O(b^d). (b&gt;1)
+\]</span></p>
+<p>这时因为主要开销仍在最底层，所以和 BFS
+的时间代价比起来，开销只有常数倍。但是空间上和 DFS 是一致的，都是 <span
+class="math inline">\(O(d)\)</span>。</p>
+<h2 id="一致代价搜索的算法dijkstra-3-4">一致代价搜索的算法(Dijkstra) <a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a> <a href="#fn6" class="footnote-ref"
+id="fnref6" role="doc-noteref"><sup>6</sup></a></h2>
+<p>上面提到了一致代价搜索。当边权全是 <span
+class="math inline">\(1\)</span> 或者有 <span
+class="math inline">\(0\)</span> 有 <span
+class="math inline">\(1\)</span> 时，BFS
+已经可以完美解决了。但是，普遍化地，如果边权可以是任意<strong>非负数</strong>（即一致代价搜索的定义），这时我们就要回到上面提到的定理了，使用数据结构来维护这样一个队列。当然，有一个性质是，此处其实不需要每个结点的多个
+<span class="math inline">\(g\)</span> 状态，只用考虑一个。时间复杂度是
+<span class="math inline">\(O(n^2+m)\)</span>（用线性表维护优先队列）或
+<span class="math inline">\(O((n+m)\log
+m)\)</span>（用二叉堆维护优先队列）。空间复杂度是 <span
+class="math inline">\(O(n+m)\)</span>。若用 <span
+class="math inline">\(b\)</span> 和 <span
+class="math inline">\(d\)</span> 描述，时间是 <span
+class="math inline">\(O(d\cdot b^d)\)</span>，空间和 BFS 一样是 <span
+class="math inline">\(O(b^d)\)</span>。</p>
+<h2 id="dijkstra-再加速---a-7">Dijkstra 再加速 - A* <a href="#fn7"
+class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a></h2>
+<p>之前考虑的都是“盲目搜索”：仅使用最基本的信息，不知道搜索空间的特征，这种搜索的效率一般是很低下的。但如果预先知道了额外的一些信息，可以使用启发式搜索来加速搜索。A*
+算法就是一种启发式算法。</p>
+<p>在 Dijkstra 的基础上，优先队列中排序的关键词发生了变化。原来是 <span
+class="math inline">\(g(u)\)</span>（从 <span
+class="math inline">\(s\)</span> 到 <span
+class="math inline">\(u\)</span> 的距离），现在改为了 <span
+class="math inline">\(f(u)=g(u)+h(u)\)</span>。其中 <span
+class="math inline">\(h(u)\)</span>
+是我们寻找的一个<strong>启发函数</strong>，代表从 <span
+class="math inline">\(u\)</span> 到 <span
+class="math inline">\(t\)</span> 估计还需要的代价。另一个概念是 <span
+class="math inline">\(h^*(u)\)</span>，即在事实上从 <span
+class="math inline">\(u\)</span> 到 <span
+class="math inline">\(t\)</span> 估计还需要的代价。</p>
+<p>自然而然，我们要询问，这样以后，我们是否还可以找到最优解呢？我们断言，只要
+<span class="math inline">\(\forall u, 0\le h(u)\le
+h^*(u)\)</span>，那么 A* 算法是满足最优性的（即，<span
+class="math inline">\(h\)</span>
+只能往少估不能往多估）。比如，在迷宫搜索问题中，选择 <span
+class="math inline">\(h(u)\)</span> 是从 <span
+class="math inline">\(u\)</span> 到 <span
+class="math inline">\(t\)</span> 的曼哈顿距离。</p>
+<blockquote>
+<p>简要证明：当 <span class="math inline">\(t\)</span>
+出队时，它的代价是 <span
+class="math inline">\(f(t)=g(t)+h(t)\)</span>，容易知道 <span
+class="math inline">\(0\le h(t)\le h^*(t)\le 0\)</span>，故 <span
+class="math inline">\(h(t)=0\)</span>，所以代价就是 <span
+class="math inline">\(f(t)=g(t)\)</span>。对于其他可能到达 <span
+class="math inline">\(t\)</span> 的它的邻点 <span
+class="math inline">\(u\)</span>，它要么还没入队，要么在队列中在 <span
+class="math inline">\(t\)</span> 的后面，所以有 <span
+class="math inline">\(f(t)\le f(u)=g(u)+h(u)\le g(u)+h^*(u)\)</span>，而
+<span class="math inline">\(g(u)+h^*(u)\)</span> 是从 <span
+class="math inline">\(u\)</span> 继续到 <span
+class="math inline">\(t\)</span> 的最低代价，所以不会更优了。</p>
+</blockquote>
+<p>A* 算法和其他一些算法有着千丝万缕的联系，比如取 <span
+class="math inline">\(h(u)\equiv
+0\)</span>（这是一定满足最优性的），就是 Dijkstra
+算法。它还和贪婪最佳优先搜索算法、加权 A* 算法等有着联系。</p>
+<p>A* 算法为何可以加快搜索？直观来看，选择合适的 <span
+class="math inline">\(h\)</span> 可以让搜索得到的分支因子 <span
+class="math inline">\(b\)</span> 减小，减少了搜索的状态数。</p>
+<h2 id="ida-8">IDA* <a href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a></h2>
+<p>用 DFS 改写，每次只搜索代价 <span class="math inline">\(\le
+L\)</span> 的结点；如果没有搜到 <span
+class="math inline">\(t\)</span>，那么下次把 <span
+class="math inline">\(L\)</span> 设定为这一次搜索中代价超出 <span
+class="math inline">\(L\)</span> 的最小代价。这当然对 Dijkstra
+也是适用的。这样可以把空间复杂度降低到 <span
+class="math inline">\(O(d)\)</span>。</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Breadth-first_search"
+class="uri">https://en.wikipedia.org/wiki/Breadth-first_search</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a target="_blank" rel="noopener" href="https://yey.world/2020/03/06/COMP90054-02/"
+class="uri">https://yey.world/2020/03/06/COMP90054-02/</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a target="_blank" rel="noopener" href="https://yey.world/2021/03/12/COMP90054-03/"
+class="uri">https://yey.world/2021/03/12/COMP90054-03/</a><a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search"
+class="uri">https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search</a><a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a
+target="_blank" rel="noopener" href="https://hljmssjg.github.io/2021/11/02/关于搜索算法的复习/"
+class="uri">https://hljmssjg.github.io/2021/11/02/关于搜索算法的复习/</a><a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Uniform-cost_search"
+class="uri">https://en.wikipedia.org/wiki/Uniform-cost_search</a><a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/A*_search_algorithm"
+class="uri">https://en.wikipedia.org/wiki/A*_search_algorithm</a><a
+href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Iterative_deepening_A*"
+class="uri">https://en.wikipedia.org/wiki/Iterative_deepening_A*</a><a
+href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/972a79c3/" title="问题求解（三） Open Topic 2 笔记">https://blog.rijuyuezhu.top/posts/972a79c3/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/19a57e20/" rel="prev" title="问题求解（三） Open Topic 1 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 1 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/5b80795d/" rel="next" title="问题求解（三） Open Topic 3 笔记">
+                  问题求解（三） Open Topic 3 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

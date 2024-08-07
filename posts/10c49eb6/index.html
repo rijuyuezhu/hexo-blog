@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Distrobox is a powerful tool which enables us to run multiple linux distributions and versions simultaneously, and switch among them seemlessly. In addition to the basic features provided by distrobox">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Play with Distrobox!">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/10c49eb6/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="Distrobox is a powerful tool which enables us to run multiple linux distributions and versions simultaneously, and switch among them seemlessly. In addition to the basic features provided by distrobox">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-30T14:21:01.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.620Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Docker&#x2F;Podman">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/10c49eb6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/10c49eb6/","path":"posts/10c49eb6/","title":"Play with Distrobox!"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Play with Distrobox! | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-usage"><span class="nav-text">Basic usage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#create-a-containerdistrobox"><span class="nav-text">Create a container(distrobox)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#export-apps-bins-to-outside"><span class="nav-text">Export apps &amp; bins to
+outside</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-advanced-configurations"><span class="nav-text">My advanced configurations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#distinguish-inout-prompt"><span class="nav-text">Distinguish in&#x2F;out prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#seemlessly-switch"><span class="nav-text">Seemlessly switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#execute-host-commands-directly-in-container"><span class="nav-text">Execute host
+commands directly in container</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/10c49eb6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Play with Distrobox! | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Play with Distrobox!
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-07-30 22:21:01" itemprop="dateCreated datePublished" datetime="2024-07-30T22:21:01+08:00">2024-07-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/">Distrobox</a> is a
+powerful tool which enables us to run multiple linux distributions and
+versions simultaneously, and switch among them seemlessly. In addition
+to the basic features provided by distrobox, I write some more scripts
+to make it easier to use.</p>
+<span id="more"></span>
+<h1 id="basic-usage">Basic usage</h1>
+<h2 id="create-a-containerdistrobox">Create a container(distrobox)</h2>
+<p>See the <a target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/">official
+repository</a> to install and use it. For example, I can use</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">distrobox create -n u22 -i ubuntu:22.04                                                                                                  130 ↵ ✭</span></span><br><span class="line">Creating &#x27;u22&#x27; using image ubuntu:22.04	[ OK ]</span><br><span class="line">Distrobox &#x27;u22&#x27; successfully created.</span><br><span class="line">To enter, run:</span><br><span class="line"></span><br><span class="line">distrobox enter u22</span><br><span class="line"></span><br><span class="line">[rijuyuezhu@rjyz-linux:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">distrobox enter u22                                                                                                                            ✭</span></span><br><span class="line">Starting container...                   	[ OK ]</span><br><span class="line">Installing basic packages...            	[ OK ]</span><br><span class="line">Setting up devpts mounts...             	[ OK ]</span><br><span class="line">...</span><br><span class="line">Container Setup Complete!</span><br></pre></td></tr></table></figure>
+<p>And now I get into the container.</p>
+<p><strong>Some properties to notice:</strong></p>
+<ul>
+<li>Many parts of the filesystem are shared between the container(u22)
+and host, including <code>/dev</code>, <code>/tmp</code>,
+<code>/home</code>, etc. However, Some other places, such as
+<code>/etc</code>, <code>/usr</code>, <code>/opt</code> are not shared.
+Hence, some programs can be effortlessly run in the container (those
+installed locally, e.g. anaconda), but some cannot (those installed by
+system-wide package manager like apt).</li>
+<li>To access the host's filesystem from containers, use the
+<code>/run/host</code> directory, which mounts the host's root
+directory.</li>
+</ul>
+<h2 id="export-apps-bins-to-outside">Export apps &amp; bins to
+outside</h2>
+<p>Use <a
+target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/blob/main/docs/usage/distrobox-export.md"><code>distrobox export</code></a>
+to export an app (<code>*.desktop</code> file) or a binary file from a
+container out to the host. <a
+target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/blob/main/docs/usage/distrobox-export.md">The
+tutorial</a> is clear enough, so I won't repeat it here. An example of
+using this command could be find at <a href="/posts/3296c668/" title="Install mailmaster via distrobox on other Linux distributions">another blog</a> of mine.</p>
+<p>The official tutorial is quite useful and I recommend you to read it.
+Also, it provides some <a
+target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/blob/main/docs/useful_tips.md">useful
+tips</a> to play with distrobox.</p>
+<h1 id="my-advanced-configurations">My advanced configurations</h1>
+<h2 id="distinguish-inout-prompt">Distinguish in/out prompt</h2>
+<p>It could be quite confusing to distinguish between host and
+container, since we are using the same username, the same hostname, the
+same shell and the same configuration file, and sadly, the same shell
+prompt between them. It's necessary to make some changes to the
+prompt.</p>
+<p>Since I prefer using <a target="_blank" rel="noopener" href="https://ohmyz.sh/">oh my zsh</a>, I try
+to modify its theme. A tutorial to modify zsh theme could be found <a
+target="_blank" rel="noopener" href="https://blog.carbonfive.com/writing-zsh-themes-a-quickref/">here</a>.
+Previously, I use the omz theme <code>kphoen</code>, and I create my own
+theme <code>kphoen-my</code> on its basis. Firstly copy the
+<code>kphoen</code> theme to <code>kphoen-my</code>:</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash"><span class="built_in">cp</span> ~/.oh-my-zsh/themes/kphoen.zsh-theme ~/.oh-my-zsh/custom/themes/kphoen-my.zsh-theme</span></span><br><span class="line">[rijuyuezhu@rjyz-linux:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">vim ~/.oh-my-zsh/custom/themes/kphoen-my.zsh-theme</span></span><br></pre></td></tr></table></figure>
+<p>Then I modify <code>kphoen-my.zsh-theme</code> as follows</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kphoen-my.zsh-theme</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">ZSH_MYTHEME_CONDAENV</span></span>() &#123;</span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONDA_DEFAULT_ENV:-&#125;</span>&quot;</span> &amp;&amp; <span class="string">&quot;<span class="variable">$&#123;CONDA_DEFAULT_ENV&#125;</span>&quot;</span> != base ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;(<span class="variable">$&#123;CONDA_DEFAULT_ENV&#125;</span>) &quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">ZSH_MYTHEME_MACHINE</span></span>() &#123;</span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONTAINER_ID:-&#125;</span>&quot;</span> &amp;&amp; ( -e /run/.containerenv || -e /.dockerenv ) ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;%&#123;<span class="variable">$fg</span>[cyan]%&#125;<span class="variable">$&#123;CONTAINER_ID&#125;</span>%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;%&#123;<span class="variable">$fg</span>[magenta]%&#125;%m%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">ZSH_MYTHEME_SHLVL</span></span>() &#123;</span><br><span class="line">  <span class="built_in">local</span> show_SHLVL=<span class="variable">$&#123;SHLVL&#125;</span></span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONTAINER_ID:-&#125;</span>&quot;</span> &amp;&amp; ( -e /run/.containerenv || -e /.dockerenv ) ]]; <span class="keyword">then</span></span><br><span class="line">    (( show_SHLVL-- ))</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$&#123;show_SHLVL&#125;</span>&quot;</span> -gt 1 ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;%&#123;<span class="variable">$fg</span>[yellow]%&#125;(<span class="variable">$&#123;show_SHLVL&#125;</span>)%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PROMPT=<span class="string">&#x27;[%&#123;$fg[red]%&#125;%n%&#123;$reset_color%&#125;@$(ZSH_MYTHEME_MACHINE)$(ZSH_MYTHEME_SHLVL):%&#123;$fg[blue]%&#125;%~%&#123;$reset_color%&#125;$(git_prompt_info)] $(ZSH_MYTHEME_CONDAENV)</span></span><br><span class="line"><span class="string">%# &#x27;</span></span><br><span class="line"></span><br><span class="line">ZSH_THEME_GIT_PROMPT_PREFIX=<span class="string">&quot; on %&#123;<span class="variable">$fg</span>[green]%&#125;&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_SUFFIX=<span class="string">&quot;%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_DIRTY=<span class="string">&quot;&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_CLEAN=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># display exitcode on the right when &gt;0</span></span><br><span class="line">ZSH_MYTHEME_RETURNCODE=<span class="string">&quot;%(?..%&#123;<span class="variable">$fg</span>[red]%&#125;%? ↵%&#123;<span class="variable">$reset_color</span>%&#125;)&quot;</span></span><br><span class="line"></span><br><span class="line">RPROMPT=<span class="string">&#x27;$&#123;ZSH_MYTHEME_RETURNCODE&#125;$(git_prompt_status)%&#123;$reset_color%&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">ZSH_THEME_GIT_PROMPT_ADDED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[green]%&#125; ✚&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_MODIFIED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[blue]%&#125; ✹&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_DELETED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[red]%&#125; ✖&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_RENAMED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[magenta]%&#125; ➜&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_UNMERGED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[yellow]%&#125; ═&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_UNTRACKED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[cyan]%&#125; ✭&quot;</span></span><br></pre></td></tr></table></figure>
+<p>To view its effect, when at host the prompt is <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~ on main] </span><br><span class="line"><span class="meta prompt_">%</span></span><br></pre></td></tr></table></figure> where
+<code>rjyz-linux</code> is the hostname. When in the container the
+prompt is <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@u22:~] </span><br><span class="line"><span class="meta prompt_">% </span></span><br></pre></td></tr></table></figure> where <code>u22</code> is the container id. And
+I give container id and hostname different colors.</p>
+<p>The crux to manage to do this modification is to notice that, when
+inside a container, the environment variable <code>CONTAINER_ID</code>
+is set to be the container id.</p>
+<h2 id="seemlessly-switch">Seemlessly switch</h2>
+<p>When using <code>distrobox enter</code> to go from host to container,
+<code>$PWD</code> will be preserved; however, when using
+<code>exit</code> to go from container to host, it rewinds to the
+directory where you entered the container. To make it seemlessly switch,
+I write a script. Put the following script in <code>~/.zshrc</code> or
+<code>~/.bashrc</code> and ensure that your host and container share
+that.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># distrobox</span></span><br><span class="line"><span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONTAINER_ID:-&#125;</span>&quot;</span> &amp;&amp; ( -e /run/.containerenv || -e /.dockerenv ) ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># inside container</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">command</span> -v distrobox-host-exec &amp;&gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">function</span> <span class="function"><span class="title">de</span></span>() &#123;</span><br><span class="line">            <span class="comment"># the path is a subdirectory of /home</span></span><br><span class="line">            <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;DISTROBOX_CHGDIR_FILE:-&#125;</span>&quot;</span> &amp;&amp;</span><br><span class="line">                -e <span class="string">&quot;<span class="variable">$&#123;DISTROBOX_CHGDIR_FILE&#125;</span>&quot;</span> &amp;&amp;</span><br><span class="line">                <span class="string">&quot;<span class="subst">$(pwd)</span>&quot;</span> =~ <span class="string">&quot;^<span class="subst">$(realpath /home)</span>*&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">pwd</span> &gt; <span class="string">&quot;<span class="variable">$&#123;DISTROBOX_CHGDIR_FILE&#125;</span>&quot;</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">            <span class="built_in">exit</span></span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        <span class="comment">#----------------------------------------------------------------#</span></span><br><span class="line">        <span class="comment">#                                                                #</span></span><br><span class="line">        <span class="comment">#   The commented part below will be use later in the tutorial   #</span></span><br><span class="line">        <span class="comment">#                                                                #</span></span><br><span class="line">        <span class="comment">#----------------------------------------------------------------#</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># function dh() &#123;</span></span><br><span class="line">        <span class="comment">#     if [[ $# -eq 0 ]]; then</span></span><br><span class="line">        <span class="comment">#         echo &quot;Usage: dh &lt;command&gt;&quot; &gt;&amp;2</span></span><br><span class="line">        <span class="comment">#         return 127</span></span><br><span class="line">        <span class="comment">#     fi</span></span><br><span class="line">        <span class="comment">#     distrobox-host-exec zsh -ic &quot;$*&quot;</span></span><br><span class="line">        <span class="comment"># &#125;</span></span><br><span class="line">        <span class="comment"># if [ -n &quot;$&#123;ZSH_VERSION:-&#125;&quot; ]; then</span></span><br><span class="line">        <span class="comment">#     function command_not_found_handler() &#123;</span></span><br><span class="line">        <span class="comment">#         dh &quot;$@&quot;</span></span><br><span class="line">        <span class="comment">#     &#125;</span></span><br><span class="line">        <span class="comment"># else</span></span><br><span class="line">        <span class="comment">#     function command_not_found_handle() &#123;</span></span><br><span class="line">        <span class="comment">#         dh &quot;$&#123;@&#125;&quot;</span></span><br><span class="line">        <span class="comment">#     &#125;</span></span><br><span class="line">        <span class="comment"># fi</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment"># outside container</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">command</span> -v distrobox &amp;&gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">function</span> <span class="function"><span class="title">de</span></span>() &#123;</span><br><span class="line">            <span class="keyword">function</span> <span class="function"><span class="title">enter_container</span></span>() &#123;</span><br><span class="line">                <span class="built_in">local</span> tmpfile=<span class="string">&quot;<span class="subst">$(mktemp /tmp/distrobox.XXXXXX)</span>&quot;</span></span><br><span class="line"></span><br><span class="line">                DISTROBOX_CHGDIR_FILE=<span class="string">&quot;<span class="variable">$&#123;tmpfile&#125;</span>&quot;</span> distrobox enter <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> [[ -e <span class="string">&quot;<span class="variable">$&#123;tmpfile&#125;</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">                    <span class="built_in">local</span> <span class="built_in">dir</span>=<span class="string">&quot;<span class="subst">$(cat $&#123;tmpfile&#125;)</span>&quot;</span></span><br><span class="line">                    <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;dir:-&#125;</span>&quot;</span> &amp;&amp; -d <span class="string">&quot;<span class="variable">$&#123;dir:-&#125;</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">                        <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$&#123;dir&#125;</span>&quot;</span></span><br><span class="line">                    <span class="keyword">fi</span></span><br><span class="line">                <span class="keyword">fi</span></span><br><span class="line">                <span class="built_in">rm</span> -f <span class="string">&quot;<span class="variable">$&#123;tmpfile&#125;</span>&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> [[ <span class="variable">$#</span> -eq 0 ]]; <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">local</span> default_container=<span class="string">&quot;u22&quot;</span></span><br><span class="line">                enter_container <span class="string">&quot;<span class="variable">$&#123;default_container&#125;</span>&quot;</span></span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                enter_container <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>This enables us to use <code>de</code> to switch between host and
+container seemlessly<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> , and it will preserve
+<code>$PWD</code> <strong>if <code>$PWD</code> is a subdirectory of
+<code>/home</code></strong>. This requirement prohibits confusing
+situations where you are in a directory that is not shared between host
+and container.</p>
+<p>An example:</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~/Playground] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">de</span></span><br><span class="line">[rijuyuezhu@u22:~/Playground] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash"><span class="built_in">mkdir</span> <span class="built_in">test</span> &amp;&amp; <span class="built_in">cd</span> <span class="built_in">test</span></span></span><br><span class="line">[rijuyuezhu@u22:~/Playground/test] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">de</span></span><br><span class="line">[rijuyuezhu@rjyz-linux:~/Playground/test] </span><br><span class="line"><span class="meta prompt_">% </span></span><br></pre></td></tr></table></figure>
+<h2 id="execute-host-commands-directly-in-container">Execute host
+commands directly in container</h2>
+<p>Distrobox provides an interesting mechanism to run host commands from
+container. The official tutorial lies <a
+target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/blob/main/docs/posts/execute_commands_on_host.md">here</a>.
+Firstly, install <a target="_blank" rel="noopener" href="https://flatpak.org/">flatpak</a> on the
+<strong>host</strong>. Then, when inside container, and you want to run
+host commands, simply run <code>distrobox-host-exec &lt;cmd&gt;</code>.
+For example,</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@u22:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">distrobox-host-exec <span class="built_in">cat</span> /etc/os-release</span></span><br><span class="line">PRETTY_NAME=&quot;Ubuntu 24.04 LTS&quot;</span><br><span class="line">NAME=&quot;Ubuntu&quot;</span><br><span class="line">VERSION_ID=&quot;24.04&quot;</span><br><span class="line">VERSION=&quot;24.04 LTS (Noble Numbat)&quot;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>EXTREMELY IMPORTANT</strong> thing to notice: the command
+runs on the host system directly, instead of "borrowing" binary from the
+host. Hence, as you see, the command above prints my host's
+information(Ubuntu 24.04), instead of the container's(Ubuntu 22.04).
+However, in most cases, this is not a problem: the host and container
+share the same <code>/home</code> directory. But remember this to avoid
+unexpected results.</p>
+<p>Also, notice that environment variables are not preserved in most
+cases.</p>
+</blockquote>
+<p>The <a
+target="_blank" rel="noopener" href="https://github.com/89luca89/distrobox/blob/main/docs/posts/execute_commands_on_host.md">official
+tutorial</a> also provides an interesting method to run host commands
+seemlessly in container. It uses the
+<code>command_not_found_handle(r?)</code>(zsh has one more
+<code>r</code>) mechanism in bash/zsh. When the command is not found in
+container, bash/zsh will call the function
+<code>command_not_found_handle(r?)</code>. Hence we can use it to
+forward the corresponding command to host, as shown in the commented
+part in above script. The complement part is as follows:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># distrobox</span></span><br><span class="line"><span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONTAINER_ID:-&#125;</span>&quot;</span> &amp;&amp; ( -e /run/.containerenv || -e /.dockerenv ) ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># inside container</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">command</span> -v distrobox-host-exec &amp;&gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">function</span> <span class="function"><span class="title">de</span></span>() &#123;</span><br><span class="line">            <span class="comment"># the path is a subdirectory of /home</span></span><br><span class="line">            <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;DISTROBOX_CHGDIR_FILE:-&#125;</span>&quot;</span> &amp;&amp;</span><br><span class="line">                -e <span class="string">&quot;<span class="variable">$&#123;DISTROBOX_CHGDIR_FILE&#125;</span>&quot;</span> &amp;&amp;</span><br><span class="line">                <span class="string">&quot;<span class="subst">$(pwd)</span>&quot;</span> =~ <span class="string">&quot;^<span class="subst">$(realpath /home)</span>*&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">pwd</span> &gt; <span class="string">&quot;<span class="variable">$&#123;DISTROBOX_CHGDIR_FILE&#125;</span>&quot;</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">            <span class="built_in">exit</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">function</span> <span class="function"><span class="title">dh</span></span>() &#123;</span><br><span class="line">            <span class="keyword">if</span> [[ <span class="variable">$#</span> -eq 0 ]]; <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;Usage: dh &lt;command&gt;&quot;</span> &gt;&amp;2</span><br><span class="line">                <span class="built_in">return</span> 127</span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">            distrobox-host-exec zsh -ic <span class="string">&quot;$*&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$&#123;ZSH_VERSION:-&#125;</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">            <span class="keyword">function</span> <span class="function"><span class="title">command_not_found_handler</span></span>() &#123;</span><br><span class="line">                dh <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">function</span> <span class="function"><span class="title">command_not_found_handle</span></span>() &#123;</span><br><span class="line">                dh <span class="string">&quot;<span class="variable">$&#123;@&#125;</span>&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment"># outside container</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">command</span> -v distrobox &amp;&gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">function</span> <span class="function"><span class="title">de</span></span>() &#123;</span><br><span class="line">            <span class="keyword">function</span> <span class="function"><span class="title">enter_container</span></span>() &#123;</span><br><span class="line">                <span class="built_in">local</span> tmpfile=<span class="string">&quot;<span class="subst">$(mktemp /tmp/distrobox.XXXXXX)</span>&quot;</span></span><br><span class="line"></span><br><span class="line">                DISTROBOX_CHGDIR_FILE=<span class="string">&quot;<span class="variable">$&#123;tmpfile&#125;</span>&quot;</span> distrobox enter <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> [[ -e <span class="string">&quot;<span class="variable">$&#123;tmpfile&#125;</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">                    <span class="built_in">local</span> <span class="built_in">dir</span>=<span class="string">&quot;<span class="subst">$(cat $&#123;tmpfile&#125;)</span>&quot;</span></span><br><span class="line">                    <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;dir:-&#125;</span>&quot;</span> &amp;&amp; -d <span class="string">&quot;<span class="variable">$&#123;dir:-&#125;</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">                        <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$&#123;dir&#125;</span>&quot;</span></span><br><span class="line">                    <span class="keyword">fi</span></span><br><span class="line">                <span class="keyword">fi</span></span><br><span class="line">                <span class="built_in">rm</span> -f <span class="string">&quot;<span class="variable">$&#123;tmpfile&#125;</span>&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> [[ <span class="variable">$#</span> -eq 0 ]]; <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">local</span> default_container=<span class="string">&quot;u22&quot;</span></span><br><span class="line">                enter_container <span class="string">&quot;<span class="variable">$&#123;default_container&#125;</span>&quot;</span></span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                enter_container <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>Now you can use <code>dh</code> to run host commands in container.
+Also, when the command cannot be found in container, it will be
+forwarded to the host. For example, <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[rijuyuezhu@u22:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash"><span class="built_in">env</span> node</span></span><br><span class="line">env: ‘node’: No such file or directory</span><br><span class="line">[rijuyuezhu@u22:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">node</span></span><br><span class="line">Welcome to Node.js v18.19.1.</span><br><span class="line">Type &quot;.help&quot; for more information.</span><br><span class="line"><span class="meta prompt_">&gt; </span></span><br></pre></td></tr></table></figure> I do not have
+<code>node</code> installed in the container, but I can use
+<code>node</code> command in the container to make it run at host.</p>
+<p>Some may argue that this is not good - we do not know which command
+is run in the container and which is run at host. However, this is not a
+problem, since we can use tools like <a
+target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting"><code>zsh-syntax-highlighting</code></a>
+to distinguish those commands that can be found in the container and
+those cannot. Also, this mechanism is only used for interactive shells
+(since we put it in <code>~/.zshrc</code> or <code>~/.bashrc</code>),
+and it has no effect on shell scripts.</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>When entering a container from host, you can use one
+argument to indicate which container to use. Otherwise the script uses
+the default, hardcoded in the script(<code>u22</code> here)<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/10c49eb6/" title="Play with Distrobox!">https://blog.rijuyuezhu.top/posts/10c49eb6/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Docker-Podman/" rel="tag"># Docker/Podman</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/50171005/" rel="prev" title="Run 'code' from remote and open VSCode locally to view">
+                  <i class="fa fa-angle-left"></i> Run 'code' from remote and open VSCode locally to view
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/3296c668/" rel="next" title="Install mailmaster via distrobox on other Linux distributions">
+                  Install mailmaster via distrobox on other Linux distributions <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

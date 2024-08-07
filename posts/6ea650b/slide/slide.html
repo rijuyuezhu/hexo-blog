@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/10/问题求解（三）-Open-Topic-8-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">最小直径生成树和最小标签生成树</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">概述</h2>
+<p class=" font-serif my-1">主要介绍最小直径生成树(Mininum diameter spanning tree, MDST)以及最小标签生成树(Mininum labeling spanning tree, MLST)的相关算法。</p>
+<p class=" font-serif my-1">MDST 主要参考了文献 [1] (Hassin &amp; Tamir, 1995) 和 [2] (Hakimi, 1964)；</p>
+<p class=" font-serif my-1">MLST 主要参考了 [3] (Chang &amp; Shing-Jiuan, 1997)。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">最小直径生成树(MDST)</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">最小直径生成树 - 定义</h2>
+<p class=" font-serif my-1"><em>Def.</em> 最小直径生成树(MDST)问题：对于非负权无向图 $G=\langle V, E\rangle$，寻找它的一棵生成树 $T^*$，使得对任意 $G$ 的生成树 $T$，有</p>
+<p class=" font-serif my-1">$$
+    diam(T^*)\le diam (T)
+$$</p>
+<p class=" font-serif my-1">其中 $diam(G')$ 是树 $G'$ 的直径，定义为 </p>
+<p class=" font-serif my-1">$$
+\max_{u\in G'}\max_{v\in G'}dist(u, v).
+$$</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">应用场景：适用于各种要最小化<strong>单次</strong>最大传输距离（即最小化直径）的场景，区别于建设费用对应的 MST 问题。</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">绝对中心问题(Absolute 1 center problem, A1CP)</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">
+<p class=" font-serif my-1">图的中心：离心率 $ecc(u)$ 最小的点 $u$。中心的离心率定义为图的半径 $rad(G)$。</p>
+<p class=" font-serif my-1">离心率 $ecc(u)$ 定义为 $u$ 到离它最远点的距离，即
+$$
+ecc(u)=\max_{v\in V}dist(u, v).
+$$</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">但是直径不一定是半径的两倍！</p>
+</li>
+</ul>
+<div align="center">
+<img width="80%" src="1.png"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">绝对中心问题(Absolute 1 center problem, A1CP)</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">图的绝对中心：允许<strong>把边拆开</strong>，每条边可以认为有无数细分的点。把细分后的图记为 $G_A=\langle V_A, E\rangle$。定义图 $G$ 的<strong>绝对中心</strong>即为 $G_A$ 的中心，$G$ 的<strong>绝对半径</strong>即为 $G_A$ 的半径。容易发现：<ul class=" list-disc font-serif">
+<li class=" ml-8">$diam(G_A)=diam(G)$；</li>
+<li class=" ml-8">$G$ 的直径是绝对半径的两倍。</li>
+</ul>
+</li>
+</ul>
+<div align="center">
+<img width="80%" src="2.png"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">MDST 和 A1CP 等价</h2>
+<p class=" font-serif my-1"><em>Theorem.(MDST 和 A1CP 的等价性)</em> 图 $G$ 的<strong>绝对中心</strong> $G^*$ 的一棵<strong>最短路径树</strong> $T^*$ 是 $G$ 的 MDST。</p>
+<p class=" font-serif my-1"><em>Proof.</em> 给定 $G$ 的任意一棵生成树 $T$，只需证明 $diam(T^*)\le diam(T)$。设 $T$ 的绝对中心是 $T^*$。</p>
+<div align="center">
+<img width="80%" src="eq1.png"/>
+</div>
+
+<p class=" font-serif my-1">最短路径树可以在 $O(m+n\log n)$ 时间内求出。问题转化为寻找图的绝对中心。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">寻找图的绝对中心</h2>
+<p class=" font-serif my-1">[2] (Hakimi, 1964) 给出了求图的绝对中心的方法。</p>
+<p class=" font-serif my-1">绝对中心即 $G_A$ 上离心率最小的点 $u\in V_A$，而这样的 $u$ 一定在某条边上。</p>
+<p class=" font-serif my-1">故可以<strong>分别考虑每条边上离心率最小的点</strong> $G^*(e)$，称为 $e$-边绝对中心。最后 $G^*$ 就是 $\arg \min_{G^*(e)}ecc(G^*(e))$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">寻找 $e$-边绝对中心</h2>
+<p class=" font-serif my-1">对边 $e=(u, v)$，考虑离 $u$ 距离为 $x$ 的内点 $p$，它离 $V$ 中每个顶点 $w$ 的最小距离为</p>
+<p class=" font-serif my-1">$$
+dist(p, w)=\min(x+dist(u, w), -x+d_e+dist(v, w))
+$$</p>
+<div align="center">
+<img width="60%" src="3.png"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">寻找 $e$-边绝对中心</h2>
+<p class=" font-serif my-1">以 $dist(p, w)$ 和 $x$ 为坐标系，描述了一个函数关系。</p>
+<div align="center">
+<img width="80%" src="4.png"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">寻找 $e$-边绝对中心</h2>
+<p class=" font-serif my-1">把全部的 $w$ 遍历一遍，取最大值得到 $ecc$ 对应的函数。</p>
+<div align="center">
+<img width="60%" src="5.png"/>
+</div>
+
+<p class=" font-serif my-1">容易线性 $O(n)$ 得到函数最小值，从而得到 $e$-边绝对中心。</p>
+<p class=" font-serif my-1">对每条边考虑，得到 $G$ 的绝对中心，时间复杂度 $O(nm)$。</p>
+<p class=" font-serif my-1">算法瓶颈在于计算 ASAP。总时间复杂度为 $O(nm+n^2\log n)$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">总结</h2>
+<p class=" font-serif my-1">我们可以在 $O(nm+n^2\log n)$ 时间内计算 A1CP，然后用 $O(m+n\log n)$ 时间内求出绝对中心的最短路径树，即最小直径生成树。总时间复杂度为 $O(nm+n^2\log n)$。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">最小标签生成树(MLST)</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">最小标签生成树 - 定义</h2>
+<p class=" font-serif my-1"><em>Def.</em> 最小标签生成树(MLST)问题：给定图 $G=\langle V, E\rangle$ 和标签函数 $L: e\to S_L$，寻找 $G$ 的一棵生成树 $T$，最小化 $|L(E(T))|$，即最小化 $T$ 使用了的标签数量。</p>
+<div align="center">
+<img width="45%" src="6.png"/>
+</div>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8">应用场景：比如，在信息传递中，边代表传播介质（有光纤、电磁波、电话线、电缆等）。建设成本定义为使用的介质种类，这时最小化成本就是寻找 MLST。</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">MLST is NP-hard</h2>
+<p class=" font-serif my-1">通过将最小覆盖问题归约到 MLST 的判定版本 BLST，得到 BLST 是 NP-Complete，从而 MLST 是 NP-hard。</p>
+<p class=" font-serif my-1"><em>Def.</em> <strong>Bounded 标签生成树(BLST)问题</strong>：给定图 $G=\langle V, E\rangle$ 和 上界 $W$，是否存在 $|L(E(T))| \le W$ 的生成树 $T$。</p>
+<p class=" font-serif my-1">显然 BLST 是 NP 的，只需证明它是 NP-hard，从而是 NP-Complete 的。</p>
+<p class=" font-serif my-1"><em>Def.</em> <strong>最小覆盖问题</strong>：给定集合 $S=\lbrace a_1, a_2, \cdots, a_n\rbrace$ 与上界 $W$，和 $m$ 个 $S$ 的子集 $C_1, C_2, \cdots, C_m\subseteq S$，是否存在 $\le W$ 个 $C_i$ 能够覆盖 $S$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">归约</h2>
+<p class=" font-serif my-1">对于给定的最小覆盖问题 $\langle S, W, C_1, C_2, \cdots, C_m\rangle$，建图如下：</p>
+<div style="display: flex">
+<div align="center" style="flex: 1">
+<img width="100%" src="7.png"/>
+<p align="center" style="font-size: 18px;" class=" font-serif my-1">图片来源：[3] (Chang &amp; Shing-Jiuan, 1997)</p>
+</div>
+<div style="flex: 1.5; margin: auto">
+<p class=" font-serif my-1">若存在该图存在 $(W+1)$ BLST，则原问题存在 $W$ 最小覆盖。该归约显然是 poly 的。因为最小覆盖是 NP-Complete 的，故 BLST 也是 NP-Complete 的。从而 MLST 是 NP-hard 的。</p>
+</div>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">MLST 的启发式算法</h2>
+<p class=" font-serif my-1"><strong>Edge Replacement Algorithm:</strong></p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">任选一棵生成树 $T$。</li>
+<li class=" ml-8">尝试每条非树边，判断将这条边替代合法树边得到 $T'$ 后使用的标签数能否减小，若可以减小则替代。</li>
+</ul>
+<p class=" font-serif my-1">时间复杂度为 $O(mn)$。</p>
+<p class=" font-serif my-1"><strong>Maximum Vertex Covering Algorithm:</strong></p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">当图不连通时，在还未选过的标签中，选取加入后连通分支数目减少最多的标签，依次反复，直到图连通。</li>
+</ul>
+<p class=" font-serif my-1">时间复杂度为 $O(lmn)$，$l$ 为标签总数。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">MLST 的精确算法 - A*</h2>
+<p class=" font-serif my-1">将“每次搜索一个新的标签”的搜索算法改造成 A*。</p>
+<p class=" font-serif my-1">$$
+f(x)=g(x)+h(x)
+$$</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">$g(x)$ 是已经使用了的标签数量；</li>
+<li class=" ml-8">$h(x)$ 计算方法是：<ul class=" list-disc font-serif">
+<li class=" ml-8">首先得到由已选定的标签构成的连通块个数 $t$。则还需要 $need=t-1$ 条树边；</li>
+<li class=" ml-8">然后设<strong>还未选过的标签</strong>对应的边数由高到低为 $e_1, e_2, \cdots, e_{l'}$；</li>
+<li class=" ml-8">设置 $h(x)$ 为最小的 $j$ 使得 $\sum_{i=1}^je_i\ge need$.</li>
+</ul>
+</li>
+</ul>
+<p class=" font-serif my-1">可以知道 $h(x)$ 一定 $\le$ 真实值 $h^*(x)$，保证了 A* 的正确性。</p>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考文献</h2>
+<p class=" font-serif my-1">[1] Hassin, R., &amp; Tamir, A. (1995). On the minimum diameter spanning tree problem. Information processing letters, 53(2), 109-111.</p>
+<p class=" font-serif my-1">[2] Hakimi, S. L. (1964). Optimum locations of switching centers and the absolute centers and medians of a graph. Operations research, 12(3), 450-459.</p>
+<p class=" font-serif my-1">[3] Chang, R. S., &amp; Shing-Jiuan, L. (1997). The minimum labeling spanning trees. Information Processing Letters, 63(5), 277-282.</p>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家！</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

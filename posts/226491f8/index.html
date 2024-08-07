@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：请调研并介绍图灵机及其至少 2 种等价模型，讨论图灵机、P、NP之间的关系。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 10 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/226491f8/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：请调研并介绍图灵机及其至少 2 种等价模型，讨论图灵机、P、NP之间的关系。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-07T09:57:45.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.613Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/226491f8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/226491f8/","path":"posts/226491f8/","title":"问题求解（三） Open Topic 10 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 10 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%8F%8A%E5%9B%BE%E7%81%B5%E5%AE%8C%E5%A4%87%E6%80%A7"><span class="nav-text">图灵机及图灵完备性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%9B%BE%E7%81%B5%E6%9C%BA%E4%B8%8E%E9%9D%9E%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%9B%BE%E7%81%B5%E6%9C%BA1"><span class="nav-text">确定性图灵机与非确定性图灵机[1]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%81%B5%E5%AE%8C%E5%A4%87%E6%80%A7"><span class="nav-text">图灵完备性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-%E6%BC%94%E7%AE%972"><span class="nav-text">Lambda 演算[2]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda-%E6%BC%94%E7%AE%97%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99"><span class="nav-text">Lambda 演算的基本规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda-%E6%BC%94%E7%AE%97---%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B03"><span class="nav-text">Lambda 演算 - 多元函数[3]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda-%E4%B8%8E%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%803"><span class="nav-text">Lambda 与编程语言[3]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-lambda-%E6%BC%94%E7%AE%97"><span class="nav-text">使用 Lambda 演算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#brainfk"><span class="nav-text">Brainf**k</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%81%B5%E6%9C%BA%E4%B8%8E-p-%E5%92%8C-np"><span class="nav-text">图灵机与 P 和 NP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/226491f8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 10 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 10 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-07 17:57:45" itemprop="dateCreated datePublished" datetime="2023-11-07T17:57:45+08:00">2023-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：请调研并介绍图灵机及其至少 2 种<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Turing_machine_equivalents">等价模型</a>，讨论图灵机、P、NP之间的关系。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">Slide</a></p>
+<h1 id="图灵机及图灵完备性">图灵机及图灵完备性</h1>
+<h2
+id="确定性图灵机与非确定性图灵机1">确定性图灵机与非确定性图灵机[1]</h2>
+<p><em>确定性图灵机(DTM)</em>：六元组 <span
+class="math inline">\(M=\langle Q, \Sigma, \iota, \sqcup, A,
+\delta\rangle\)</span></p>
+<ul>
+<li><span class="math inline">\(Q\)</span> 是读写头的状态集合。</li>
+<li><span class="math inline">\(\Sigma\)</span> 是纸带字符集。</li>
+<li><span class="math inline">\(\iota\in Q\)</span>
+是读写头初始状态。</li>
+<li><span class="math inline">\(\sqcup \in \Sigma\)</span>
+表示空符号。</li>
+<li><span class="math inline">\(A\subseteq Q\)</span> 是结束状态。</li>
+<li><span class="math inline">\(\delta: (Q\setminus A \times \Sigma)\to
+(Q\times \Sigma \times \lbrace L, S, R\rbrace)\)</span>
+为<strong>状态转移函数</strong>。</li>
+</ul>
+<p>使用形式语言的范畴，可以认为 DTM
+是一个有存储结构(纸带)的有限状态自动机。</p>
+<p><em>非确定性图灵机(NTM)</em>：六元组 <span
+class="math inline">\(M=\langle Q, \Sigma, \iota, \sqcup, A,
+\delta\rangle\)</span></p>
+<ul>
+<li><span class="math inline">\(Q\)</span> 是读写头的状态集合。</li>
+<li><span class="math inline">\(\Sigma\)</span> 是纸带字符集。</li>
+<li><span class="math inline">\(\iota\in Q\)</span>
+是读写头初始状态。</li>
+<li><span class="math inline">\(\sqcup \in \Sigma\)</span>
+表示空符号。</li>
+<li><span class="math inline">\(A\subseteq Q\)</span> 是结束状态。</li>
+<li><span class="math inline">\(\delta\subseteq(Q\setminus A \times
+\Sigma)\times (Q\times \Sigma \times \lbrace L, S, R\rbrace)\)</span>
+为<strong>状态转移关系</strong>。</li>
+</ul>
+<p>可以发现 DTM 和 NTM 的区别仅在于 <span
+class="math inline">\(\delta\)</span> 是函数还是关系。</p>
+<h2 id="图灵完备性">图灵完备性</h2>
+<p>如果一个计算模型/指令系统具有<strong>模拟</strong>一台图灵机的能力，则称它具有图灵完备性。</p>
+<p>以下给出两种具有图灵完备性的计算模型。</p>
+<h2 id="lambda-演算2">Lambda 演算[2]</h2>
+<p>Lambda 演算由 Alonzo Church (Alan Turing
+的博导)提出，被证明具有图灵完备性。</p>
+<p>现在很多语言都支持函数式编程，Lambda 演算是其中的重要一环。</p>
+<h3 id="lambda-演算的基本规则">Lambda 演算的基本规则</h3>
+<p>Lambda 演算主要内容是“函数抽象”和“函数应用”</p>
+<ul>
+<li>变量：如 <span class="math inline">\(x\)</span>, <span
+class="math inline">\(y\)</span> 等，用来表示函数参数。</li>
+<li>函数抽象：或是函数定义，如 <code>(lambda x. (* x x))</code>
+是一个单个参数的函数，返回参数的平方。</li>
+<li>函数应用：或是函数调用，如 <code>((lambda x. (* x x)) 233)</code> 将
+233 带入左边函数的参数 <span class="math inline">\(x\)</span>，得到
+<span class="math inline">\(233^2\)</span>.</li>
+</ul>
+<h3 id="lambda-演算---多元函数3">Lambda 演算 - 多元函数[3]</h3>
+<p>Lambda
+演算基础版本中只提供一元函数，但是多元函数可以使用“返回函数的函数”来完成。如计算加法的二元函数：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lambda x y. (+ x y))</span><br></pre></td></tr></table></figure>
+<p>可以用“函数的函数”来完成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lambda x. (lambda y. (+ x y)))</span><br></pre></td></tr></table></figure>
+<p>在应用时，可以方便地后接两个参数：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(((lambda x. (lambda y. (+ x y))), 2) 3)</span><br><span class="line">or</span><br><span class="line">((lambda x. (lambda y. (+ x y))), 2 3)</span><br></pre></td></tr></table></figure>
+<h3 id="lambda-与编程语言3">Lambda 与编程语言[3]</h3>
+<p>可以使用函数来编码编程语言中的基本概念，如 Boolean 和条件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">true = lambda x. lambda y. x</span><br><span class="line">false = lambda x. lambda y. y</span><br><span class="line">if E1 then E2 else E3 (一个三元函数) = E1 E2 E3</span><br></pre></td></tr></table></figure>
+<p>解释：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if false then a else b</span><br><span class="line">-&gt; false a b</span><br><span class="line">-&gt; (lambda x. lambda y. y) a b</span><br><span class="line">-&gt; (lambda y.y) b</span><br><span class="line">-&gt; b</span><br></pre></td></tr></table></figure>
+<h3 id="使用-lambda-演算">使用 Lambda 演算</h3>
+<p>C++, Python 等许多现代编程语言均提供 Lambda
+演算，更不用说一些专门的函数式语言。</p>
+<p>相信许多同学这样写过（充当匿名函数）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span>(a, a + n, [] (<span class="type">int</span> x, <span class="type">int</span> y) -&gt; <span class="type">bool</span> &#123;<span class="keyword">return</span> x &gt; y;&#125;);</span><br></pre></td></tr></table></figure>
+<p>python 中写得更顺畅一点，如加法：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span> x: <span class="keyword">lambda</span> y: x + y</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f(<span class="number">2</span>)(<span class="number">3</span>)</span><br><span class="line"><span class="number">5</span></span><br></pre></td></tr></table></figure>
+<h2 id="brainfk">Brainf**k</h2>
+<p>Brainf**k 由 Urban Müller 创立，仅使用 8
+种符号创立的及其简单的语言。</p>
+<p>该机器由内存 <code>M</code> 和字节指针 <code>p</code>
+构成，初始化内存全为 0。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>&gt;</code></td>
+<td style="text-align: center;"><code>++p</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>&lt;</code></td>
+<td style="text-align: center;"><code>--p</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>+</code></td>
+<td style="text-align: center;"><code>++(*p)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>-</code></td>
+<td style="text-align: center;"><code>--(*p)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.</code></td>
+<td style="text-align: center;">输出 <code>*p</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>,</code></td>
+<td style="text-align: center;">输入 <code>*p</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>[</code></td>
+<td style="text-align: center;">下详</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>]</code></td>
+<td style="text-align: center;">下详</td>
+</tr>
+</tbody>
+</table>
+<p>其中 Brainf**k 提供循环格式为</p>
+<p><code>A[B]C</code> 表示</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A;</span><br><span class="line"><span class="keyword">while</span> (*p) &#123; <span class="comment">// here meets [</span></span><br><span class="line">    B;</span><br><span class="line">&#125; <span class="comment">// here meets ]</span></span><br><span class="line">C;</span><br></pre></td></tr></table></figure>
+<p>它是图灵完备的。比如使用 Brainf**k 来写 <code>Hello world</code> 为
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">++++++++</span>               <span class="comment">Set Cell #0 to 8</span></span><br><span class="line"><span class="title">[</span></span><br><span class="line">    &gt;<span class="literal">++++</span>               <span class="comment">Add 4 to Cell #1; this will always set Cell #1 to 4</span></span><br><span class="line">    <span class="title">[</span>                   <span class="comment">as the cell will be cleared by the loop</span></span><br><span class="line">        &gt;<span class="literal">++</span>             <span class="comment">Add 2 to Cell #2</span></span><br><span class="line">        &gt;<span class="literal">+++</span>            <span class="comment">Add 3 to Cell #3</span></span><br><span class="line">        &gt;<span class="literal">+++</span>            <span class="comment">Add 3 to Cell #4</span></span><br><span class="line">        &gt;<span class="literal">+</span>              <span class="comment">Add 1 to Cell #5</span></span><br><span class="line">        &lt;&lt;&lt;&lt;<span class="literal">-</span>           <span class="comment">Decrement the loop counter in Cell #1</span></span><br><span class="line">    <span class="title">]</span>                   <span class="comment">Loop until Cell #1 is zero; number of iterations is 4</span></span><br><span class="line">    &gt;<span class="literal">+</span>                  <span class="comment">Add 1 to Cell #2</span></span><br><span class="line">    &gt;<span class="literal">+</span>                  <span class="comment">Add 1 to Cell #3</span></span><br><span class="line">    &gt;<span class="literal">-</span>                  <span class="comment">Subtract 1 from Cell #4</span></span><br><span class="line">    &gt;&gt;<span class="literal">+</span>                 <span class="comment">Add 1 to Cell #6</span></span><br><span class="line">    <span class="title">[</span>&lt;<span class="title">]</span>                 <span class="comment">Move back to the first zero cell you find; this will</span></span><br><span class="line">                        <span class="comment">be Cell #1 which was cleared by the previous loop</span></span><br><span class="line">    &lt;<span class="literal">-</span>                  <span class="comment">Decrement the loop Counter in Cell #0</span></span><br><span class="line"><span class="title">]</span>                       <span class="comment">Loop until Cell #0 is zero; number of iterations is 8</span></span><br><span class="line"></span><br><span class="line"><span class="comment">The result of this is:</span></span><br><span class="line"><span class="comment">Cell no :   0   1   2   3   4   5   6</span></span><br><span class="line"><span class="comment">Contents:   0   0  72 104  88  32   8</span></span><br><span class="line"><span class="comment">Pointer :   ^</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;<span class="string">.</span>                     <span class="comment">Cell #2 has value 72 which is &#x27;H&#x27;</span></span><br><span class="line">&gt;<span class="literal">---</span><span class="string">.</span>                   <span class="comment">Subtract 3 from Cell #3 to get 101 which is &#x27;e&#x27;</span></span><br><span class="line"><span class="literal">+++++++</span><span class="string">.</span><span class="string">.</span><span class="literal">+++</span><span class="string">.</span>           <span class="comment">Likewise for &#x27;llo&#x27; from Cell #3</span></span><br><span class="line">&gt;&gt;<span class="string">.</span>                     <span class="comment">Cell #5 is 32 for the space</span></span><br><span class="line">&lt;<span class="literal">-</span><span class="string">.</span>                     <span class="comment">Subtract 1 from Cell #4 for 87 to give a &#x27;W&#x27;</span></span><br><span class="line">&lt;<span class="string">.</span>                      <span class="comment">Cell #3 was set to &#x27;o&#x27; from the end of &#x27;Hello&#x27;</span></span><br><span class="line"><span class="literal">+++</span><span class="string">.</span><span class="literal">------</span><span class="string">.</span><span class="literal">--------</span><span class="string">.</span>    <span class="comment">Cell #3 for &#x27;rl&#x27; and &#x27;d&#x27;</span></span><br><span class="line">&gt;&gt;<span class="literal">+</span><span class="string">.</span>                    <span class="comment">Add 1 to Cell #5 gives us an exclamation point</span></span><br><span class="line">&gt;<span class="literal">++</span><span class="string">.</span>                    <span class="comment">And finally a newline from Cell #6</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="图灵机与-p-和-np">图灵机与 P 和 NP</h2>
+<ul>
+<li>P: 在确定性图灵机上可以在多项式步内判定的语言。</li>
+<li>NP: 在非确定性图灵机上可以在多项式步内判定的语言。</li>
+</ul>
+<p>此处，非确定性图灵机可以认为是能够“神奇地选择最易方式”，或是“在遇到分支形成副本”，从而也就和
+TC 中 NP 定义中的 certificate 不谋而合。存在的 certificate
+指引确定性图灵机模拟一台非确定性图灵机走正确道路的那条分支的结果。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] https://en.wikipedia.org/wiki/Turing_machine</p>
+<p>[2] https://en.wikipedia.org/wiki/Lambda_calculus</p>
+<p>[3]
+https://liujiacai.net/blog/2014/10/12/lambda-calculus-introduction/</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/226491f8/" title="问题求解（三） Open Topic 10 笔记">https://blog.rijuyuezhu.top/posts/226491f8/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/ca406595/" rel="prev" title="问题求解（三） Open Topic 9 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 9 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/eece9166/" rel="next" title="问题求解（三） Open Topic 11 笔记">
+                  问题求解（三） Open Topic 11 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

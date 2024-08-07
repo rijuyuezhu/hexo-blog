@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="选题为 15-1, 讲解 Tarjan 离线 LCA 算法及其的线性改进.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（二） Open Topic IV 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/34e7c893/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="选题为 15-1, 讲解 Tarjan 离线 LCA 算法及其的线性改进.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/34e7c893/LCA-routine.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/34e7c893/illustration%20of%20the%20algorithm.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/34e7c893/illustration%20of%20the%20blocks.png">
+<meta property="article:published_time" content="2023-05-30T07:32:26.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.563Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/34e7c893/LCA-routine.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/34e7c893/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/34e7c893/","path":"posts/34e7c893/","title":"问题求解（二） Open Topic IV 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（二） Open Topic IV 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81-lca-%E7%AE%97%E6%B3%95%E4%B8%80%E8%A7%88"><span class="nav-text">常见 LCA 算法一览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tarjan-%E7%A6%BB%E7%BA%BF-lca-%E7%AE%97%E6%B3%95"><span class="nav-text">Tarjan 离线 LCA 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%A7%A3%E9%87%8A"><span class="nav-text">算法解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%9A%84%E7%AE%80%E8%A6%81%E8%AF%81%E6%98%8E"><span class="nav-text">算法的简要证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%97%B6%E7%A9%BA%E5%88%86%E6%9E%90"><span class="nav-text">算法时空分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E7%A7%8D%E6%94%B9%E8%BF%9B%E5%88%B0%E7%BA%BF%E6%80%A7%E7%9A%84%E5%81%9A%E6%B3%95"><span class="nav-text">一种改进到线性的做法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-text">算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%9D%97%E5%86%85%E8%BF%9B%E8%A1%8C%E6%9F%A5%E8%AF%A2"><span class="nav-text">在块内进行查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%9D%97%E9%97%B4%E8%BF%9B%E8%A1%8C%E6%9F%A5%E8%AF%A2"><span class="nav-text">在块间进行查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E4%B8%8A%E5%90%88%E5%B9%B6%E6%93%8D%E4%BD%9C"><span class="nav-text">树上合并操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/34e7c893/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（二） Open Topic IV 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（二） Open Topic IV 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-30 15:32:26" itemprop="dateCreated datePublished" datetime="2023-05-30T15:32:26+08:00">2023-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>选题为 15-1, 讲解 Tarjan 离线 LCA 算法及其的线性改进.</p>
+<span id="more"></span>
+<p>演示文稿: 详见 <a href="4.pdf">Slide</a>.</p>
+<h1 id="常见-lca-算法一览">常见 LCA 算法一览</h1>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 12%" />
+<col style="width: 38%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">算法</th>
+<th style="text-align: center;">在/离线</th>
+<th style="text-align: center;">时间复杂度</th>
+<th style="text-align: center;">空间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">倍增法</td>
+<td style="text-align: center;">在线</td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log
+n)\sim O(\log n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log
+n)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">树链剖分法</td>
+<td style="text-align: center;">在线</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\sim
+O(\log n)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Link Cut Tree 法</td>
+<td style="text-align: center;">在线</td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log
+n)\sim O(\log n)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">RMQ, ST 表</td>
+<td style="text-align: center;">在线</td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log
+n)\sim O(1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log
+n)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Tarjan LCA</strong></td>
+<td style="text-align: center;">离线</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n+q\alpha(q+n, n))\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n+q)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Tarjan LCA(改进)</strong></td>
+<td style="text-align: center;">离线</td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n+q)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n+q)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">标准 RMQ</td>
+<td style="text-align: center;">在线</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\sim
+O(1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(O(n)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>其中定义树的节点个数为 <span class="math inline">\(n\)</span>.
+在线算法的时间复杂度中, 符号 <span class="math inline">\(O(T_1)\sim
+O(T_2)\)</span> 意为, 预处理需要时间 <span
+class="math inline">\(O(T_1)\)</span>, 单次在线询问需要时间 <span
+class="math inline">\(O(T_2)\)</span>. 离线算法中 <span
+class="math inline">\(q\)</span> 为总询问个数. 以上复杂度分析均在 RAM
+模型下进行.</p>
+<p>另外, <span class="math inline">\(\alpha(m, n)=\min\lbrace i\ge 1:
+A_i(\lfloor m/n \rfloor) \ge \log n\rbrace\)</span>, 它关于 <span
+class="math inline">\(m\)</span> 递减, 关于 <span
+class="math inline">\(n\)</span> 递增.</p>
+<p>本文主要介绍 Tarjan 离线 LCA 算法及其改进算法.</p>
+<h1 id="tarjan-离线-lca-算法">Tarjan 离线 LCA 算法</h1>
+<h2 id="算法流程">算法流程</h2>
+<p><img src="LCA-routine.png" /></p>
+<h2 id="算法解释">算法解释</h2>
+<p><img src="illustration%20of%20the%20algorithm.png" /></p>
+<h2 id="算法的简要证明">算法的简要证明</h2>
+<p>注意到几个事实:</p>
+<ol type="1">
+<li>如果 <span class="math inline">\(u\)</span> 为白色而 <span
+class="math inline">\(v\)</span> 为黑色, 那么所有以 <span
+class="math inline">\(v\)</span> 的祖先到 LCA(<span
+class="math inline">\(u, v\)</span>)(不含
+LCA)为根的子树都已经合并成了一个连通块(因为它们所在的递归已经完整退出).</li>
+<li>LCA(<span class="math inline">\(u, v\)</span>) 还在执行中(因为 <span
+class="math inline">\(v\)</span> 是 LCA(<span class="math inline">\(u,
+v\)</span>) 的子孙), 故它尚未与它的父亲合并.
+由于算法的执行过程保证该连通块的代表元(或者说代码中的 ancestor)
+是深度最小的节点, 也就是 LCA.</li>
+</ol>
+<h2 id="算法时空分析">算法时空分析</h2>
+<p>空间复杂度显然为 <span class="math inline">\(O(n+q)\)</span>,
+时间复杂度分析如下:</p>
+<p><strong>一、上界分析</strong></p>
+<p>在每一次的递归过程中, 除去处理询问的部分, 其余部分均花费常数时间.
+故累计 <span class="math inline">\(n\)</span> 次递归的时间为 <span
+class="math inline">\(O(n)\)</span>; 每次处理询问需调用一次 Find-Set,
+单次时间均摊为 <span class="math inline">\(O(\alpha(q+n, n))\)</span>.
+故总时间为 <span class="math inline">\(O(n+q\alpha(q+n,
+n))\)</span>.</p>
+<p><strong>二、下界分析</strong></p>
+<p>Tarjan 的一篇论文<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>给出了并查集在最坏情况下的下界是
+<span class="math inline">\(\Omega(n+q\alpha(q+n, n))\)</span>.
+该下界证明容易拓展到 Tarjan 离线 LCA 算法.</p>
+<p>故综上, 该算法时间为 <span class="math inline">\(O(n+q\alpha(q+n,
+n))\)</span> 并达到理论最优, 空间为 <span
+class="math inline">\(O(n+q)\)</span>.</p>
+<h1 id="一种改进到线性的做法">一种改进到线性的做法</h1>
+<p>由 Gabow 和 Tarjan 提出<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a>.
+他们提出了一种并查集方法: 当并查集的 Union 过程事先已知(不要求顺序已知,
+只要求操作已知)时, 可以将 <span class="math inline">\(n\)</span>
+个点、<span class="math inline">\(q\)</span> 次在线 Find-Set 和 Union
+的并查集的复杂度改进成线性 <span
+class="math inline">\(O(n+q)\)</span>.</p>
+<h2 id="算法描述">算法描述</h2>
+<p>由于 Union 关系确定, 可以把需要执行 Union(<span
+class="math inline">\(u, v\)</span>) 的元素之间建边,
+则可以形成一棵"合并树"(如果 Union(<span class="math inline">\(u,
+v\)</span>) 操作少于 <span class="math inline">\(n-1\)</span> 次,
+得到的是一个森林, 但不影响我们的讨论). 容易发现, 当我们在讨论 Tarjan
+离线 LCA 时, 原树就是合并树.
+在合并树上我们的并查集只要求完成两种操作:</p>
+<ol type="1">
+<li>Union-Tree(<span class="math inline">\(u\)</span>): 把 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(u.p\)</span> 合并到同一个连通块中, 且把原来 <span
+class="math inline">\(u.p\)</span>
+所在连通块的代表元设置为新连通块的代表元. 每个结点仅可以执行一次,
+且不可对根执行.</li>
+<li>Find-Tree(<span class="math inline">\(u\)</span>): 查找 <span
+class="math inline">\(u\)</span> 所在连通块的代表元.</li>
+</ol>
+<p>这个算法的主要思想是进行树分块, 在块的<strong>根</strong>之间使用带
+<span class="math inline">\(\alpha\)</span> 复杂度的并查集进行维护,
+在块内部使用查表得到结果. 利用这种并查集, 可以将 Tarjan 离线 LCA
+的理论时间复杂度优化到 <span class="math inline">\(O(n+q)\)</span>.</p>
+<p><img src="illustration%20of%20the%20blocks.png" /></p>
+<p>每一个块的大小要求小于 <span class="math inline">\(b\)</span>,
+是一个森林, 森林中的每一棵树都是原树中的一个连通块,
+并且它们深度最低的节点有着公共的父亲, 称作这个块的<strong>根</strong>.
+注意根不在该块中.</p>
+<p>如果一个结点 <span class="math inline">\(u\)</span> 已经执行过
+Union-Tree(<span class="math inline">\(u\)</span>)了,
+称它是<strong>被标记</strong>的. 显然被标记的结点无法成为代表元. 那么,
+在 Find-Tree(<span class="math inline">\(u\)</span>) 中, 要寻找的是离
+<span class="math inline">\(u\)</span> 最近的未被标记的祖先.
+这个祖先可能和 <span class="math inline">\(u\)</span> 在同一个块中,
+也可能和 <span class="math inline">\(u\)</span> 不在同一个块中.
+我们分情况如下:</p>
+<h3 id="在块内进行查询">在块内进行查询</h3>
+<p>使用 Find-In-Block(<span class="math inline">\(u\)</span>)
+查询在块内的 <span class="math inline">\(u\)</span>
+的最近未被标记的祖先. 如果没有(即在别的块中), 那么返回块的根.
+由于每一块的大小至多为 <span class="math inline">\(b\)</span>,
+故不同的块的形状至多为 <span class="math inline">\(b^{b-1}\)</span>
+(枚举每一个元素的父亲. 实际上远远小于它,
+因为很多情况不能构成合法的森林). 如果用一个二进制数存储, 需要 <span
+class="math inline">\(2^{(b-1)\lceil \log b\rceil}\)</span> 位存储. 假设
+RAM 的字长 <span class="math inline">\(w=O(\log n)\)</span>,
+那么取适当的 <span class="math inline">\(b=O(\log n/\log \log
+n)\)</span> 可以使得 <span class="math inline">\((b-1)\lceil \log
+b\rceil\le w\)</span>. 那么可以用一个整数存储某个块的父亲状态. 除此以外,
+如果得知了每个点是否被标记(有至多 <span
+class="math inline">\(2^{b-1}\)</span> 个状态数), 要求的 Find-In-Block
+是哪个点 <span class="math inline">\(u\)</span>, 那么可以用一个表
+table<span class="math inline">\([0\cdots 2^{(b-1)\lceil \log
+b\rceil}-1, 0\cdots 2^{b-1}-1, 1\cdots b-1]\)</span>
+事先预处理相应块的答案(注意这个表的三维都可以用整数压缩), 从而在 <span
+class="math inline">\(O(1)\)</span> 时间内完成 FInd-In-Block(<span
+class="math inline">\(u\)</span>) 操作. 至于空间, 该表的空间需求是 <span
+class="math display">\[
+    2^{(b-1)\lceil \log b\rceil}\cdot 2^{b-1}\cdot (b-1).
+\]</span> 当 <span class="math inline">\(b=O(\log n/\log \log
+n)\)</span> 时, 上式是 <span class="math inline">\(O(n)\)</span> 的.
+Gabow 和 Tarjan 在文中给出了在时间 <span
+class="math inline">\(O(n)\)</span> 内构建该表的算法.</p>
+<h3 id="在块间进行查询">在块间进行查询</h3>
+<p>当在块内进行查询后返回的结点不在块内(即是它的根)时, 说明在块内找不到
+<span class="math inline">\(u\)</span> 未被标记的祖先, 需要进行块间查询.
+在<strong>每个块的根</strong>之间建立传统的 <span
+class="math inline">\(\alpha\)</span> 并查集, 那么并查集中有 <span
+class="math inline">\(O(n/b)\)</span> 个结点.</p>
+<p>我们把块间查询算法叫 Find-Across-Block(<span
+class="math inline">\(x\)</span>), 其中 <span
+class="math inline">\(x\)</span> 是 <span
+class="math inline">\(u\)</span> 所在块的根. 方法如下:</p>
+<ol type="1">
+<li>执行 <span class="math inline">\(x\gets \alpha\)</span>-Find(<span
+class="math inline">\(x\)</span>).</li>
+<li>执行 <span class="math inline">\(y=\)</span> Find-In-Block(<span
+class="math inline">\(x\)</span>). 如果得到的 <span
+class="math inline">\(y\)</span> 和 <span
+class="math inline">\(x\)</span> 在同一个块, 则返回; 否则, 执行 <span
+class="math inline">\(\alpha\)</span>-Union(<span
+class="math inline">\(y, x\)</span>), 并让 <span
+class="math inline">\(x\gets \alpha-\)</span>Find(<span
+class="math inline">\(x\)</span>), 重复执行 <span
+class="math inline">\(2\)</span>.</li>
+</ol>
+<p>这里 <span class="math inline">\(\alpha\)</span> -
+并查集的作用是快速排除某段路径:
+在已经合并了的块的根之间不会再有没有标记的节点,
+从而保证了均摊复杂度.</p>
+<p>进行时间复杂度分析, 容易得到复杂度为 <span
+class="math inline">\(O((q+O(n/b))\alpha(q+O(n/b),
+O(n/b))+O(n/b))=O(q+n)\)</span>, 当 <span
+class="math inline">\(b=\Omega(\log \log n)\)</span> 时.</p>
+<h3 id="树上合并操作">树上合并操作</h3>
+<p>是 <span class="math inline">\(O(1)\)</span> 的,
+只需要在块中标记该节点即可.</p>
+<h2 id="结论">结论</h2>
+<p>在分块中取 <span class="math inline">\(b=\Omega(\log \log n)\)</span>
+并 <span class="math inline">\(b=O(\log n/\log \log n)\)</span>,
+则可以在 <span class="math inline">\(O(n+q)\)</span> 时间, <span
+class="math inline">\(O(n)\)</span> 空间内解决 RAM
+模型上的已知结构的在线并查集合并查询问题. 虽然可能并不实用,
+但是具有理论价值.</p>
+<h1 id="参考文献">参考文献</h1>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/0022000079900424">A
+class of algorithms which require nonlinear time to maintain disjoint
+sets</a><a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/0022000085900145">A
+linear-time algorithm for a special case of disjoint set union, Harold
+N. Gabow, Robert Endre Tarjan</a>.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/34e7c893/" title="问题求解（二） Open Topic IV 笔记">https://blog.rijuyuezhu.top/posts/34e7c893/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/b0473663/" rel="prev" title="问题求解（二） Open Topic III 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（二） Open Topic III 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/61f05c0b/" rel="next" title="How to use customized domain for GitHub Pages">
+                  How to use customized domain for GitHub Pages <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：最小生成树问题有很多相关问题，例如 Steiner tree、k-MST、MBST 等，请调研至少 2 种问题（其中至多 1 种来自上述例子，欧氏最小生成树问题等仅限制原始问题输入的问题不在调研范围内），讨论适用场景，形式化描述问题并概述现有解决方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 8 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/6ea650b/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：最小生成树问题有很多相关问题，例如 Steiner tree、k-MST、MBST 等，请调研至少 2 种问题（其中至多 1 种来自上述例子，欧氏最小生成树问题等仅限制原始问题输入的问题不在调研范围内），讨论适用场景，形式化描述问题并概述现有解决方案。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/2.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/4.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/5.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/6.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/7.png">
+<meta property="article:published_time" content="2023-10-23T15:02:06.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.610Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/6ea650b/1.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/6ea650b/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/6ea650b/","path":"posts/6ea650b/","title":"问题求解（三） Open Topic 8 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 8 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%9B%B4%E5%BE%84%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E6%9C%80%E5%B0%8F%E6%A0%87%E7%AD%BE%E7%94%9F%E6%88%90%E6%A0%91"><span class="nav-text">最小直径生成树和最小标签生成树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mdst"><span class="nav-text">MDST</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%9B%B4%E5%BE%84%E7%94%9F%E6%88%90%E6%A0%91---%E5%AE%9A%E4%B9%89"><span class="nav-text">最小直径生成树 - 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E4%B8%AD%E5%BF%83%E9%97%AE%E9%A2%98absolute-1-center-problem-a1cp"><span class="nav-text">绝对中心问题(Absolute 1
+center problem, A1CP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mdst-%E5%92%8C-a1cp-%E7%AD%89%E4%BB%B7"><span class="nav-text">MDST 和 A1CP 等价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%9B%BE%E7%9A%84%E7%BB%9D%E5%AF%B9%E4%B8%AD%E5%BF%83"><span class="nav-text">寻找图的绝对中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE-e-%E8%BE%B9%E7%BB%9D%E5%AF%B9%E4%B8%AD%E5%BF%83"><span class="nav-text">寻找 \(e\)-边绝对中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mlst"><span class="nav-text">MLST</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E6%A0%87%E7%AD%BE%E7%94%9F%E6%88%90%E6%A0%91---%E5%AE%9A%E4%B9%89"><span class="nav-text">最小标签生成树 - 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlst-is-np-hard"><span class="nav-text">MLST is NP-hard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%92%E7%BA%A6"><span class="nav-text">归约</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95---1.-edge-replacement-algorithm"><span class="nav-text">启发式算法 - 1. Edge
+Replacement Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95---2.-maximum-vertex-covering-algorithm"><span class="nav-text">启发式算法 -
+2. Maximum Vertex Covering Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E7%AE%97%E6%B3%95---a"><span class="nav-text">精确算法 - A*</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/6ea650b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 8 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 8 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-23 23:02:06" itemprop="dateCreated datePublished" datetime="2023-10-23T23:02:06+08:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：最小生成树问题有很多<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Minimum_spanning_tree#Related_problems">相关问题</a>，例如
+<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Steiner_tree_problem">Steiner
+tree</a>、<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/K-minimum_spanning_tree">k-MST</a>、<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Minimum_bottleneck_spanning_tree">MBST</a>
+等，请调研至少 2 种问题（其中至多 1 种来自上述例子，<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Euclidean_minimum_spanning_tree">欧氏最小生成树问题</a>等仅限制原始问题输入的问题不在调研范围内），讨论适用场景，形式化描述问题并概述现有解决方案。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">Slide</a></p>
+<h1
+id="最小直径生成树和最小标签生成树">最小直径生成树和最小标签生成树</h1>
+<h2 id="概述">概述</h2>
+<p>主要介绍最小直径生成树(Mininum diameter spanning tree,
+MDST)以及最小标签生成树(Mininum labeling spanning tree,
+MLST)的相关算法。</p>
+<p>MDST 主要参考了文献 [1] (Hassin &amp; Tamir, 1995) 和 [2] (Hakimi,
+1964)；MLST 主要参考了 [3] (Chang &amp; Shing-Jiuan, 1997)。</p>
+<h1 id="mdst">MDST</h1>
+<h2 id="最小直径生成树---定义">最小直径生成树 - 定义</h2>
+<p><em>Def.</em> 最小直径生成树(MDST)问题：对于非负权无向图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span>，寻找它的一棵生成树
+<span class="math inline">\(T^*\)</span>，使得对任意 <span
+class="math inline">\(G\)</span> 的生成树 <span
+class="math inline">\(T\)</span>，有</p>
+<p><span class="math display">\[
+    diam(T^*)\le diam (T)
+\]</span></p>
+<p>其中 <span class="math inline">\(diam(G&#39;)\)</span> 是树 <span
+class="math inline">\(G&#39;\)</span> 的直径，定义为</p>
+<p><span class="math display">\[
+\max_{u\in G&#39;}\max_{v\in G&#39;}dist(u, v).
+\]</span></p>
+<h2 id="应用场景">应用场景</h2>
+<p>适用于各种要最小化<strong>单次</strong>最大传输距离（即最小化直径）的场景，区别于建设费用对应的
+MST 问题。</p>
+<h2
+id="绝对中心问题absolute-1-center-problem-a1cp">绝对中心问题(Absolute 1
+center problem, A1CP)</h2>
+<ul>
+<li><p>图的中心：离心率 <span class="math inline">\(ecc(u)\)</span>
+最小的点 <span
+class="math inline">\(u\)</span>。中心的离心率定义为图的半径 <span
+class="math inline">\(rad(G)\)</span>。</p>
+<p>离心率 <span class="math inline">\(ecc(u)\)</span> 定义为 <span
+class="math inline">\(u\)</span> 到离它最远点的距离，即 <span
+class="math display">\[
+  ecc(u)=\max_{v\in V}dist(u, v).
+\]</span></p></li>
+<li><p>但是直径不一定是半径的两倍！</p></li>
+</ul>
+<div data-align="center">
+<p><img width="80%" src="1.png" /></p>
+</div>
+<ul>
+<li>图的绝对中心：允许<strong>把边拆开</strong>，每条边可以认为有无数细分的点。把细分后的图记为
+<span class="math inline">\(G_A=\langle V_A, E\rangle\)</span>。定义图
+<span class="math inline">\(G\)</span> 的<strong>绝对中心</strong>即为
+<span class="math inline">\(G_A\)</span> 的中心，<span
+class="math inline">\(G\)</span> 的<strong>绝对半径</strong>即为 <span
+class="math inline">\(G_A\)</span> 的半径。容易发现：
+<ul>
+<li><span class="math inline">\(diam(G_A)=diam(G)\)</span>；</li>
+<li><span class="math inline">\(G\)</span> 的直径是绝对半径的两倍</li>
+</ul></li>
+</ul>
+<div data-align="center">
+<p><img width="80%" src="2.png" /></p>
+</div>
+<h2 id="mdst-和-a1cp-等价">MDST 和 A1CP 等价</h2>
+<p><em>Theorem.(MDST 和 A1CP 的等价性)</em> 图 <span
+class="math inline">\(G\)</span> 的<strong>绝对中心</strong> <span
+class="math inline">\(G^*\)</span> 的一棵<strong>最短路径树</strong>
+<span class="math inline">\(T^*\)</span> 是 <span
+class="math inline">\(G\)</span> 的 MDST。</p>
+<p><em>Proof.</em> 给定 <span class="math inline">\(G\)</span>
+的任意一棵生成树 <span class="math inline">\(T\)</span>，只需证明 <span
+class="math inline">\(diam(T^*)\le diam(T)\)</span>。设 <span
+class="math inline">\(T\)</span> 的绝对中心是 <span
+class="math inline">\(T^*\)</span>。</p>
+<p><span class="math display">\[
+\begin{align*}
+    diam(T^*)=&amp;2 ecc_{T^*}(G^*) &amp; (直径是绝对半径两倍)\\
+             =&amp;2 ecc_{G_A}(G^*) &amp; (最短路径树)\\
+             \le &amp;2 ecc_{G_A}(T^*) &amp; (G^* 是 G 的绝对中心)\\
+             \le &amp;2 ecc_{T}(T^*) &amp; (T 是 G 的子图)\\
+             =&amp; diam(T) &amp; (T 中直径是绝对半径的两倍)
+\end{align*}
+\]</span></p>
+<p>最短路径树可以在 <span class="math inline">\(O(m+n\log n)\)</span>
+时间内求出。问题转化为寻找图的绝对中心。</p>
+<h2 id="寻找图的绝对中心">寻找图的绝对中心</h2>
+<p>[2] (Hakimi, 1964) 给出了求图的绝对中心的方法。</p>
+<p>绝对中心即 <span class="math inline">\(G_A\)</span> 上离心率最小的点
+<span class="math inline">\(u\in V_A\)</span>，而这样的 <span
+class="math inline">\(u\)</span> 一定在某条边上。</p>
+<p>故可以<strong>分别考虑每条边上离心率最小的点</strong> <span
+class="math inline">\(G^*(e)\)</span>，称为 <span
+class="math inline">\(e\)</span>-边绝对中心。最后 <span
+class="math inline">\(G^*\)</span> 就是 <span class="math inline">\(\arg
+\min_{G^*(e)}ecc(G^*(e))\)</span>。</p>
+<h2 id="寻找-e-边绝对中心">寻找 <span
+class="math inline">\(e\)</span>-边绝对中心</h2>
+<p>对边 <span class="math inline">\(e=(u, v)\)</span>，考虑离 <span
+class="math inline">\(u\)</span> 距离为 <span
+class="math inline">\(x\)</span> 的内点 <span
+class="math inline">\(p\)</span>，它离 <span
+class="math inline">\(V\)</span> 中每个顶点 <span
+class="math inline">\(w\)</span> 的最小距离为</p>
+<p><span class="math inline">\(dist(p, w)=\min(x+dist(u, w),
+-x+d_e+dist(v, w))\)</span>。</p>
+<div data-align="center">
+<p><img width="80%" src="3.png" /></p>
+</div>
+<p>以 <span class="math inline">\(dist(p, w)\)</span> 和 <span
+class="math inline">\(x\)</span> 为坐标系，描述了一个函数关系。</p>
+<div data-align="center">
+<p><img width="80%" src="4.png" /></p>
+</div>
+<p>把全部的 <span class="math inline">\(w\)</span>
+遍历一遍，可以得到若干的线，取最大值。</p>
+<div data-align="center">
+<p><img width="80%" src="5.png" /></p>
+</div>
+<p>容易线性 <span class="math inline">\(O(n)\)</span>
+得到全局最小值，从而得到 <span
+class="math inline">\(e\)</span>-边绝对中心</p>
+<p>对每条边考虑，得到 <span class="math inline">\(G\)</span>
+的绝对中心，时间复杂度 <span class="math inline">\(O(nm)\)</span>。</p>
+<p>算法瓶颈在于计算 ASAP。总时间复杂度为 <span
+class="math inline">\(O(nm+n^2\log n)\)</span>。</p>
+<h2 id="总结">总结</h2>
+<p>我们可以在 <span class="math inline">\(O(nm+n^2\log n)\)</span>
+时间内计算 A1CP，然后用 <span class="math inline">\(O(m+n\log
+n)\)</span>
+时间内求出绝对中心的最短路径树，即最小直径生成树。总时间复杂度为 <span
+class="math inline">\(O(nm+n^2\log n)\)</span>。</p>
+<h1 id="mlst">MLST</h1>
+<h2 id="最小标签生成树---定义">最小标签生成树 - 定义</h2>
+<p><em>Def.</em> 最小标签生成树(MLST)问题：给定图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span> 和标签函数 <span
+class="math inline">\(L: e\to S_L\)</span>，寻找 <span
+class="math inline">\(G\)</span> 的一棵生成树 <span
+class="math inline">\(T\)</span>，最小化 <span
+class="math inline">\(|L(E(T))|\)</span>，即最小化 <span
+class="math inline">\(T\)</span> 使用了的标签数量。</p>
+<div data-align="center">
+<p><img width="80%" src="6.png" /></p>
+</div>
+<h2 id="应用场景-1">应用场景</h2>
+<p>比如，在信息传递中，边代表传播介质（有光纤、电磁波、电话线、电缆等）。建设成本定义为使用的介质种类，这时最小化成本就是寻找
+MLST。</p>
+<h2 id="mlst-is-np-hard">MLST is NP-hard</h2>
+<p>通过将<strong>最小覆盖问题</strong>归约到 MLST 的判定版本 BLST，得到
+BLST 是 NP-Complete，从而 MLST 是 NP-hard。</p>
+<p><em>Def.</em> 限制标签生成树(BLST)问题：给定图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span> 和 上界 <span
+class="math inline">\(W\)</span>，是否存在 <span
+class="math inline">\(|L(E(T))| \le W\)</span> 的生成树 <span
+class="math inline">\(T\)</span>。</p>
+<p>显然 BLST 是 NP 的，只需证明它是 NP-hard，从而是 NP-Complete 的。</p>
+<p><em>Def.</em> 最小覆盖问题：给定集合 <span
+class="math inline">\(S=\lbrace a_1, a_2, \cdots, a_n\rbrace\)</span> 与
+<span class="math inline">\(W\)</span>，和 <span
+class="math inline">\(m\)</span> 个 <span
+class="math inline">\(S\)</span> 的子集 <span class="math inline">\(C_1,
+C_2, \cdots, C_m\subseteq S\)</span>，是否存在 <span
+class="math inline">\(\le W\)</span> 个 <span
+class="math inline">\(C_i\)</span> 能够覆盖 <span
+class="math inline">\(S\)</span>。</p>
+<h2 id="归约">归约</h2>
+<p>对于给定的最小覆盖问题 <span class="math inline">\(\langle S, W, C_1,
+C_2, \cdots, C_m\rangle\)</span>，建图如下：</p>
+<div data-align="center">
+<p><img width="60%" src="7.png" /></p>
+</div>
+<p align="center">
+图片来源：[3] (Chang &amp; Shing-Jiuan, 1997)
+</p>
+<p>若存在该图存在 <span class="math inline">\(W+1\)</span>
+BLST，则原问题存在 W 最小覆盖。该归约显然是 poly 的。因为最小覆盖是
+NP-Complete 的，故 BLST 也是 NP-Complete 的。从而 MLST 是 NP-hard
+的。</p>
+<p>接下来介绍两种启发式算法和一种基于 A* 的精确算法。</p>
+<h2 id="启发式算法---1.-edge-replacement-algorithm">启发式算法 - 1. Edge
+Replacement Algorithm</h2>
+<p>算法流程：</p>
+<ul>
+<li>任选一棵生成树 <span class="math inline">\(T\)</span>。</li>
+<li>尝试每条非树边，判断将这条边替代合法树边得到 <span
+class="math inline">\(T&#39;\)</span>
+后使用的标签数能否减小，若可以减小则替代。</li>
+</ul>
+<p>时间复杂度为 <span class="math inline">\(O(mn)\)</span>。</p>
+<h2 id="启发式算法---2.-maximum-vertex-covering-algorithm">启发式算法 -
+2. Maximum Vertex Covering Algorithm</h2>
+<p>当图不连通时，在还未选过的标签中，选取加入后连通分支数目减少最多的标签，依次反复，直到图连通。</p>
+<p>时间复杂度为 <span class="math inline">\(O(lmn)\)</span>，<span
+class="math inline">\(l\)</span> 为标签总数。</p>
+<h2 id="精确算法---a">精确算法 - A*</h2>
+<p>将“每次搜索一个新的标签”的搜索算法改造成 A*。</p>
+<p><span class="math display">\[
+f(x)=g(x)+h(x)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(g(x)\)</span>
+是已经使用了的标签数量；</li>
+<li><span class="math inline">\(h(x)\)</span> 计算方法是：
+<ul>
+<li>首先得到由已选定的标签构成的连通块个数 <span
+class="math inline">\(t\)</span>。则还需要 <span
+class="math inline">\(need=t-1\)</span> 条边；</li>
+<li>然后设<strong>还未选过的标签</strong>对应的边数由高到低为 <span
+class="math inline">\(e_1, e_2, \cdots, e_{l&#39;}\)</span>；</li>
+<li>设置 <span class="math inline">\(h(x)\)</span> 为最小的 <span
+class="math inline">\(j\)</span> 使得 <span
+class="math inline">\(\sum_{i=1}^je_i\ge need\)</span>.</li>
+</ul></li>
+</ul>
+<p>可以知道 <span class="math inline">\(h(x)\)</span> 一定 <span
+class="math inline">\(\le\)</span> 真实值 <span
+class="math inline">\(h^*(x)\)</span>。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] Hassin, R., &amp; Tamir, A. (1995). On the minimum diameter
+spanning tree problem. Information processing letters, 53(2),
+109-111.</p>
+<p>[2] Hakimi, S. L. (1964). Optimum locations of switching centers and
+the absolute centers and medians of a graph. Operations research, 12(3),
+450-459.</p>
+<p>[3] Chang, R. S., &amp; Shing-Jiuan, L. (1997). The minimum labeling
+spanning trees. Information Processing Letters, 63(5), 277-282.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/6ea650b/" title="问题求解（三） Open Topic 8 笔记">https://blog.rijuyuezhu.top/posts/6ea650b/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/972c44eb/" rel="prev" title="ICS PA memory leak issue due to lib readline bug">
+                  <i class="fa fa-angle-left"></i> ICS PA memory leak issue due to lib readline bug
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/ca406595/" rel="next" title="问题求解（三） Open Topic 9 笔记">
+                  问题求解（三） Open Topic 9 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

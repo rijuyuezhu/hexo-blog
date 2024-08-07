@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/12/问题求解（三）-Open-Topic-15-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">二分图最大权匹配和最小 $k$-支配集</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">二分图最大权匹配</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">问题描述</h2>
+<p class=" font-serif my-1">给定二分图 $G=\langle X\cup Y, E\rangle$ 和权值函数 $w: E\to \mathbb R$（<strong>允许负权</strong>）。求匹配 $I\subseteq E$ 最大化</p>
+<p class=" font-serif my-1">$$
+cost(I)=\sum_{e\in I}w(e).
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">方法 1: 最大费用最大流</h2>
+<p class=" font-serif my-1">在二分图的网络流建模上，为边 $\langle u, v\rangle, u\in X, v\in Y$ 添加代价 $w(( u, v))$，为 $\langle s, u\rangle, u\in X$ 和 $\langle v, t\rangle, v\in Y$ 添加代价 $0$。</p>
+<p class=" font-serif my-1">使用 SSP 求解最大费用的最大流，时间复杂度 $O(nmf)$，其中 $f=O(n)$ 且 $m=O(n^2)$，在稠密的二分图上，最坏是 $O(n^4)$ 的。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">方法 2: KM 算法</h2>
+<p class=" font-serif my-1">KM 算法(Kuhn–Munkres Algorithm)可在 $O(n^3)$ 时间内解决二分图最大权匹配问题。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">一类特殊二分图</h2>
+<p class=" font-serif my-1">在运行 KM 算法之前，假设图 $G$ 满足以下性质：</p>
+<ol>
+<li class=" ml-8">$G$ 是完全二分图。</li>
+<li class=" ml-8">$G$ 是平衡二分图。</li>
+</ol>
+<p class=" font-serif my-1">对<strong>任意二分图</strong>，可以在左部或右部补充顶点满足条件 <strong>2.</strong>；可以加入 $0$ 或 $-\infty$ 的边满足条件 <strong>1.</strong>。所以该假设是不影响一般性的。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">顶标和相等子图</h2>
+<p class=" font-serif my-1"><strong>顶标</strong>：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">对于左部任意一点 $u\in X$，设置顶标 $lx_u$；</li>
+<li class=" ml-8">对于右部任意一点 $v\in Y$，设置顶标 $ly_v$。</li>
+</ul>
+<p class=" font-serif my-1"><strong>要求</strong>：在算法运行的任意时刻，对任意边 $(u, v)\in E, u\in X, v\in Y$ 有</p>
+<p class=" font-serif my-1">$$
+    lx_u+ly_v\ge w((u, v)).
+$$</p>
+<p class=" font-serif my-1"><strong>相等子图</strong> $G'=\langle V, E'\rangle$ 包含原图中的所有顶点，但仅包含原图中满足</p>
+<p class=" font-serif my-1">$$
+lx_u+ly_v=w((u, v))
+$$</p>
+<p class=" font-serif my-1">的边 $(u, v)$。可知相等子图由顶标序列决定。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">相等子图的性质</h2>
+<p class=" font-serif my-1"><em>Property 1</em>: 若相等子图存在完美匹配，则该完美匹配的权就是顶标和 $\sum_{u\in X}lx_u+\sum_{v\in Y}ly_v$.</p>
+<p class=" font-serif my-1"><em>Proof of Property 1</em>:</p>
+<p class=" font-serif my-1">设完美匹配 $I$（恰有 $|X|=|Y|=n$ 条边）为 $\lbrace (u_i, v_i): 1\le i\le n\rbrace$，其中 $\lbrace u_i: 1\le i\le n\rbrace = X$，$\lbrace v_i: 1\le i\le n\rbrace=Y$ 且互不相同。由相等子图的性质知</p>
+<p class=" font-serif my-1">$$
+cost(I)=\sum_{i=1}^nw((u_i, v_i))=\sum_{i=1}^nlx_{u_i}+ly_{v_i}=\sum_{u\in X}lx_u+\sum_{v\in Y}ly_v.
+$$</p>
+<p class=" font-serif my-1"><em>Property 2</em>: 若相等子图存在完美匹配，则该完美匹配就是原图的<strong>最大权</strong>完美匹配。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">相等子图的性质</h2>
+<p class=" font-serif my-1"><em>Proof of Property 2</em>:</p>
+<p class=" font-serif my-1">显然相等子图 $G'$ 的完美匹配 $I$ 是原图的完美匹配。对任意原图 $G$ 的完美匹配 $I'=\lbrace (u_i', v_i'): 1\le i\le n\rbrace$，有</p>
+<p class=" font-serif my-1">$$
+cost(I')=\sum_{i=1}^nw((u_i', v_i'))\le \sum_{i=1}^nlx_{u_i}+ly_{v_i}=cost(I).
+$$</p>
+<p class=" font-serif my-1">故 $I$ 是 $G$ 的最大权匹配。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法流程</h2>
+<p class=" font-serif my-1">只需求得具有完美匹配的相等子图即可。</p>
+<p class=" font-serif my-1"><em>Step 1</em>: 赋予符合条件的初始顶标 $lx_u\gets\max_{v\in Y}\lbrace w((u, v))\rbrace$，$ly_v\gets0$。</p>
+<p class=" font-serif my-1"><em>Step 2</em>: 从一个未匹配点开始在<strong>相等子图</strong> $G'$ 中增广，即只经过 $lx_u+ly_v=w((u, v))$ 的边 $(u, v)$。</p>
+<p class=" font-serif my-1"><em>Step 3</em>: <strong>调整顶标</strong>，扩大相等子图 $G'$。重复 <em>Step 2</em> 和 <em>Step 3</em> 直至 $G'$ 包含恰 $n$ 条边。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">调整顶标</h2>
+<p class=" font-serif my-1">为了扩大相等子图 $G'$，在 <em>Step 2</em> 经过的交错树中，让左部点顶标全部减少 $s$，让右部点顶标全部增加 $s(s&gt; 0)$。</p>
+<p class=" font-serif my-1">调整后，对于原图中的所有边，观察它的约束：（记 $u$ 和 $\hat u$ 分别为 $X$ 中在交错树和不在交错树的任意顶点，$v$ 和 $\hat v$ 同理）</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">边 $(u, v)$ 有 $lx'_u+ly'_v=lx_u-s+ly_v+s=lx_u+ly_v$，约束不变。</li>
+<li class=" ml-8">边 $(\hat u, \hat v)$ 有 $lx_{\hat u}'+ly_{\hat v}'=lx_{\hat u}+ly_{\hat v}$，约束不变。</li>
+<li class=" ml-8">边 $(u, \hat v)$ 要求有 $lx_u'+ly_{\hat v}'=lx_u-s+ly_{\hat v}\ge w((u, \hat v))$，有 $s\le lx_u+ly_{\hat v}-w((u, \hat v))$。</li>
+<li class=" ml-8">边 $(\hat u, v)$ 有 $lx_{\hat u}'+ly_v'=lx_{\hat u}+ly_v+s$，约束放松。</li>
+</ul>
+<p class=" font-serif my-1">综上，选择 $\displaystyle s=\min_{u\in X, \hat v\in Y}\lbrace lx_u+ly_{\hat v}-w((u, \hat v))\rbrace$ 既可以满足约束，又可以使相应的 $\hat v$ 加入相等子图。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法复杂性分析</h2>
+<p class=" font-serif my-1">至多扩增 $O(n)$ 次相等子图，每次进行增广(BFS)并维护顶标时间为 $O(n^2)$，总时间复杂度为 $O(n^3)$。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">最小 $k$-支配集</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">问题描述</h2>
+<p class=" font-serif my-1">图 $G=\langle V, E\rangle$ 的 $k$-支配集是点集的子集 $D_k\subseteq V$，使得去除 $V$ 中任意 $k-1$ 个顶点，剩余顶点或者在 $D_k$ 中，或者存在邻点在 $D_k$ 中。</p>
+<p class=" font-serif my-1">最小支配集是 $k=1$ 时的该问题的特例。该问题是 NP-Hard 的。</p>
+<p class=" font-serif my-1">[2] (Foerster, 2013) 中给出了一种近似率为 $\ln(\Delta+k)+1&lt;\ln(\Delta)+1.7&lt;\ln (n)+1.7$ 的贪心算法。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法介绍</h2>
+<p class=" font-serif my-1">对于某个 $D\subseteq V$，定义某个顶点 $v\in V$ 在 $k$-支配集中的<strong>度</strong> $d_k(v, D)$ 为</p>
+<div align="center">
+<img src="1.png" width="70%"/>
+</div>
+
+<p class=" font-serif my-1">即表示 “还需在 $D$ 中补充 $k- d_k(v, D)$ 个 $v$ 的邻点才能使得 $D$ 在 $v$ 处成为 $k$-支配集合法”。</p>
+<p class=" font-serif my-1">定义<strong>剩余代价</strong> $a(G, D)$ 为</p>
+<p class=" font-serif my-1">$$
+a(G, D)=\sum_{v\in V}[k-d_k(v, D)]=nk-\sum_{v\in V}d_k(v, D).
+$$</p>
+<p class=" font-serif my-1">则贪心算法则是依次迭代一系列 $D^{(0)}, D^{(1)}, \cdots, D^{(i)}$，每次加入一个顶点，使得 $a(G, D)$ 下降最快。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法步骤</h2>
+<p class=" font-serif my-1"><em>Step 1</em>: 令 $D^{(0)}\gets\varnothing$，$i\gets 0$。</p>
+<p class=" font-serif my-1"><em>Step 2</em>: </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">选择点 $v\in V\setminus D^{(i)}$ 使得 $a(G, D^{(i)})-a(G, D^{(i)}\cup \lbrace v\rbrace)$ 最大。</li>
+<li class=" ml-8">令 $D^{(i+1)}\gets D^{(i)}\cup \lbrace v\rbrace$，$i\gets i+1$。</li>
+</ul>
+<p class=" font-serif my-1"><em>Step 3</em>: 重复 <em>Step 2</em> 直至 $a(G, D^{(i)})=0$，则此时 $D_k=D^{(i)}$ 是 $k$-支配集。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法分析</h2>
+<p class=" font-serif my-1">该算法容易以 $O(n(n+m))$ 时间实现。为了分析近似率，我们使用以下数学结论：</p>
+<p class=" font-serif my-1"><em>Lemma</em>: 若 $r\in \mathbb N, r&gt;1$，且 $b_1, b_2, \cdots, b_s\in \mathbb N$ 满足</p>
+<p class=" font-serif my-1">$$
+    b_v\ge \frac{1}{r}(B_s-B_{v-1}), \forall v\in\lbrace 1, 2, \cdots, s\rbrace
+$$</p>
+<p class=" font-serif my-1">其中 $B_k=\sum_{i=1}^kb_i$ 为前缀和。</p>
+<p class=" font-serif my-1">则有结论 $B_{\lambda}&gt;B_s-r$，对于</p>
+<p class=" font-serif my-1">$$
+\lambda &gt; \frac{\ln(\frac{B_s}{r})}{\ln(\frac{r}{r-1})}.
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法近似率</h2>
+<p class=" font-serif my-1"><em>Theorem</em>: 设 $r$ 是最小 $k$-支配集的代价（即 $OPT$），则该贪心算法近似率为</p>
+<p class=" font-serif my-1">$$
+\frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1.
+$$</p>
+<p class=" font-serif my-1"><em>Corollary 1</em>: 该算法近似率为 $\ln (\Delta + k)+1$。</p>
+<p class=" font-serif my-1"><em>Corollary 2</em>: 该算法近似率为 $\ln(\Delta)+1.7&lt;\ln(n)+1.7$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">推论证明</h2>
+<p class=" font-serif my-1"><em>Proof for corollary 1</em>: 用导数易证恒等式</p>
+<p class=" font-serif my-1">$$
+\frac{1}{\ln(\frac{r}{r-1})}\le r(1-\frac{1}{2r}), r\ge 0.
+$$</p>
+<p class=" font-serif my-1">$$
+\frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1\le(1-\frac{1}{2r})\ln(\frac{nk}{r})+1&lt;\ln(\frac{nk}{r})+1
+$$</p>
+<p class=" font-serif my-1">因为 $D_k$ 中的每个点为 $a(G, D_k)$ 从 $nk$ 变化到 $0$ 至多有 $\Delta+k$ 的贡献（$k$ 为自己，$1$ 为每个邻点），故有</p>
+<p class=" font-serif my-1">$$
+    nk\le r(\Delta+k) \Leftrightarrow \frac{nk}{r}\le \Delta+k
+$$</p>
+<p class=" font-serif my-1">于是 $\ln(\frac{nk}{r})+1\le \ln(\Delta+k)+1$ 也为该算法近似率。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">推论证明</h2>
+<p class=" font-serif my-1"><em>Proof for corollary 2</em>: 当 $k&gt;\Delta$，则唯一的 $k$-支配集是 $V$，贪心算法可得到最优解 $r=|V|$；若考虑 $k\le \Delta$，有</p>
+<p class=" font-serif my-1">$$
+\ln(\Delta+k)+1\le \ln(2\Delta)+1\le \ln(\Delta)+\ln 2 + 1 &lt; \ln(\Delta)+1.7
+$$</p>
+<p class=" font-serif my-1">也为该算法近似率。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">定理的证明</h2>
+<p class=" font-serif my-1"><em>Theorem</em>: 设 $r$ 是最小 $k$-支配集的代价（即 $OPT$），则该贪心算法近似率为</p>
+<p class=" font-serif my-1">$$
+\frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1.
+$$</p>
+<p class=" font-serif my-1"><em>Proof</em>: 设某个最小 $k$-支配集为 $D^*_k$。在从 $D^{(i-1)}$ 构造 $D^{(i)}$ 的过程中，若取 $D^{(i)}=D^{(i-1)}\cup D^*_k$，则 $a(G, D^{(i)})=0$。故在 $D^*_k\setminus D^{(i-1)}$ 中至少存在一个顶点 $u^{(i)}$ 使得 $a$ 下降 $a(G, D^{(i)})/|D^*_k|=a(G, D^{(i)})/r$。于是有</p>
+<p class=" font-serif my-1">$$
+a(G, D^{(i)})\le a(G, D^{(i-1)}\cup \lbrace u^i\rbrace)\le a(G, D^{(i-1)})\left(1-\frac{1}{r}\right)
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">定理的证明</h2>
+<p class=" font-serif my-1">取 $B_i=nk-a(G, D^{(i)})$，变形上式有</p>
+<p class=" font-serif my-1">$$
+B_i-B_{i-1}\ge\frac{1}{r}(nk-B_{i-1}).
+$$</p>
+<p class=" font-serif my-1">令 $B_s=nk$，则由 <em>Lemma</em>，在</p>
+<p class=" font-serif my-1">$$
+\lambda &gt; \frac{\ln(\frac{B_s}{r})}{\ln(\frac{r}{r-1})}=\frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}
+$$
+时有 $B_{\lambda}&gt;B_s-r$，即 $a(G, D^{(\lambda)})&lt;r$。再选至多 $r-1$ 个点即可使得 $a(G, D^{(\lambda+r-1)})=0$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">定理的证明</h2>
+<p class=" font-serif my-1">故最终答案可取</p>
+<p class=" font-serif my-1">$$
+|D_k|=\left\lfloor \frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}+1\right\rfloor+r-1=\left\lfloor \frac{\ln(\frac{nk}{r})}{\ln(\frac{r}{r-1})}\right\rfloor+r.
+$$</p>
+<p class=" font-serif my-1">故近似率</p>
+<p class=" font-serif my-1">$$
+\alpha=\frac{|D_k|}{r}\le \frac{\ln(\frac{nk}{r})}{r\ln(\frac{r}{r-1})}+1
+$$</p>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考资料</h2>
+<p class=" font-serif my-1">[1] https://blog.rijuyuezhu.top/posts/58a68c50/</p>
+<p class=" font-serif my-1">[2] Foerster, K. T. (2013, January). Approximating fault-tolerant domination in general graphs. In 2013 Proceedings of the Tenth Workshop on Analytic Algorithmics and Combinatorics (ANALCO) (pp. 25-32). Society for Industrial and Applied Mathematics.</p>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家!</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

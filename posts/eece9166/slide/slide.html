@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/11/问题求解（三）-Open-Topic-11-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">任意图上 $O(nm)$ 的网络最大流算法</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">引言</h2>
+<p class=" font-serif my-1">[1] (Orlin, 2013) 给出了一种在任意图上 $O(nm)$ 的网络最大流算法。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">前置结果和本文贡献</h2>
+<p class=" font-serif my-1">[1] 中的若干证明用到了一些前置结果：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">[2] (King et al., 1994) 给出了强多项式 $O(nm\log_{m/(n\log n)})$ 的算法。对于任意 $m=\Omega(n^{1+\epsilon})$，该算法都是 $O(nm)$ 的。</li>
+<li class=" ml-8">[3] (Goldberg &amp; Rao, 1998) 给出了弱多项式的算法，每轮将 $\Delta$ bounded 的最大流问题转化为 $\Delta/2$ bounded 的最大流问题，每轮时间为 $O(\min\lbrace n^{2/3}, m^{1/2}\rbrace\cdot m\log (n^2/m))$。</li>
+</ul>
+<p class=" font-serif my-1">可以发现，需要攻克的仅在于 $m$ 不超过多项式地渐进大于 $n$ 时。</p>
+<p class=" font-serif my-1">本文提出 $O(nm+m^{31/16}\log^2n)$ 的算法。当 $m=O(n^{(16/15)-\epsilon})$ 时，该结果是 $O(nm)$ 的。</p>
+<p class=" font-serif my-1">和上文第一个结果相结合，得到了对任意图 $O(nm)$ 的网络最大流算法。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">主要思路</h2>
+<p class=" font-serif my-1">主要利用某种方法套用了 Goldberg 的结果：若最大流为 $U$，则时间为
+$$
+T(n)=\tilde O(\min\lbrace n^{2/3}, m^{1/2}\rbrace\cdot m\log U).
+$$</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">若 $\log U\le m^{7/16}$，则有</li>
+</ul>
+<p class=" font-serif my-1">$$
+    T(n)=\tilde O(m^{1/2}\cdot m\cdot m^{7/16})=\tilde O(m^{31/16}),
+$$</p>
+<p class=" font-serif my-1">已然满足条件。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">主要思路</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">若 $\log U\le m^{7/16}$，则在每轮前，把原图<strong>压缩</strong>成 $C$ 顶点、$O(C^2)$ 边的图。平均 $C=O(m/\log U)$，则单轮中 $n'=C, m'=O(C^2)$，带入有单轮时间为</li>
+</ul>
+<p class=" font-serif my-1">$$
+    \tilde O(C^{2/3}\cdot C^2)=\tilde O(C^{8/3}).
+$$</p>
+<p class=" font-serif my-1">于是 $O(\log U)$ 轮总时间为</p>
+<p class=" font-serif my-1">$$
+    T(n)=\tilde O(C^{8/3}\log U)=\tilde O(m^{8/3}\log^{-5/3}U)=\tilde O(m^{8/3}\cdot (m^{7/16})^{-5/3})=\tilde O(m^{16/31}).
+$$</p>
+<p class=" font-serif my-1">故问题的核心在于：要寻求一种<strong>压缩方式</strong>使得平均 $C=O(m/\log U)$，且对于流的影响较小。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">基本方法</h2>
+<p class=" font-serif my-1">[1] 提出的算法同样由 $O(\log U)$ 构成，每轮的步骤是：</p>
+<ol>
+<li class=" ml-8">
+<p class=" font-serif my-1">收缩(comtraction)。</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1"><strong>压缩</strong>（算法的核心）。</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">运行 Goldberg。</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">恢复对应到原图。</p>
+</li>
+</ol>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Abundant Arc</h2>
+<p class=" font-serif my-1">每轮算法的输入和输出都表示为 $(r, S, T)$，其中 $r$ 是残余网络，$C_{S, T}$ 是一组源汇割。可知在残余网络中至多还可以增长 $c(S, T)$ 的流，记作<strong>流上限</strong> $\Delta=c(S, T)$（和 Goldberg 中的 $\Delta$ 同义）。</p>
+<p class=" font-serif my-1"><strong>Abundant Arc</strong>: 若有一边 $r(e)\ge 2\Delta$，则称其为 $\Delta$-Abundant Arc.</p>
+<p class=" font-serif my-1"><em>Theorem</em>: 若在某轮算法中，输入为 $(r, S, T): \Delta$，输出为 $(r', S', T'): \Delta'$，且若 $r(e)\ge 2\Delta$ 是 $\Delta$-Abundant Arc，则在结束后，$r'(e)\ge 2\Delta'$ 是 $\Delta'$-Abundant Arc.</p>
+<p class=" font-serif my-1"><em>Proof</em>: 设 $e$ 增广了 $x$，即 $r(e)-r'(e)=x$，则有 $\Delta'\le \Delta-x$。故而</p>
+<p class=" font-serif my-1">$$
+    r'(e)=r(e)-x \ge 2\Delta-x \ge 2(\Delta'+x)-x \ge 2\Delta',
+$$</p>
+<p class=" font-serif my-1">故而 Abundant Arc 集合只会增加，不会减少。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">收缩</h2>
+<p class=" font-serif my-1">对输入 $(r, S, T)$，可以先将 <strong>Abundant Arc 环</strong>收缩：在收缩后的图上的流，必然可以满足收缩前的图的流。</p>
+<p class=" font-serif my-1">对于算法的 3. 运行 Goldberg，为了证明的方便，假设结束后的流 $\Delta'\le \Delta/(8m)$。可以发现复杂度只影响对数因子。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">四类弧</h2>
+<p class=" font-serif my-1">把图中所有弧分为四类：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">Little Arc($L$)：弧 $\langle i, j\rangle$ 满足 $c(\langle i, j\rangle) + c(\langle j, i\rangle)&lt; \Delta/(64m^3)$.</li>
+<li class=" ml-8">Medium Arc($M$): 弧 $\langle i, j\rangle$ 满足上式 $\ge \Delta/(64m^3)$，但正、反向弧都不是 Abundant Edge。</li>
+<li class=" ml-8">Abundant Arc($A$)。</li>
+<li class=" ml-8">Anti Abundant Arc($A'$)：反向弧在 $A$ 中的弧。</li>
+</ul>
+<p class=" font-serif my-1">注意到因为收缩后的图无 Abundant Arc 环，故一条边不能既在 $A$ 中又在 $A'$ 中。$L, M, A, A'$ 构成了弧集的一个划分。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">压缩 - 压缩掉一些顶点</h2>
+<p class=" font-serif my-1">如果一个顶点<strong>同时</strong>满足以下两个条件，则它可以被压缩（Compatible）：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">与它相邻的边没有 Medium Arc；</li>
+<li class=" ml-8">进入它的 Anti Abundant Arc 的残余容量和与离开它的相差不超过 $\Delta/(16m^2)$。</li>
+</ul>
+<p class=" font-serif my-1">换言之：一个顶点保留（是 Criticle）的条件是，满足以下条件<strong>之一</strong>：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">与它相邻的边有 Medium Arc；</li>
+<li class=" ml-8">进入它的 Anti Abundant Arc 的残余容量和与离开它的相差超过 $\Delta/(16m^2)$。</li>
+</ul>
+<p class=" font-serif my-1">直观理解，当一个顶点旁边的与 Abundant Arc 无关的边都是微不足道的时候，且 Anti Abundant Arc 流入和流出量基本相抵时，它是不重要的。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">压缩 - 忽略掉一些路径</h2>
+<p class=" font-serif my-1">如果一条路径 $P$ 中，存在某条 Little Arc： 则它可以增流的量至多为 $\Delta/(64m^3)$，可以忽略。故只需考虑 $P$ 经过  Medium Arc、Abundant Arc 和 Anti Abundant Arc。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">压缩 - 忽略掉一些路径</h2>
+<p class=" font-serif my-1"><em>Claim</em>: $P$ 中若存在 Anti Abundant Subpath 是以 Compatible 顶点为端点，则也可以忽略。</p>
+<p class=" font-serif my-1">因此，只需考虑的路径是：仅包含 Medium Arc、Abundant Arc、Auti Abundant Path（以 Criticle 顶点为端点）的路径。</p>
+<p class=" font-serif my-1">于是<strong>只需在 Criticle 顶点和以下三种边中运行 Goldberg 最大流算法</strong>: 当 $i, j$ 都是 Criticle 时</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">Medium 边；</li>
+<li class=" ml-8">伪 Abundant 弧：若在原图中存在 $i\Rightarrow j$ 的 <strong>Abundant</strong> Path，则有容量为 $2\Delta$ 的 $\langle i, j\rangle$ 弧；</li>
+<li class=" ml-8">伪 Anti Abundant 弧：若在原图中存在 $i\Rightarrow j$ 的 Anti Abundant Path，则有容量为所有这样的路径的残余容量和的弧 $\langle i, j\rangle$。</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">复杂度证明</h2>
+<p class=" font-serif my-1"><em>Theorem</em>: Criticle 顶点在<strong>全部</strong> $O(\log U)$ 轮算法中共 $O(m)$ 个，故每轮平均 $O(m/\log U)$，故开头的复杂度分析正确。</p>
+<p class=" font-serif my-1"><em>Proof</em>: 注意到对于原图中的弧:</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">对于 <em>Medium Arc</em>，在 $3$ 次操作后一定会变成 Abundant Arc；</li>
+<li class=" ml-8">对于所有相邻弧都不是 <em>Medium Arc</em>，但是因为"进入它的 Anti Abundant Arc 的残余容量和与离开它的相差超过 $\Delta/(16m^2)$"而不能被压缩的 Criticle 顶点，在 $4$ 轮后一定会有一条 Anti Abundant Arc 变为 Abundant Arc，进而形成 Abundant Cycle 被收缩。</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">Dinic 算法</h1>
+<p class=" font-serif my-1">(尽管正确的名字可能是 Dinitz，但就这么叫了)</p>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">主要思想</h2>
+<p class=" font-serif my-1">每次对于残余网络 $r$，进行一次 BFS，按照从 $s$ 的距离得到<strong>分层图</strong> $r_d$。</p>
+<p class=" font-serif my-1">对于 $r_d$ 进行<strong>若干次</strong> DFS，找出在 $r_d$ 上 <strong>阻塞流</strong>，即无法从 $s$ 到 $t$ 得到更多的流(不考虑退流)。</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="k">def</span> <span class="nf">Dinic</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">maxflow</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">flow</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">bfs</span><span class="p">()</span> <span class="n">gets</span> <span class="n">a</span> <span class="n">connective</span> <span class="n">graph</span> <span class="kn">from</span> <span class="nn">s</span> <span class="n">to</span> <span class="n">t</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">flow</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">INF</span><span class="p">)</span>
+            <span class="n">maxflow</span> <span class="o">+=</span> <span class="n">flow</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">flow</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">break</span>
+    <span class="k">return</span> <span class="n">maxflow</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">可以看到 Dinic 算法是 Ford-Fulkerson 增广的一种变种，正确性证明和 FF 算法相同，以下主要考虑其复杂度。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法复杂度</h2>
+<p class=" font-serif my-1"><em>Theorem 1</em>：对于单轮的分层图，DFS 求出阻塞流的复杂度为 $O(nm)$。</p>
+<p class=" font-serif my-1"><em>Theorem 2</em>: Dinic 算法至多考虑 $O(n)$ 次分层图。</p>
+<p class=" font-serif my-1"><em>Theorem 3</em>: 从上述两个定理可知，Dinic 算法的总复杂度为 $O(n^2m)$，但对于平均情况（以及特殊网络）有更好的复杂度。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">特殊图上的复杂度</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">
+<p class=" font-serif my-1">若网络中全部弧的容量均为 $1$，则 Dinic 算法的复杂度为 $O(m\cdot \min\lbrace n^{2/3}, m^{1/2}\rbrace)$。</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">若网络中全部弧的容量均为 $1$，且除源点和汇点外的每个点均满足 $d^-(u)=1$ 或 $d^+(u)=1$，则 Dinic 算法的复杂度为 $O(m\sqrt n)$。</p>
+</li>
+</ul>
+<p class=" font-serif my-1">对于二分图最大匹配，注意到该复杂度与 Hopcroft-Karp 算法相同。实质上，两个算法的本质是相同的。</p>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考资料</h2>
+<p class=" font-serif my-1">[1] James B. Orlin. 2013. Max flows in O(nm) time, or better. In Proceedings of the forty-fifth annual ACM symposium on Theory of Computing (STOC '13). Association for Computing Machinery, New York, NY, USA, 765–774. https://doi.org/10.1145/2488608.2488705</p>
+<p class=" font-serif my-1">[2] V. King, S. Rao, and R. Tarjan. A faster deterministic maximum flow algorithm. J. Algorithms, 23:447–474, 1994.</p>
+<p class=" font-serif my-1">[3] A. V. Goldberg and S. Rao. Beyond the flow decomposition barrier. Journal of the ACM, 45:783–797, 1998.</p>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家!</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

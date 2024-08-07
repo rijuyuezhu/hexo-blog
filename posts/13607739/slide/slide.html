@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/10/问题求解（三）-Open-Topic-6-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">基于 Goldberg 算法的 SSSP 并行算法</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">概述</h2>
+<p class=" font-serif my-1">本次 OT 先介绍一种可以处理非负权图的 $L$-<strong>限定距离 SSSP</strong>的并行算法，work 为 $\tilde O (m)$，span 为 $n^{1/2+o(1)}L^{1/2}$ WHP。</p>
+<blockquote>
+<p class=" font-serif my-1">$L$-限定距离 SSSP: 只计算途中 $dist(s, v)\le L$ 的 $v$ 的最短距离 $v.d=dist(s, v)$，而将 $dist(s, v)&gt;L$ 的 $v$ 求得的 $v.d=\infty$。</p>
+<p class=" font-serif my-1">WHP: With high probability，有 neglible 的概率失败。</p>
+</blockquote>
+<p class=" font-serif my-1">然后在此基础上再介绍基于 Goldberg's algorithm 的整数权的 SSSP 并行算法。设图中所有权的边权均 $\ge -L$，则 work 为 $\tilde O(m\sqrt n\log N)$，span 为 $n^{5/4+o(1)}$ WHP。[1]</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">$L$-限定距离 SSSP</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">两个黑盒结果</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">
+<p class=" font-serif my-1">“单（多）点连通性判断问题”：给定图 $G=\langle V, E\rangle$ 和起点集合 $S\subseteq V$，判定图中哪些点可以从 $S$ 中某个点可达。</p>
+<p class=" font-serif my-1">在该文[2]中给出了 $\tilde O(m)$ work 和 $n^{1/2+o(1)}$ span WHP 的结果。</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">“逼近 SSSP 问题（ASSSP）”：给定图 $G=\langle V, E\rangle$ 和起点 $s$，要求求得“过估距离” $d'(v)$ 满足 $dist(s, v)\le d'(v)\le (1+\epsilon)dist(s, v)$。</p>
+<p class=" font-serif my-1">对于固定的 $\epsilon$，该文[3]给出了 $\tilde O(m)$ work 和 $n^{1/2+o(1)}$ span WHP 的结果。</p>
+</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">$L$-限定距离 SSSP 主过程</h2>
+<p class=" font-serif my-1">设 $D$ 是大于 $L$ 的最小的 $2$ 的幂次。该算法先运行一次 ASSSP with $\epsilon=1$。对于 $d'(v)\ge 2D$ 可知 $dist(v) \ge D&gt;L$，这些点一定不用在 $L$-限定距离 SSSP 中考虑，直接设为 $v.d=\infty$。剩下的点的 $dist(v)$ 一定落在 $[0, D)$ 区间。对于 $d'(v)=0$ 的，可知 $dist(v)=0$。</p>
+<p class=" font-serif my-1">该算法正是依赖于“逐渐减小范围”的方法来求出 $dist(s, \cdot)=d$ 的所有顶点：假设已经找到了 $dist(s, \cdot)&lt;d$ 的所有顶点，并不再考虑。那么，剩下的顶点可以另构图，使得整体的 $dist'(s', \cdot)$ 都减小 $d$：对于图中所有的边 $(u, v)$ 满足 $dist(s, u)&lt;d$，$dist(s, v)\ge d$，相应地建边 $(s', v)$ 且</p>
+<p class=" font-serif my-1">$$
+    w'(s', v)=w(s, v)+dist(s, u)-d.
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">图示</h2>
+<p class=" font-serif my-1"><img alt="" src="2.png"/></p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">伪代码</h2>
+<p class=" font-serif my-1"><img src="1.png" width="70%"/></p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">范围收缩</h2>
+<p class=" font-serif my-1">假设当前考虑 $v$ 的 $dist(s, v)$ 范围是 $[d, d+2^i)$，则在作这个变换后，可以知道对于这些 $v$ 有 $dist'(s', v)\in [0, 2^i)$。使用 $\epsilon&lt;1/4$ 的 ASSSP 后，可以根据得到的 $d'$ 分为三类（注意上界为 $5/4\cdot 2^i$）：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">$0\le d'&lt;2\cdot 2^{i-2}$，则 $0\le dist'(s', v)&lt;2\cdot 2^{i-2}$，进而 $d\le dist(s, v)&lt; d+2\cdot 2^{i-2}$。</li>
+<li class=" ml-8">$2\cdot 2^{i-2}\le d'&lt;3\cdot 2^{i-2}$，则 $2^{i-2}\le dist'(s', v)&lt; 3\cdot 2^{i-2}$，进而 $d+2^{i-2}\le dist(u, v)&lt;d+3\cdot 2^{i-2}$。</li>
+<li class=" ml-8">$3\cdot 2^{i-2}\le d'&lt;5\cdot2^{i-2}$，则 $2\cdot 2^{i-2}\le dist'(s, v)&lt;4\cdot 2^{i-2}$，进而 $d+2\cdot 2^{i-2}\le dist(u, v)&lt;d+4\cdot 2^{i-2}$。</li>
+</ul>
+<p class=" font-serif my-1">于是划分成了 $2^{i-1}$ 长度的三小段。在 $\log L$ 次后即可计算完成 $dist(s, v)=d$ 的顶点。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法分析</h2>
+<p class=" font-serif my-1">简要分析可知，该算法做到了 $\tilde O(m)$ work 和 $n^{1/2+o(1)}L$ span WHP。在加上一定的随机赋优先级后，有着期望 $\tilde O(m)$ work 和 $n^{1/2+o(1)}\sqrt L$ span WHP。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">基于 Goldberg 算法的 SSSP</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">基于 Goldberg 算法的 SSSP</h2>
+<p class=" font-serif my-1">Goldberg 可以解决的问题：解决整数权（可以有负权）的 SSSP 问题。设图中所有边权 $\ge -N$，则 Goldberg 算法的时间复杂度为 $O(m\sqrt n\log N)$。</p>
+<p class=" font-serif my-1">该文[1]对其并行化后，得到了 $\tilde O(m\sqrt n\log N)$ work，$n^{5/4+o(1)}$ span WHP 算法，并行率至少为 $m^{1/4-o(1)}$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Goldberg 简述</h2>
+<p class=" font-serif my-1">Goldberg 的核心思想是构造一个“价值函数” $p$ 满足</p>
+<p class=" font-serif my-1">$$
+    \forall (u, v)\in E, p(v)\le p(u)+w(u, v).
+$$</p>
+<p class=" font-serif my-1">构造新图 $G'=\langle V, E, w'\rangle$，在 $G'$ 中</p>
+<p class=" font-serif my-1">$$
+    \forall (u, v)\in E, w'(u, v)=w(u, v)+p(u)-p(v).
+$$</p>
+<p class=" font-serif my-1">可知 $w'(u, v)\ge 0$。</p>
+<p class=" font-serif my-1">而对于原图中的一条路径 $p=\langle e_1, e_2, \cdots, e_m\rangle$，可知</p>
+<p class=" font-serif my-1">$$
+\begin{aligned}
+    w'(p)&amp;=\sum_{i=1}^{m-1}w'(e_i)
+    \
+    &amp;=\sum_{i=1}^{m-1}[w(e_i)+p(u_i)-p(v_i)]
+    \
+    &amp;=w(p)+p(s)-p(t).
+\end{aligned}
+$$
+其中 $s, t$ 分别是 $p$ 的起点和终点。故 $G'$ 中 $s,v$ 最短路对应于 $G$ 中的最短路。由于 $G'$ 是非负权图，故可以使用 Dijkstra 算法求解。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">求出价值 $p$</h2>
+<p class=" font-serif my-1">问题转化为了求出满足条件 $p$。Goldberg 算法对图中的最小边权做递推。最终要求的是满足 $\forall (u, v), w(u, v)&gt; -N$ 的 $p$，记作 $p_{N}(G)$。方便起见，设 $N$ 是 $2$ 的幂次。递归方案如下：</p>
+<ol>
+<li class=" ml-8">对任意图，$p_1(G)$ 是好构造的：此时 $w(u, v)&gt;-1$ 即非负，取 $p\equiv 0$ 即满足条件。</li>
+<li class=" ml-8">若要求符合条件的 $p_{2m}(G)$，<ol>
+<li class=" ml-8">若 $w$ 全为偶数，则构造新图 $G'=\langle V, E, w/2\rangle$，在 $G'$ 中得到 $p_{m}(G')$，则可令 $p_{2m}(G)=2p_m(G')$。</li>
+<li class=" ml-8">若 $w$ 并非全为偶数，构造新图 $G'=\langle V, E, \lceil w/2\rfloor\rceil$，在 $G'$ 中得到 $p_m(G')$，令 $p_{2m}(G)=2p_m(G')$，此时仍有一些边不满足条件：它们比预期差了 $1$。于是，会得到一个边权 $\ge -1$ 的图。</li>
+</ol>
+</li>
+</ol>
+<p class=" font-serif my-1">下面只需要对该边权 $\ge -1$ 的图 $G_p$ 调整 $p$ 的值即可。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">调整 $\ge -1$ 权图的价值 $p$</h2>
+<p class=" font-serif my-1">先求 $G_p$ 的强连通分量并缩点，得到一个 DAG $G'_p$。若某个 SCC 中含有负边，则图中显然存在负环。记 $G'_p$ 中有入边为 $-1$ 的点称为“负点”，其集合记为 $V_n$，可以按以下方法逐渐缩小 $V_n$ 最终致其为空集：</p>
+<blockquote>
+<p class=" font-serif my-1">取 $x\in V_n$，记 $x$ 可达的所有点为 $S_x$，将 $S_x$ 的所有点 $p$ 值降低 $1$。这样以后 $x$ 就不再是负点了。</p>
+</blockquote>
+<p class=" font-serif my-1">由于每次都需要重新求 SCC，时间复杂度为 $O(mn\log N)$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">优化时间复杂度</h2>
+<p class=" font-serif my-1">注意到最长反链长等于最小链覆盖：DAG 中最长链和最长反链至少有一个超过 $O(\sqrt k)$，其中 $k$ 是 $V_n$ 的大小。如果我们提出一个一次性消除链的算法，一个一次性消除反链的算法，就可以解决了。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">一次性消除反链：直接求出反链上的所有点可达的点，一起让 $p$ 值减 $1$ 即可。</li>
+<li class=" ml-8">一次性消除链：较为复杂，但也可以线性得到，略。</li>
+</ul>
+<p class=" font-serif my-1">寻找最长链/最长反链是容易的：构造超级源点 $s$ 并运行一次 DAG 上的 SSSP(时间 $O(m)$)，设距离为 $-d$ 的点集为 $V_d$，得到 $V_0, V_1, \cdots, V_\tau$。若 $\tau\ge \sqrt k$，则找到了一条长度 $\ge \sqrt k$ 的链；否则由鸽巢原理，必然存在 $|V_i|\ge \sqrt k$，这是一条反链。</p>
+<p class=" font-serif my-1">于是，每次都会使得问题规模 $k'\gets (1-\frac{1}{\sqrt k})\cdot k$，可以知道在 $O(\sqrt k)$ 轮后 $V_n$ 变为空集，每轮复杂度 $O(m)$，一共要进行 $O(\log N)$ 次递推。最后还需进行一次 $O(n\log m)$ 的 Dijkstra。Goldberg 算法复杂度故为 $O(m\sqrt n\log N)$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Goldberg 算法的并行化</h2>
+<p class=" font-serif my-1">外面的 $O(\log N)$ 次递推，以及中间的 $\sqrt n$ 次 $V_d$ 迭代仍然保持顺序执行，如此，若内部的每次迭代可以做到 span $f$ WHP，并保持 work $\tilde O(m)$，则最后可以得到 $\tilde O(m\sqrt n\log N)$ work 和 $f\cdot n^{1/2}\log N$ span WHP 的算法。在此处，我们使用得到 $f=n^{3/4+o(1)}$ WHP 的算法。只需要注意到</p>
+<ol>
+<li class=" ml-8">求 SCC 可以归约到单点连通性[4]，进而用“单（多）点连通性判断问题”在 $\tilde O(m)$ work 和 $n^{1/2}+o(1)$ span WHP 内完成。</li>
+<li class=" ml-8">寻找最长链/最长反链运行的 SSSP 需要运行带负权边 $-1$ 的 DAG $\sqrt k$-限定距离 SSSP，在原文中给出了一个 $\tilde O(m)$ work，$n^{1/2+o(1)}\sqrt L$ WHP 的算法（在此略去），取 $L=\sqrt k$ 满足条件。</li>
+<li class=" ml-8">一次性消除反链：对于给定的反链需要求出可达点，这也就是"单（多）连通性判断问题"，同 1.</li>
+<li class=" ml-8">一次性消除链：使用一个 $\sqrt n$-限定距离 SSSP，用了前一个算法，$\tilde O(m)$ work，$n^{1/2+o(1)}\sqrt L$ WHP，符合条件。</li>
+</ol>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">总结</h2>
+<p class=" font-serif my-1">综上，最终我们得到了一个 $O(m\sqrt n\log N)$ work，$n^{5/4+o(1)}\log N$ span 的基于 Goldberg 算法的并行算法。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">参考文献</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<p class=" font-serif my-1">[1] Cao, N., Fineman, J. T., &amp; Russell, K. (2022, July). Parallel Shortest Paths with Negative Edge Weights. In Proceedings of the 34th ACM Symposium on Parallelism in Algorithms and Architectures (pp. 177-190).</p>
+<!-- @inproceedings{10.1145/3490148.3538583, -->
+<!-- author = {Cao, Nairen and Fineman, Jeremy T. and Russell, Katina}, -->
+<!-- title = {Parallel Shortest Paths with Negative Edge Weights}, -->
+<!-- year = {2022}, -->
+<!-- isbn = {9781450391467}, -->
+<!-- publisher = {Association for Computing Machinery}, -->
+<!-- address = {New York, NY, USA}, -->
+<!-- url = {https://doi.org/10.1145/3490148.3538583}, -->
+<!-- doi = {10.1145/3490148.3538583}, -->
+<!-- abstract = {This paper presents a parallel version of Goldberg's algorithm for the problem of single-source shortest paths with integer (including negatives) edge weights. Given an input graph with n vertices, m edges, and integer weights ≥-N, our algorithms solves the problem with \~{O}(m √n log N) work and n5/4+o(1) log N span, both with high probability. Our algorithm thus has work similar to Goldberg's algorithm while also achieving at least m1/4-o(1) parallelism. To generate our parallel version of Goldberg's algorithm, we solve two specific distance-limited shortest-path problems, both with work \~{O}(m) and span √L · n1/2+o(1), where L is the distance limit.}, -->
+<!-- booktitle = {Proceedings of the 34th ACM Symposium on Parallelism in Algorithms and Architectures}, -->
+<!-- pages = {177–190}, -->
+<!-- numpages = {14}, -->
+<!-- keywords = {parallel algorithm, shortest paths}, -->
+<!-- location = {Philadelphia, PA, USA}, -->
+<!-- series = {SPAA '22} -->
+<!-- } -->
+
+<p class=" font-serif my-1">[2] Jambulapati, A., Liu, Y. P., &amp; Sidford, A. (2019, November). Parallel reachability in almost linear work and square root depth. In 2019 IEEE 60th Annual Symposium on Foundations of Computer Science (FOCS) (pp. 1664-1686). IEEE.</p>
+<!-- @inproceedings{jambulapati2019parallel, -->
+<!--   title={Parallel reachability in almost linear work and square root depth}, -->
+<!--   author={Jambulapati, Arun and Liu, Yang P and Sidford, Aaron}, -->
+<!--   booktitle={2019 IEEE 60th Annual Symposium on Foundations of Computer Science (FOCS)}, -->
+<!--   pages={1664--1686}, -->
+<!--   year={2019}, -->
+<!--   organization={IEEE} -->
+<!-- } -->
+
+<p class=" font-serif my-1">[3] Cao, N., Fineman, J. T., &amp; Russell, K. (2020, June). Efficient construction of directed hopsets and parallel approximate shortest paths. In Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing (pp. 336-349).</p>
+<!-- @inproceedings{cao2020efficient, -->
+<!--   title={Efficient construction of directed hopsets and parallel approximate shortest paths}, -->
+<!--   author={Cao, Nairen and Fineman, Jeremy T and Russell, Katina}, -->
+<!--   booktitle={Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing}, -->
+<!--   pages={336--349}, -->
+<!--   year={2020} -->
+<!-- } -->
+
+<p class=" font-serif my-1">[4] Blelloch, G. E., Gu, Y., Shun, J., &amp; Sun, Y. (2020). Parallelism in randomized incremental algorithms. Journal of the ACM (JACM), 67(5), 1-27.</p>
+<!-- @article{blelloch2020parallelism, -->
+<!--   title={Parallelism in randomized incremental algorithms}, -->
+<!--   author={Blelloch, Guy E and Gu, Yan and Shun, Julian and Sun, Yihan}, -->
+<!--   journal={Journal of the ACM (JACM)}, -->
+<!--   volume={67}, -->
+<!--   number={5}, -->
+<!--   pages={1--27}, -->
+<!--   year={2020}, -->
+<!--   publisher={ACM New York, NY, USA} -->
+<!-- } -->
+
+</div> </section> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家！</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

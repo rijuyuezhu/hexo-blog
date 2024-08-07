@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/10/问题求解（三）-Open-Topic-9-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">字符集编码和问题的形式化描述</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">字符集 $\Sigma$ 的编码能力</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">引入</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">字符集 $\Sigma_{bool}$，$\Sigma_{latin}$，$\lbrace 0, 1,\#\rbrace$ 等有什么本质不同？</li>
+</ul>
+<blockquote>
+<p class=" font-serif my-1">e.g. 使用 $\lbrace 0, 1, \#\rbrace$ 表达带权图？使用 $\lbrace 0, 1\rbrace$ 表达带权图？</p>
+</blockquote>
+<ol>
+<li class=" ml-8">
+<p class=" font-serif my-1">字符集 $\Sigma$ 的编码能力只和其元素个数 $|\Sigma|$ 有关，和其种类无关(因为存在双射)。</p>
+<p class=" font-serif my-1">（e.g. $\lbrace 0, 1\rbrace$ 和 $\lbrace a, b\rbrace$）</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">所有基数大于等于 $2$(有限)的字符集 $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|}\rbrace$ 的编码能力相同（编码长度仅差距多项式倍），都和 $\Sigma_{bool}$ 等价。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">若 $w\in \Sigma_{bool}^*$，可以使用 $\lbrace x_0, x_1\rbrace$ 在 $\Sigma$ 上表达 $w$。</li>
+<li class=" ml-8">若 $w\in \Sigma^*$，将 $\Sigma$ 中的字符用 $\Sigma_{bool}$ 赋予 <strong>$0/1$ 上的唯一编码</strong>后即可在 $\Sigma_{bool}$ 上表达 $w$。</li>
+</ul>
+</li>
+</ol>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">如何赋予唯一编码？</h2>
+<p class=" font-serif my-1"><em>($0/1$ 上的唯一编码)</em> 给定 $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|-1}\rbrace$，需要输出一个转化函数 $f: \Sigma\to \Sigma_{bool}^*$。约束为：根据 $f$ 可以确定性地构造函数 $g_f:\Sigma^*\to \Sigma_{bool}^*$ 为，若 $w=c_1c_2\cdots c_{|w|}, c_i\in \Sigma$，则 $g_f(w)=f(c_1)f(c_2)\cdots f(c_{|w|})$，要求 $g_f$ 是<strong>单射</strong>，且 $|g_f(w)|$ 是 $|w|$ 的 poly-bounded 倍。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">形象化理解，需要给 $\Sigma$ 的每个字符用 $0/1$ 编码，并保证对任意 $\Sigma$ 上的词语，改为用 $0/1$ 表达后不会发生<strong>误读</strong>。</li>
+</ul>
+<p class=" font-serif my-1">e.g. $\lbrace 0, 1, \#\rbrace$ 上的字符串 $11\#01$ 代表了一个有向无权图。定义 $f(0)=00$，$f(1)=01$，$f(\#)=10$，原字符串改写为 $0101100001$，两位一读，不会发生误读。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">满足条件的 $f$</h2>
+<p class=" font-serif my-1">从上例可知，一种最简单的编码：对于大小为 $n=|\Sigma|$ 的字符集 $\Sigma$，对每个 $x_i\in\Sigma$ 固定使用长度为 $\lceil \lg n\rceil$ 的 $\Sigma_{bool}$ 词 $w_i$ 表示（前补零），且 $Number(w_i)=i$。</p>
+<p class=" font-serif my-1">更本质地，什么样的 $f$ 是合法的？</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">只需对任意不同的 $x, y\in \Sigma$，满足 $f(x)$ 不是 $f(y)$ 的前缀即可。（在 0/1 trie 树上不同时选择祖先-子孙对）。</li>
+</ul>
+<blockquote>
+<p class=" font-serif my-1">思考题：若已知 $w\in \Sigma^*$，如何输出合适的 $f$，使得 $g_f(w)$ 尽量短？</p>
+</blockquote>
+<p class=" font-serif my-1">由于字符集 $\Sigma$ 的选取对问题的本质无影响（但编码内容有影响），故以下问题只给出最易于表达的 $\Sigma$。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">Some Decision Problems</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">有向无环图的判定问题</h2>
+<p class=" font-serif my-1"><em>有向无环图的判定问题</em>：给定图 $G$，判断其中是否不存在有向环。</p>
+<p class=" font-serif my-1">形式化地，<em>有向无环图的判定问题</em>是 Decision Problem $(\text{isDAG}, \lbrace 0, 1, \# \rbrace)$，其中</p>
+<p class=" font-serif my-1">$$
+    \text{isDAG} = \lbrace w\in \lbrace 0, 1, \#\rbrace^* | \text{$w$ 表示一个有向图且无环}\rbrace
+$$</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">有向(无权)图的表示可以为：对于 $n$ 阶图，设邻接矩阵为 $G=(a_{ij}), a_{ij}\in \lbrace 0, 1\rbrace$，表示为</li>
+</ul>
+<p class=" font-serif my-1">$$
+w_{G}=a_{11}a_{12}\cdots a_{1n}\#a_{21}a_{22}\cdots a_{2n}\#\cdots\# a_{n1}a_{n2}\cdots a_{nn}
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">停机问题</h2>
+<p class=" font-serif my-1"><em>停机问题</em>：给定程序 $P$ 和输入集合 $S$，判断 $P$ 是否可以在以任意 $s\in S$ 作为输入的前提下在有限时间内结束。</p>
+<p class=" font-serif my-1">如果把 $P$ 使用的字符集记为 $\Sigma_P$，即 $P\in \Sigma_P^*$，把 $P$ 的输入使用的字符集记为 $\Sigma_{in}$，即 $S\subseteq \Sigma_{in}^*$，且定义 $\perp$ 是在 $\Sigma_P\cup \Sigma_{in}$ 中未出现的一种字符。则</p>
+<p class=" font-serif my-1">形式化地，<em>停机问题</em>是 Decision Problem $(\text{Halt}, \Sigma)$，其中</p>
+<p class=" font-serif my-1">$$
+\Sigma = \Sigma_{P}\cup\Sigma_{in}\cup\lbrace \perp\rbrace
+$$</p>
+<p class=" font-serif my-1">$$
+\small\text{Halt}=\lbrace w\in\Sigma^*| \text{$w$ 表示程序 $P$ 和 $S$，且满足对任意 $s\in S$ 作为输入 $P$ 可停机}\rbrace
+$$</p>
+<p class=" font-serif my-1">$w$ 的编码方式可以为</p>
+<p class=" font-serif my-1">$$
+    w=P\perp s_1\perp s_2\perp \cdots \perp s_{|S|}\perp\perp
+$$</p>
+<p class=" font-serif my-1">其中 $P\in \Sigma_P^*$ 编码程序 $P$，$s_i\in \Sigma_{in}^*$ 编码 $P$ 的输入 $s_i$.</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">Some optimization problems</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">排序问题</h2>
+<p class=" font-serif my-1"><em>排序问题</em>：输入 $n$ 和序列 $\langle a_1, a_2, \cdots, a_n\rangle$，输出序列的一个重排 $\langle b_1, b_2, \cdots, b_n\rangle$ 且 $b_1\le b_2\le \cdots \le b_n$。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">只需要求解可行解，在可行解之间没有优劣之分。</li>
+</ul>
+<p class=" font-serif my-1">形式化地，<em>排序问题</em>定义为:</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">Input: 正整数 $n\ge 1$ 和正整数序列 $a_1, a_2, \cdots, a_n$.</li>
+<li class=" ml-8">Constraints: 对任意输入实例 $(n, a_1, a_2, \cdots, a_n)$，$\mathcal M(n, a_1, a_2, \cdots, a_n)=\lbrace(b_1, b_2,\cdots, b_n)| 多重集 \lbrace a_1, a_2, \cdots, a_n\rbrace=\lbrace b_1, b_2, \cdots, b_n\rbrace，且 b_1\le b_2\le \cdots\le b_n\rbrace$.</li>
+<li class=" ml-8">Costs: 对 $(b_1, b_2, \cdots, b_n)\in \mathcal M(n, a_1, a_2, \cdots, a_n)$，$cost((b_1, b_2, \cdots, b_n), (n, a_1, a_2, \cdots, a_n))=0$.</li>
+<li class=" ml-8">Goal: 最小化。</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">最小化唯一编码问题</h2>
+<p class=" font-serif my-1"><em>(最小化唯一编码问题)</em> 输入 $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|-1}\rbrace$ 和 $w\in \Sigma^*$，需要输出一个转化函数 $f: \Sigma\to \Sigma_{bool}^*$。约束为：根据 $f$ 可以确定性地构造函数 $g_f:\Sigma^*\to \Sigma_{bool}^*$ 为，若 $w'=c_1c_2\cdots c_{|w|}, c_i\in \Sigma$，则 $g_f(w')=f(c_1)f(c_2)\cdots f(c_{|w'|})$，要求 $g_f$ 是<strong>单射</strong>，且 $|g_f(w')|$ 是 $|w'|$ 的 poly-bounded 倍。最小化 $|g_f(w)|$.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">最小化唯一编码问题</h2>
+<p class=" font-serif my-1">形式化地，<em>最小化唯一编码问题</em>定义为：</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">Input: $\Sigma=\lbrace x_0, x_1, \cdots, x_{|\Sigma|-1}\rbrace$ 和 $w=c_1c_2\cdots c_{|w|}, c_i\in\Sigma$.</li>
+<li class=" ml-8">Constraints: 对任意输入实例 $(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)$，$\mathcal M(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)=\lbrace(f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1}))|满足上述约束\rbrace$。</li>
+<li class=" ml-8">Costs: 对 $(f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1}))\in\mathcal M(x_0, x_1, \cdots, x_{|\Sigma|-1}, w)$，$cost((f(x_0), f(x_1), \cdots, f(x_{|\Sigma|-1})),(x_0, x_1, \cdots, x_{|\Sigma|-1}, w))=\sum_{i=1}^{|w|}|f(c_i)|$.</li>
+<li class=" ml-8">Goal: 最小化。</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家！</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

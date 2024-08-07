@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：单源最短路问题有很多并行算法，例如 Δ-stepping 算法、Radius Stepping 算法等，请调研至少 2 种算法（其中至多 1 种来自上述例子），结合例子介绍算法的设计与分析，比较异同并分析优劣。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 6 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/13607739/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：单源最短路问题有很多并行算法，例如 Δ-stepping 算法、Radius Stepping 算法等，请调研至少 2 种算法（其中至多 1 种来自上述例子），结合例子介绍算法的设计与分析，比较异同并分析优劣。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/13607739/1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/13607739/2.png">
+<meta property="article:published_time" content="2023-10-10T11:33:00.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.587Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/13607739/1.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/13607739/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/13607739/","path":"posts/13607739/","title":"问题求解（三） Open Topic 6 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 6 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-goldberg-%E7%AE%97%E6%B3%95%E7%9A%84-sssp-%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95"><span class="nav-text">基于 Goldberg 算法的 SSSP
+并行算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#l-%E9%99%90%E5%AE%9A%E8%B7%9D%E7%A6%BB-sssp"><span class="nav-text">\(L\)-限定距离
+SSSP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E9%BB%91%E7%9B%92%E7%BB%93%E6%9E%9C"><span class="nav-text">两个黑盒结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#l-%E9%99%90%E5%AE%9A%E8%B7%9D%E7%A6%BB-sssp-%E4%B8%BB%E8%BF%87%E7%A8%8B"><span class="nav-text">\(L\)-限定距离 SSSP 主过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-goldberg-%E7%AE%97%E6%B3%95%E7%9A%84-sssp"><span class="nav-text">基于 Goldberg 算法的 SSSP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#goldberg-%E7%AE%80%E8%BF%B0"><span class="nav-text">Goldberg 简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#goldberg-%E7%AE%97%E6%B3%95%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%8C%96"><span class="nav-text">Goldberg 算法的并行化</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/13607739/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 6 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 6 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-10 19:33:00" itemprop="dateCreated datePublished" datetime="2023-10-10T19:33:00+08:00">2023-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：单源最短路问题有很多并行算法，例如 <a
+target="_blank" rel="noopener" href="https://linkinghub.elsevier.com/retrieve/pii/S0196677403000762">Δ-stepping</a>
+算法、<a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/2935764.2935765">Radius
+Stepping</a> 算法等，请调研至少 2 种算法（其中至多 1
+种来自上述例子），结合例子介绍算法的设计与分析，比较异同并分析优劣。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">Slides</a></p>
+<h1 id="基于-goldberg-算法的-sssp-并行算法">基于 Goldberg 算法的 SSSP
+并行算法</h1>
+<p>本文先介绍一种可以处理非负权图的 <span
+class="math inline">\(L\)</span>-<strong>限定距离
+SSSP</strong>的并行算法，work 为 <span class="math inline">\(\tilde O
+(m)\)</span>，span 为 <span
+class="math inline">\(n^{1/2+o(1)}L^{1/2}\)</span> WHP。</p>
+<blockquote>
+<p><span class="math inline">\(L\)</span>-限定距离 SSSP: 只计算途中
+<span class="math inline">\(dist(s, v)\le L\)</span> 的 <span
+class="math inline">\(v\)</span> 的最短距离 <span
+class="math inline">\(v.d=dist(s, v)\)</span>，而将 <span
+class="math inline">\(dist(s, v)&gt;L\)</span> 的 <span
+class="math inline">\(v\)</span> 求得的 <span
+class="math inline">\(v.d=\infty\)</span>。</p>
+<p>WHP: With high probability，有 neglible 的概率失败。</p>
+</blockquote>
+<p>然后在此基础上再介绍基于 Goldberg's algorithm 的整数权的 SSSP
+并行算法。设图中所有权的边权均 <span class="math inline">\(\ge
+-L\)</span>，则 work 为 <span class="math inline">\(\tilde O(m\sqrt
+n\log N)\)</span>，span 为 <span
+class="math inline">\(n^{5/4+o(1)}\)</span> WHP。<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h2 id="l-限定距离-sssp"><span class="math inline">\(L\)</span>-限定距离
+SSSP</h2>
+<h3 id="两个黑盒结果">两个黑盒结果</h3>
+<p>“单（多）点连通性判断问题”：给定图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span> 和起点集合 <span
+class="math inline">\(S\subseteq V\)</span>，判定图中哪些点可以从 <span
+class="math inline">\(S\)</span> 中某个点可达。在该文<a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>中给出了 <span
+class="math inline">\(\tilde O(m)\)</span> work 和 <span
+class="math inline">\(n^{1/2+o(1)}\)</span> span WHP 的结果。</p>
+<p>“逼近 SSSP 问题（ASSSP）”：给定图 <span
+class="math inline">\(G=\langle V, E\rangle\)</span> 和起点 <span
+class="math inline">\(s\)</span>，要求求得“过估距离” <span
+class="math inline">\(d&#39;(v)\)</span> 满足 <span
+class="math inline">\(dist(s, v)\le d&#39;(v)\le (1+\epsilon)dist(s,
+v)\)</span>。对于固定的 <span
+class="math inline">\(\epsilon\)</span>，该文<a href="#fn3"
+class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>给出了 <span
+class="math inline">\(\tilde O(m)\)</span> work 和 <span
+class="math inline">\(n^{1/2+o(1)}\)</span> span WHP 的结果。</p>
+<h3 id="l-限定距离-sssp-主过程"><span
+class="math inline">\(L\)</span>-限定距离 SSSP 主过程</h3>
+<p>设 <span class="math inline">\(D\)</span> 是大于 <span
+class="math inline">\(L\)</span> 的最小的 <span
+class="math inline">\(2\)</span> 的幂次。该算法先运行一次 ASSSP with
+<span class="math inline">\(\epsilon=1\)</span>。对于 <span
+class="math inline">\(d&#39;(v)\ge 2D\)</span> 可知 <span
+class="math inline">\(dist(v) \ge D&gt;L\)</span>，这些点一定不用在
+<span class="math inline">\(L\)</span>-限定距离 SSSP 中考虑，直接设为
+<span class="math inline">\(v.d=\infty\)</span>。剩下的点的 <span
+class="math inline">\(dist(v)\)</span> 一定落在 <span
+class="math inline">\([0, D)\)</span> 区间。对于 <span
+class="math inline">\(d&#39;(v)=0\)</span> 的，可知 <span
+class="math inline">\(dist(v)=0\)</span>。</p>
+<p>该算法正是依赖于“逐渐减小范围”的方法来求出 <span
+class="math inline">\(dist(s, \cdot)=d\)</span>
+的所有顶点：假设已经找到了 <span class="math inline">\(dist(s,
+\cdot)&lt;d\)</span>
+的所有顶点，并不再考虑。那么，剩下的顶点可以另构图，使得整体的 <span
+class="math inline">\(dist&#39;(s&#39;, \cdot)\)</span> 都减小 <span
+class="math inline">\(d\)</span>：对于图中所有的边 <span
+class="math inline">\((u, v)\)</span> 满足 <span
+class="math inline">\(dist(s, u)&lt;d\)</span>，<span
+class="math inline">\(dist(s, v)\ge d\)</span>，相应地建边 <span
+class="math inline">\((s&#39;, v)\)</span> 且</p>
+<p><span class="math display">\[
+    w&#39;(s&#39;, v)=w(s, v)+dist(s, u)-d.
+\]</span></p>
+<p><img src="1.png" /></p>
+<p><img src="2.png" /></p>
+<p>假设当前考虑 <span class="math inline">\(v\)</span> 的 <span
+class="math inline">\(dist(s, v)\)</span> 范围是 <span
+class="math inline">\([d,
+d+2^i)\)</span>，则在作这个变换后，可以知道对于这些 <span
+class="math inline">\(v\)</span> 有 <span
+class="math inline">\(dist&#39;(s&#39;, v)\in [0, 2^i)\)</span>。使用
+<span class="math inline">\(\epsilon&lt;1/4\)</span> 的 ASSSP
+后，可以根据得到的 <span class="math inline">\(d&#39;\)</span>
+分为三类（注意上界为 <span class="math inline">\(5/4\cdot
+2^i\)</span>）：</p>
+<ul>
+<li><span class="math inline">\(0\le d&#39;&lt;2\cdot
+2^{i-2}\)</span>，则 <span class="math inline">\(0\le dist&#39;(s&#39;,
+v)&lt;2\cdot 2^{i-2}\)</span>，进而 <span class="math inline">\(d\le
+dist(s, v)&lt; d+2\cdot 2^{i-2}\)</span>。</li>
+<li><span class="math inline">\(2\cdot 2^{i-2}\le d&#39;&lt;3\cdot
+2^{i-2}\)</span>，则 <span class="math inline">\(2^{i-2}\le
+dist&#39;(s&#39;, v)&lt; 3\cdot 2^{i-2}\)</span>，进而 <span
+class="math inline">\(d+2^{i-2}\le dist(u, v)&lt;d+3\cdot
+2^{i-2}\)</span>。</li>
+<li><span class="math inline">\(3\cdot 2^{i-2}\le
+d&#39;&lt;5\cdot2^{i-2}\)</span>，则 <span class="math inline">\(2\cdot
+2^{i-2}\le dist&#39;(s, v)&lt;4\cdot 2^{i-2}\)</span>，进而 <span
+class="math inline">\(d+2\cdot 2^{i-2}\le dist(u, v)&lt;d+4\cdot
+2^{i-2}\)</span>。</li>
+</ul>
+<p>于是划分成了 <span class="math inline">\(2^{i-1}\)</span>
+长度的三小段。在 <span class="math inline">\(\log L\)</span>
+次后即可计算完成 <span class="math inline">\(dist(s, v)=d\)</span>
+的顶点。</p>
+<p>简要分析可知，该算法有 <span class="math inline">\(\tilde
+O(m)\)</span> work 和 <span class="math inline">\(n^{1/2+o(1)}L\)</span>
+span 的结果。在加上一定的随机赋优先级后，有着期望 <span
+class="math inline">\(\tilde O(m)\)</span> work 和 <span
+class="math inline">\(n^{1/2+o(1)}\sqrt L\)</span> span WHP 的结果。</p>
+<h1 id="基于-goldberg-算法的-sssp">基于 Goldberg 算法的 SSSP</h1>
+<p>Goldberg 可以解决的问题：解决整数权（可以有负权）的 SSSP
+问题。设图中所有边权 <span class="math inline">\(\ge -N\)</span>，则
+Goldberg 算法的时间复杂度为 <span class="math inline">\(O(m\sqrt n\log
+N)\)</span>。</p>
+<p>该文<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>对其并行化后，得到了 <span
+class="math inline">\(\tilde O(m\sqrt n\log N)\)</span> work，<span
+class="math inline">\(n^{5/4+o(1)}\)</span> span WHP 算法，并行率至少为
+<span class="math inline">\(m^{1/4-o(1)}\)</span>。</p>
+<h2 id="goldberg-简述">Goldberg 简述</h2>
+<p>Goldberg 的核心思想是构造一个“价值函数” <span
+class="math inline">\(p\)</span> 满足</p>
+<p><span class="math display">\[
+    \forall (u, v)\in E, p(v)\le p(u)+w(u, v).
+\]</span></p>
+<p>构造新图 <span class="math inline">\(G&#39;=\langle V, E,
+w&#39;\rangle\)</span>，在 <span class="math inline">\(G&#39;\)</span>
+中</p>
+<p><span class="math display">\[
+    \forall (u, v)\in E, w&#39;(u, v)=w(u, v)+p(u)-p(v).
+\]</span></p>
+<p>可知 <span class="math inline">\(w&#39;(u, v)\ge 0\)</span>。</p>
+<p>而对于原图中的一条路径 <span class="math inline">\(p=\langle e_1,
+e_2, \cdots, e_m\rangle\)</span>，可知</p>
+<p><span class="math display">\[
+\begin{aligned}
+    w&#39;(p)&amp;=\sum_{i=1}^{m-1}w&#39;(e_i)
+    \\
+    &amp;=\sum_{i=1}^{m-1}[w(e_i)+p(u_i)-p(v_i)]
+    \\
+    &amp;=w(p)+p(s)-p(t).
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(s, t\)</span> 分别是 <span
+class="math inline">\(p\)</span> 的起点和终点。故 <span
+class="math inline">\(G&#39;\)</span> 中 <span
+class="math inline">\(s,v\)</span> 最短路对应于 <span
+class="math inline">\(G\)</span> 中的最短路。由于 <span
+class="math inline">\(G&#39;\)</span> 是非负权图，故可以使用 Dijkstra
+算法求解。问题转化为了求出满足条件 <span
+class="math inline">\(p\)</span>。</p>
+<p>Goldberg 算法对图中的最小边权做递推。最终要求的是满足 <span
+class="math inline">\(\forall (u, v), w(u, v)&gt; -N\)</span> 的 <span
+class="math inline">\(p\)</span>，记作 <span
+class="math inline">\(p_{N}(G)\)</span>。方便起见，设 <span
+class="math inline">\(N\)</span> 是 <span
+class="math inline">\(2\)</span> 的幂次。递归方案如下：</p>
+<ol type="1">
+<li>对任意图，<span class="math inline">\(p_1(G)\)</span>
+是好构造的：此时 <span class="math inline">\(w(u, v)&gt;-1\)</span>
+即非负，取 <span class="math inline">\(p\equiv 0\)</span>
+即满足条件。</li>
+<li>若要求符合条件的 <span class="math inline">\(p_{2m}(G)\)</span>，
+<ol type="1">
+<li>若 <span class="math inline">\(w\)</span> 全为偶数，则构造新图 <span
+class="math inline">\(G&#39;=\langle V, E, w/2\rangle\)</span>，在 <span
+class="math inline">\(G&#39;\)</span> 中得到 <span
+class="math inline">\(p_{m}(G&#39;)\)</span>，则可令 <span
+class="math inline">\(p_{2m}(G)=2p_m(G&#39;)\)</span>。</li>
+<li>若 <span class="math inline">\(w\)</span> 并非全为偶数，构造新图
+<span class="math inline">\(G&#39;=\langle V, E, \lceil
+w/2\rfloor\rceil\)</span>，在 <span
+class="math inline">\(G&#39;\)</span> 中得到 <span
+class="math inline">\(p_m(G&#39;)\)</span>，令 <span
+class="math inline">\(p_{2m}(G)=2p_m(G&#39;)\)</span>，此时仍有一些边不满足条件：它们比预期差了
+<span class="math inline">\(1\)</span>。于是，会得到一个边权 <span
+class="math inline">\(\ge -1\)</span> 的图。</li>
+</ol></li>
+</ol>
+<p>下面只需要对该边权 <span class="math inline">\(\ge -1\)</span> 的图
+<span class="math inline">\(G_p\)</span> 调整 <span
+class="math inline">\(p\)</span> 的值即可。</p>
+<p>先求其强连通分量并缩点，得到一个 DAG <span
+class="math inline">\(G&#39;_p\)</span>。若某个 SCC
+中含有负边，则图中显然存在负环。记 <span
+class="math inline">\(G&#39;_p\)</span> 中有入边为 <span
+class="math inline">\(-1\)</span> 的点称为“负点”，其集合记为 <span
+class="math inline">\(V_n\)</span>，可以按以下方法逐渐缩小 <span
+class="math inline">\(V_n\)</span> 最终致其为空集：</p>
+<blockquote>
+<p>取 <span class="math inline">\(x\in V_n\)</span>，记 <span
+class="math inline">\(x\)</span> 可达的所有点为 <span
+class="math inline">\(S_x\)</span>，将 <span
+class="math inline">\(S_x\)</span> 的所有点 <span
+class="math inline">\(p\)</span> 值降低 <span
+class="math inline">\(1\)</span>。这样以后 <span
+class="math inline">\(x\)</span> 就不再是负点了。</p>
+</blockquote>
+<p>由于每次都需要重新求 SCC，时间复杂度为 <span
+class="math inline">\(O(mn\log N)\)</span>。</p>
+<p>注意到最长反链长等于最小链覆盖：DAG 中最长链和最长反链至少有一个超过
+<span class="math inline">\(O(\sqrt k)\)</span>，其中 <span
+class="math inline">\(k\)</span> 是 <span
+class="math inline">\(V_n\)</span>
+的大小。如果我们提出一个一次性消除链的算法，一个一次性消除反链的算法，就可以解决了。</p>
+<ul>
+<li>一次性消除反链：直接求出反链上的所有点可达的点，一起让 <span
+class="math inline">\(p\)</span> 值减 <span
+class="math inline">\(1\)</span> 即可。</li>
+<li>一次性消除链：较为复杂，但也可以线性得到，略。</li>
+</ul>
+<p>寻找最长链/最长反链是容易的：构造超级源点 <span
+class="math inline">\(s\)</span> 并运行一次 DAG 上的 SSSP(时间 <span
+class="math inline">\(O(m)\)</span>)，设距离为 <span
+class="math inline">\(-d\)</span> 的点集为 <span
+class="math inline">\(V_d\)</span>，得到 <span
+class="math inline">\(V_0, V_1, \cdots, V_\tau\)</span>。若 <span
+class="math inline">\(\tau\ge \sqrt k\)</span>，则找到了一条长度 <span
+class="math inline">\(\ge \sqrt k\)</span>
+的链；否则由鸽巢原理，必然存在 <span class="math inline">\(|V_i|\ge
+\sqrt k\)</span>，这是一条反链。</p>
+<p>于是，每次都会使得问题规模 <span class="math inline">\(k&#39;\gets
+(1-\frac{1}{\sqrt k})\cdot k\)</span>，可以知道在 <span
+class="math inline">\(O(\sqrt k)\)</span> 轮后 <span
+class="math inline">\(V_n\)</span> 变为空集，每轮复杂度 <span
+class="math inline">\(O(m)\)</span>，一共要进行 <span
+class="math inline">\(O(\log N)\)</span> 次递推。最后还需进行一次 <span
+class="math inline">\(O(n\log m)\)</span> 的 Dijkstra。</p>
+<p>Goldberg 算法复杂度故为 <span class="math inline">\(O(m\sqrt n\log
+N)\)</span>。</p>
+<h2 id="goldberg-算法的并行化">Goldberg 算法的并行化</h2>
+<p>外面的 <span class="math inline">\(O(\log N)\)</span>
+次递推，以及中间的 <span class="math inline">\(\sqrt n\)</span> 次 <span
+class="math inline">\(V_d\)</span>
+迭代仍然保持顺序执行，如此，若内部的每次迭代可以做到 span <span
+class="math inline">\(f\)</span> WHP，并保持 work <span
+class="math inline">\(\tilde O(m)\)</span>，则最后可以得到 <span
+class="math inline">\(\tilde O(m\sqrt n\log N)\)</span> work 和 <span
+class="math inline">\(f\cdot n^{1/2}\log N\)</span> span WHP
+的算法。在此处，我们使用得到 <span
+class="math inline">\(f=n^{3/4+o(1)}\)</span> WHP
+的算法。只需要注意到</p>
+<ol type="1">
+<li>求 SCC 可以归约到单点连通性<a href="#fn5" class="footnote-ref"
+id="fnref5"
+role="doc-noteref"><sup>5</sup></a>，进而用“单（多）点连通性判断问题”在
+<span class="math inline">\(\tilde O(m)\)</span> work 和 <span
+class="math inline">\(n^{1/2}+o(1)\)</span> span WHP 内完成。</li>
+<li>寻找最长链/最长反链运行的 SSSP 需要运行带负权边 <span
+class="math inline">\(-1\)</span> 的 <span class="math inline">\(\sqrt
+k\)</span>-限定距离 SSSP，在原文中给出了一个 <span
+class="math inline">\(\tilde O(m)\)</span> work，<span
+class="math inline">\(n^{1/2+o(1)}\sqrt L\)</span> WHP
+的算法（在此略去），取 <span class="math inline">\(L=\sqrt k\)</span>
+满足条件。</li>
+<li>一次性消除反链：对于给定的反链需要求出可达点，这也就是"单（多）连通性判断问题"，同
+1.</li>
+<li>一次性消除链：使用一个 <span class="math inline">\(\sqrt
+n\)</span>-限定距离 SSSP，用了前一个算法，<span
+class="math inline">\(\tilde O(m)\)</span> work，<span
+class="math inline">\(n^{1/2+o(1)}\sqrt L\)</span> WHP，符合条件。</li>
+</ol>
+<p>综上，最终我们得到了一个 <span class="math inline">\(O(m\sqrt n\log
+N)\)</span> work，<span class="math inline">\(n^{5/4+o(1)}\log
+N\)</span> span 的基于 Goldberg 算法的并行算法。</p>
+<!-- @inproceedings{10.1145/3490148.3538583, -->
+<!-- author = {Cao, Nairen and Fineman, Jeremy T. and Russell, Katina}, -->
+<!-- title = {Parallel Shortest Paths with Negative Edge Weights}, -->
+<!-- year = {2022}, -->
+<!-- isbn = {9781450391467}, -->
+<!-- publisher = {Association for Computing Machinery}, -->
+<!-- address = {New York, NY, USA}, -->
+<!-- url = {https://doi.org/10.1145/3490148.3538583}, -->
+<!-- doi = {10.1145/3490148.3538583}, -->
+<!-- abstract = {This paper presents a parallel version of Goldberg's algorithm for the problem of single-source shortest paths with integer (including negatives) edge weights. Given an input graph with n vertices, m edges, and integer weights ≥-N, our algorithms solves the problem with \~{O}(m √n log N) work and n5/4+o(1) log N span, both with high probability. Our algorithm thus has work similar to Goldberg's algorithm while also achieving at least m1/4-o(1) parallelism. To generate our parallel version of Goldberg's algorithm, we solve two specific distance-limited shortest-path problems, both with work \~{O}(m) and span √L · n1/2+o(1), where L is the distance limit.}, -->
+<!-- booktitle = {Proceedings of the 34th ACM Symposium on Parallelism in Algorithms and Architectures}, -->
+<!-- pages = {177–190}, -->
+<!-- numpages = {14}, -->
+<!-- keywords = {parallel algorithm, shortest paths}, -->
+<!-- location = {Philadelphia, PA, USA}, -->
+<!-- series = {SPAA '22} -->
+<!-- } -->
+<!-- @inproceedings{jambulapati2019parallel, -->
+<!--   title={Parallel reachability in almost linear work and square root depth}, -->
+<!--   author={Jambulapati, Arun and Liu, Yang P and Sidford, Aaron}, -->
+<!--   booktitle={2019 IEEE 60th Annual Symposium on Foundations of Computer Science (FOCS)}, -->
+<!--   pages={1664--1686}, -->
+<!--   year={2019}, -->
+<!--   organization={IEEE} -->
+<!-- } -->
+<!-- @inproceedings{cao2020efficient, -->
+<!--   title={Efficient construction of directed hopsets and parallel approximate shortest paths}, -->
+<!--   author={Cao, Nairen and Fineman, Jeremy T and Russell, Katina}, -->
+<!--   booktitle={Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing}, -->
+<!--   pages={336--349}, -->
+<!--   year={2020} -->
+<!-- } -->
+<!-- @article{blelloch2020parallelism, -->
+<!--   title={Parallelism in randomized incremental algorithms}, -->
+<!--   author={Blelloch, Guy E and Gu, Yan and Shun, Julian and Sun, Yihan}, -->
+<!--   journal={Journal of the ACM (JACM)}, -->
+<!--   volume={67}, -->
+<!--   number={5}, -->
+<!--   pages={1--27}, -->
+<!--   year={2020}, -->
+<!--   publisher={ACM New York, NY, USA} -->
+<!-- } -->
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>https://dl.acm.org/doi/abs/10.1145/3490148.3538583<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://doi.org/10.48550/arXiv.1905.08841<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://dl.acm.org/doi/abs/10.1145/3357713.3384270<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://dl.acm.org/doi/abs/10.1145/3490148.3538583<a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>https://arxiv.org/abs/1810.05303<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/13607739/" title="问题求解（三） Open Topic 6 笔记">https://blog.rijuyuezhu.top/posts/13607739/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/51457044/" rel="prev" title="问题求解（三） Open Topic 4 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 4 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/dfca77a7/" rel="next" title="问题求解（三） Open Topic 7 笔记">
+                  问题求解（三） Open Topic 7 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/10/问题求解（三）-Open-Topic-7-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">Distance Oracle—空间与时间的权衡</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">简介</h2>
+<p class=" font-serif my-1">未加说明的定义见 [1] (Sommer, 2014)。</p>
+<p class=" font-serif my-1">Distance oracle 是一种距离 stretch，空间 space 和单次查询时间 query time 的权衡的艺术。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">适用于一般无向非负权图的</h1>
+<h1 class=" text-2xl mt-2 font-sans">stretch $&lt; 2$ 的 DO</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">DO 的历史发现</h2>
+<div align="center">
+<img src="1.png"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">论文贡献</h2>
+<p class=" font-serif my-1">[2] (Agarwal, 2014) 提供了三种满足 stretch $\alpha\in(1, 2]$ 的 DO。</p>
+<div align="center">
+<img src="2.png"/>
+</div>
+
+<p class=" font-serif my-1">我们主要讨论第一个成果：</p>
+<p class=" font-serif my-1"><em>Result:</em> 对于平均度为 $\mu=2m/n$ 的图，对任意 $1\le \alpha \le n$，存在 stretch 为 $O(1+1/k)$，询问时间 $T=O((\alpha \mu)^k)$，空间为 $S=O(m+n^2/\alpha)$ 的 DO。</p>
+<p class=" font-serif my-1">约束方程：</p>
+<p class=" font-serif my-1">$$
+    S\times T^{1/k}=O(n^2)
+$$</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">主要思想</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">经典的 landmark 法：选一个 landmark 集 $L$，对所有点存储到它们的距离。</li>
+<li class=" ml-8">合理地选择多级 landmark，使得<strong>估计距离</strong> $\delta(s, t)$ 和实际距离的误差尽量小。</li>
+<li class=" ml-8">和 Agarwal 的之前的成果相比：创新性地使用了<strong>双向</strong>方法来处理询问。</li>
+<li class=" ml-8">正是由于双向的优化，在不影响 space 和 construction time 的前提下，query time 得到了大幅优化：</li>
+</ul>
+<div align="center">
+<img src="3.png" width="80%"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">图的结构性预处理 - degree bounded</h2>
+<p class=" font-serif my-1"><em>Theorem:</em> 任何 $n$ 点 $m$ 边的图都可以转化为不超过 $2n$ 点，所有点度数不超过 $\lceil \mu + 2\rceil$ 的图。（$\mu$ 是原图的平均度数，为 $2m/n$）。</p>
+<p class=" font-serif my-1"><em>Construction:</em> 在新图 $G'$ 中，将所有点 $u$ 转化为 $t_u=\lceil \deg(u)/\mu\rceil$ 个点 $u_1, u_2, \cdots, u_{t_u}$。将原图中 $u$ 的邻点分成 $t_u$ 组，每组不超过 $\mu$ 个，在新图中连到这 $t_u$ 个点上。最后将这 $t_u$ 个点在新图中用零边连成链。</p>
+<div align="center" style="display: flex;">
+<img src="4.png" style="width: 45%; flex: 1"/>
+<img src="5.png" style="width: 45%; flex: 1"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">基础定义</h2>
+<p class=" font-serif my-1">若选定了 landmark 集 $L$，则对于任意一点 $v\in V$：</p>
+<p class=" font-serif my-1">$l(v)$：距离 $v$ 最近的 $L$ 中顶点；$r_v$：$v$ 和 $l(v)$ 之间的距离。</p>
+<div align="center">
+<img src="6.png" style="width: 80%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">基础定义</h2>
+<p class=" font-serif my-1">$B(v)$：所有到 $v$ 距离<strong>小于</strong> $r(v)$ 的点的集合。</p>
+<div align="center">
+<img src="7.png" style="width: 80%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">基础定义</h2>
+<p class=" font-serif my-1">$B^*(v)$：在 $B(v)$ 中或与 $B(v)$ 中顶点相邻的点的集合。</p>
+<div align="center">
+<img src="8.png" style="width: 80%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">基础定义</h2>
+<p class=" font-serif my-1">迭代定义：</p>
+<p class=" font-serif my-1">$$
+\Gamma_i^*(v)=\bigcup_{w\in \Gamma^*_{i-1}(v)} B^*(w)
+$$</p>
+<p class=" font-serif my-1">$$
+\Gamma_i(v)=\bigcup_{w\in \Gamma^*_{i-1}(v)} B(w)
+$$</p>
+<p class=" font-serif my-1">且 $\Gamma_0^*(v)=v, \Gamma_0(v)=\varnothing$.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">landmark 集 $L$ 选取</h2>
+<p class=" font-serif my-1"><em>Theorem:</em> 对于最大度 $\Delta(G)=\mu$ 的图 $G$，对任意 $1\le \alpha\le n$，存在 landmark 集 $L$ 大小为 $\tilde O(n/\alpha)$，满足对任意 $v\in V$，$|B(v)|=O(\alpha)$ 从而 $|B^*(v)|=O(\alpha\mu)$, WHP。</p>
+<p class=" font-serif my-1">证明：[4] (Alon &amp; Spencer, 2016).</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法预处理</h2>
+<p class=" font-serif my-1">对每个点 $v$，使用一个哈希表存储到所有 $|L|=\tilde O(n/\alpha)$ 个 landmark 的距离，以及 $l(v)$ 和 $r_v$。</p>
+<p class=" font-serif my-1">每个点使用 Perfect hashing，空间为 $\tilde O(n/\alpha)$。故算法总空间 $\tilde O(m+n^2/\alpha)$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">算法主过程</h2>
+<p class=" font-serif my-1">对于 $s$ 和 $t$ 的查询，分为三部分。</p>
+<p class=" font-serif my-1">(Candidate distance 意为，只从 e.g. $\Gamma_k^*(s)$ 内部更新的距离)</p>
+<div align="center">
+<img src="9.png" style="width: 100%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">$s$ 到 $t$ 的最短路</h2>
+<p class=" font-serif my-1">在 $s$ 到 $t$ 的最短路中，我们考虑 $\Gamma^*_i$ 的递归表现：</p>
+<div align="center">
+<img src="10.png" style="width: 70%;"/>
+<img src="11.png" style="width: 70%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">$s$ 到 $t$ 的最短路</h2>
+<div align="center">
+<img src="12.png" style="width: 70%;"/>
+<img src="13.png" style="width: 70%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">一些性质</h2>
+<p class=" font-serif my-1">以下性质对于 $s$ 和 $t$ 是对称的，故只证 $s$.</p>
+<p class=" font-serif my-1"><em>Property 1.</em> 在 Query 的 1.2. 行后，可以得出所有 $s$ 到 $w_j^s(0\le j\le k)$ 的距离，也就是求得的 Candidate distance。</p>
+<p class=" font-serif my-1"><em>Property 2.</em> 设 $r^s$ 是 $\min_{0\le j&lt;k}r_{w^s_j}$，则 $d(s, w_i^s)\ge i\cdot r^s$。</p>
+<p class=" font-serif my-1"><div align="center">
+<img src="14.png" style="width: 70%;"/>
+</div></p>
+<p class=" font-serif my-1"><em>Property 3.</em> 若 $w_k^t\notin \Gamma^*_k(s)$（即两向的迭代不交），则 $d(s, t)\ge 2k\min\lbrace r^s, r^t\rbrace$.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">一些性质</h2>
+<p class=" font-serif my-1"><em>Property 4.</em> query 算法得到的估计距离 $\delta(s, t)\le d(s, t)+2\min\lbrace r^s, r^t\rbrace$.</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">
+<p class=" font-serif my-1">这是因为第 5. 行使用更新的 $d'_s(w)+d(w, l(w))+d(l(w), t)\le d(s, t)+2r^s$。</p>
+<p class=" font-serif my-1">其中 $w$ 选择使得 $r_{w^s_j}$ 取得 $r^s$ 的 $w^s_j$。</p>
+</li>
+</ul>
+<div align="center">
+<img src="15.png" style="width: 65%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">stretch 分析</h2>
+<ol>
+<li class=" ml-8">当 $w_k^t\in \Gamma_k^*(s)$ 时，可以得到 $\delta(s, t)=d(s, t)$，此时得到准确值。</li>
+<li class=" ml-8">当 $w_k^t\notin \Gamma_k^*(s)$ 时，由 <em>Property 3.</em> 有 $d(s, t)\ge 2k\min\lbrace r^s, r^t\rbrace$；由 <em>Property 4.</em> 有 $\delta(s, t)\le d(s, t)+2\min\lbrace r^s, r^t\rbrace$。从而</li>
+</ol>
+<p class=" font-serif my-1">$$
+    \delta(s, t)\le d(s, t)+2\min\lbrace r^s, r^t\rbrace \le d(s, t)+2\cdot d(s, t)/(2k).
+$$</p>
+<p class=" font-serif my-1">进而</p>
+<p class=" font-serif my-1">$$
+\dfrac{\delta(s, t)}{d(s, t)}\le 1+1/k.
+$$</p>
+<p class=" font-serif my-1">即 stretch 为 $1+1/k$.</p>
+<p class=" font-serif my-1">由上知，该算法空间为 $\tilde O(m+n^2/\alpha)$。由于每次 query 要进行 $O(|\Gamma^*_k|)$ 范围的计算 Cadidate distance 和枚举，而每个点 $v$ 的 $|B^*(v)|=O(\alpha\mu)$，故最终单次询问复杂度为 $O((\alpha\mu)^k)$.</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">平面图的一种 Exact DO</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">概述</h2>
+<p class=" font-serif my-1">[3] (Djidjev, 1996) 给出了平面图（确切地说，$O(\sqrt n)$ 分离图）上的一种预处理时间 $O(S)$, 空间 $S=O(S)$, 单次询问时间 $T=O(n^2/S)$ 的 DO。</p>
+<p class=" font-serif my-1">满足约束</p>
+<p class=" font-serif my-1">$$
+    S\times T=O(n^2).
+$$</p>
+<p class=" font-serif my-1">以下只展示 $S=O(n\sqrt n)$，$T=O(\sqrt n)$ 的构建方法，其余范围是它的推论。</p>
+<div align="center">
+<img src="16.png" style="width: 60%;"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">$f(n)$ 分离性</h2>
+<p class=" font-serif my-1">称一类图 $\mathcal G_{f(n)}$ 具有 $f(n)$ 分离性，即对 $G\in \mathcal G_{f(n)}$，存在大小为 $O(f(n))$ 的 $C$，使得 $G-C$ 的每个连通分支的大小均不超过 $\alpha n$，其中 $\alpha&lt;1$ 为常数。</p>
+<p class=" font-serif my-1"><em>Theorem(平面分离定理):</em> 平面图 $\subseteq \mathcal G_{\sqrt n}$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">预处理</h2>
+<p class=" font-serif my-1">通过递归构造 $O(\sqrt n)$ seperator，形成一棵 $O(\log n)$ 深度的树。</p>
+<div style="display: flex; flex-wrap: wrap;" align="center">
+<img src="17.png" style="width: 33%; flex: 1"/>
+<img src="18.png" style="width: 33%; flex: 1"/>
+<img src="19.png" style="width: 33%; flex: 1"/>
+</div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">预处理</h2>
+<p class=" font-serif my-1">转化为树，树中的每个顶点代表原图中一个 $O(\sqrt n)$ seperator，即为：</p>
+<div align="center">
+<img src="20.png" style="width: 80%;"/>
+</div>
+
+<p class=" font-serif my-1">树中每个顶点即一个 $O(\sqrt n)$ seperator $C(G_x)$）代表的原图中每个顶点计算到 $G_x$ 中的每个顶点的距离）。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">预处理分析</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">使用 [5] (Henzinger et.al, 1997) 的方法可以在平面图中 $O(|G|)$ 进行 SSSP。</li>
+<li class=" ml-8">计算一个大小为 $n_x$ 的$C(G_x)$ 的信息需要 $O(n_x\sqrt {n_x})$ 的预处理时间和算法总空间。</li>
+</ul>
+<p class=" font-serif my-1">预处理时间/算法总空间共计</p>
+<p class=" font-serif my-1">$$
+f(n)=\sum_{i}f(n_i)+O(n\sqrt {n}), \text{where } \sum_{i}n_i=n, n_i\le \alpha n.
+$$</p>
+<p class=" font-serif my-1">解得 $f(n)=O(n\sqrt n)$。故预处理时间，空间均为 $O(n\sqrt n)$。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">询问</h2>
+<p class=" font-serif my-1">对于 $u, v$，找到在树中它们所在的顶点，设它们的 LCA 为 $C(G_l)$。输出答案为</p>
+<p class=" font-serif my-1">$$
+d(u, v)=\min_{x\in C(G_l)} \lbrace d(u, x) + d(x, v)\rbrace.
+$$</p>
+<p class=" font-serif my-1">这是因为 $C(G_l)$ 中一定有顶点在 $u, v$ 的最短路上（它是割集）。单次询问时间 $O(\sqrt n)$。</p>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">总结</h2>
+<p class=" font-serif my-1">在第一部分，我们得到了一般图预处理时间 $O(mn/\alpha)$，空间 $O(m+n^2/\alpha)$，单次询问时间为 $O((\alpha\mu)^k)$ 的近似 DO。</p>
+<p class=" font-serif my-1">在第二部分，我们得到了平面图（或一般地，$\mathcal G_{\sqrt n}$）预处理时间和空间均为 $O(n\sqrt n)$，单次询问时间为 $O(\sqrt n)$ 的精确 DO。</p>
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考文献</h2>
+<p class=" font-serif my-1">[1] Sommer, C. (2014). Shortest-path queries in static networks. ACM Computing Surveys (CSUR), 46(4), 1-31.</p>
+<p class=" font-serif my-1">[2] Agarwal, R. (2014). The space-stretch-time tradeoff in distance oracles. In Algorithms-ESA 2014: 22th Annual European Symposium, Wroclaw, Poland, September 8-10, 2014. Proceedings 21 (pp. 49-60). Springer Berlin Heidelberg.</p>
+<p class=" font-serif my-1">[3] Djidjev, H. N. (1996, June). Efficient algorithms for shortest path queries in planar digraphs. In International Workshop on Graph-Theoretic Concepts in Computer Science (pp. 151-165). Berlin, Heidelberg: Springer Berlin Heidelberg.</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考文献</h2>
+<p class=" font-serif my-1">[4] Alon, N., &amp; Spencer, J. H. (2016). The probabilistic method. John Wiley &amp; Sons.</p>
+<p class=" font-serif my-1">[5] Henzinger, M. R., Klein, P., Rao, S., &amp; Subramanian, S. (1997). Faster shortest-path algorithms for planar graphs. journal of computer and system sciences, 55(1), 3-23.</p>
+</div> </section> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家！</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

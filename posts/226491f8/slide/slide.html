@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://blog.rijuyuezhu.top/static/css/base.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://blog.rijuyuezhu.top/static/css/fonts.css" rel="stylesheet"
+        type="text/css">
+    <title>slide</title>
+    <!-- browser favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+    <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/katex/katex.min.css">
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="https://blog.rijuyuezhu.top/static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/reveal.css">
+    <link rel="stylesheet" href="https://blog.rijuyuezhu.top/static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+ <div class="center middle"><div style="width:100%"><div>
+<!-- source/_posts/2023/11/问题求解（三）-Open-Topic-10-笔记/ -->
+
+<h1 class=" text-2xl mt-2 font-sans"><span style="color: purple">图灵机及图灵完备性</span></h1>
+<p class=" font-serif my-1">黄文睿</p>
+<p class=" font-serif my-1">221180115 计算机拔尖班</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">确定性图灵机与非确定性图灵机[1]</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">DTM</h2>
+<p class=" font-serif my-1"><em>确定性图灵机(DTM)</em>：六元组 $M=\langle Q, \Sigma, \iota, \sqcup, A, \delta\rangle$</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">$Q$ 是读写头的状态集合。</li>
+<li class=" ml-8">$\Sigma$ 是纸带字符集。</li>
+<li class=" ml-8">$\iota\in Q$ 是读写头初始状态。</li>
+<li class=" ml-8">$\sqcup \in \Sigma$ 表示空符号。</li>
+<li class=" ml-8">$A\subseteq Q$ 是结束状态。</li>
+<li class=" ml-8">$\delta: (Q\setminus A \times \Sigma)\to (Q\times \Sigma \times \lbrace L, S, R\rbrace)$ 为<strong>状态转移函数</strong>。</li>
+</ul>
+<p class=" font-serif my-1">使用形式语言的范畴，可以认为 DTM 是一个有存储结构(纸带)的有限状态自动机。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">NTM</h2>
+<p class=" font-serif my-1"><em>非确定性图灵机(NTM)</em>：六元组 $M=\langle Q, \Sigma, \iota, \sqcup, A, \delta\rangle$</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">$Q$ 是读写头的状态集合。</li>
+<li class=" ml-8">$\Sigma$ 是纸带字符集。</li>
+<li class=" ml-8">$\iota\in Q$ 是读写头初始状态。</li>
+<li class=" ml-8">$\sqcup \in \Sigma$ 表示空符号。</li>
+<li class=" ml-8">$A\subseteq Q$ 是结束状态。</li>
+<li class=" ml-8">$\delta\subseteq(Q\setminus A \times \Sigma)\times (Q\times \Sigma \times \lbrace L, S, R\rbrace)$ 为<strong>状态转移关系</strong>。</li>
+</ul>
+<p class=" font-serif my-1">可以发现 DTM 和 NTM 的区别仅在于 $\delta$ 是函数还是关系。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">图灵完备性</h2>
+<p class=" font-serif my-1">如果一个计算模型/指令系统具有<strong>模拟</strong>一台图灵机的能力，则称它具有图灵完备性。</p>
+<p class=" font-serif my-1">以下给出两种具有图灵完备性的计算模型。</p>
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">Lambda 演算</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Lambda 演算[2]</h2>
+<p class=" font-serif my-1">Lambda 演算由 Alonzo Church (Alan Turing 的博导)提出，被证明具有图灵完备性。</p>
+<p class=" font-serif my-1">现在很多语言都支持函数式编程，Lambda 演算是其中的重要一环。</p>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Lambda 演算的基本规则</h2>
+<p class=" font-serif my-1">Lambda 演算主要内容是“函数抽象”和“函数应用”</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">变量：如 $x$, $y$ 等，用来表示函数参数。</li>
+<li class=" ml-8">函数抽象：或是函数定义，如 <code>(lambda x. (* x x))</code> 是一个单个参数的函数，返回参数的平方。</li>
+<li class=" ml-8">函数应用：或是函数调用，如 <code>((lambda x. (* x x)) 233)</code> 将 233 带入左边函数的参数 $x$，得到 $233^2$.</li>
+</ul>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Lambda 演算 - 多元函数[3]</h2>
+<p class=" font-serif my-1">Lambda 演算基础版本中只提供一元函数，但是多元函数可以使用“返回函数的函数”来完成。如计算加法的二元函数：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>(lambda x y. (+ x y))
+</code></pre></div>
+
+<p class=" font-serif my-1">可以用“函数的函数”来完成：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>(lambda x. (lambda y. (+ x y)))
+</code></pre></div>
+
+<p class=" font-serif my-1">在应用时，可以方便地后接两个参数：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>(((lambda x. (lambda y. (+ x y))), 2) 3)
+or
+((lambda x. (lambda y. (+ x y))), 2 3)
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Lambda 与编程语言[3]</h2>
+<p class=" font-serif my-1">可以使用函数来编码编程语言中的基本概念，如 Boolean 和条件：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>true = lambda x. lambda y. x
+false = lambda x. lambda y. y
+if E1 then E2 else E3 (一个三元函数) = E1 E2 E3
+</code></pre></div>
+
+<p class=" font-serif my-1">解释：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>if false then a else b
+-&gt; false a b
+-&gt; (lambda x. lambda y. y) a b
+-&gt; (lambda y.y) b
+-&gt; b
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">使用 Lambda 演算</h2>
+<p class=" font-serif my-1">C++, Python 等许多现代编程语言均提供 Lambda 演算，更不用说一些专门的函数式语言。</p>
+<p class=" font-serif my-1">相信许多同学这样写过（充当匿名函数）：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="n">sort</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">;});</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">python 中写得更顺畅一点，如加法：</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">5</span>
+</code></pre></div>
+
+</div> </section> 
+</section>
+
+<section>
+ 
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">Brainf**k</h1>
+</div> </div> </div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Brainf**k</h2>
+<p class=" font-serif my-1">Brainf**k 由 Urban Müller 创立，仅使用 8 种符号创立的及其简单的语言。</p>
+<p class=" font-serif my-1">该机器由内存 <code>M</code> 和字节指针 <code>p</code> 构成，初始化内存全为 0。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">意义</th>
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>&gt;</code></td>
+<td style="text-align: center;"><code>++p</code></td>
+<td style="text-align: center;"><code>.</code></td>
+<td style="text-align: center;">输出 <code>*p</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>&lt;</code></td>
+<td style="text-align: center;"><code>--p</code></td>
+<td style="text-align: center;"><code>,</code></td>
+<td style="text-align: center;">输入 <code>*p</code></td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td style="text-align: center;"><code>++(*p)</code></td>
+<td style="text-align: center;"><code>[</code></td>
+<td style="text-align: center;">下详</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>-</code></td>
+<td style="text-align: center;"><code>--(*p)</code></td>
+<td style="text-align: center;"><code>]</code></td>
+<td style="text-align: center;">下详</td>
+</tr>
+</tbody>
+</table>
+</div> </section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Brainf**k</h2>
+<p class=" font-serif my-1">其中 Brainf**k 提供循环格式为</p>
+<p class=" font-serif my-1"><code>A[B]C</code> 表示</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="n">A</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// here meets [</span>
+<span class="w">    </span><span class="n">B</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="c1">// here meets ]</span>
+<span class="n">C</span><span class="p">;</span>
+</code></pre></div>
+
+<p class=" font-serif my-1">它是图灵完备的。</p>
+</div> </section>
+
+<section>
+ <div>
+<p class=" font-serif my-1">比如使用 Brainf**k 来写 <code>Hello world</code> 为</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nb">++++++++</span><span class="c">               Set Cell #0 to 8</span>
+<span class="k">[</span>
+<span class="c">    </span><span class="nv">&gt;</span><span class="nb">++++</span><span class="c">               Add 4 to Cell #1; this will always set Cell #1 to 4</span>
+<span class="c">    </span><span class="k">[</span><span class="c">                   as the cell will be cleared by the loop</span>
+<span class="c">        </span><span class="nv">&gt;</span><span class="nb">++</span><span class="c">             Add 2 to Cell #2</span>
+<span class="c">        </span><span class="nv">&gt;</span><span class="nb">+++</span><span class="c">            Add 3 to Cell #3</span>
+<span class="c">        </span><span class="nv">&gt;</span><span class="nb">+++</span><span class="c">            Add 3 to Cell #4</span>
+<span class="c">        </span><span class="nv">&gt;</span><span class="nb">+</span><span class="c">              Add 1 to Cell #5</span>
+<span class="c">        </span><span class="nv">&lt;&lt;&lt;&lt;</span><span class="nb">-</span><span class="c">           Decrement the loop counter in Cell #1</span>
+<span class="c">    </span><span class="k">]</span><span class="c">                   Loop until Cell #1 is zero; number of iterations is 4</span>
+<span class="c">    </span><span class="nv">&gt;</span><span class="nb">+</span><span class="c">                  Add 1 to Cell #2</span>
+<span class="c">    </span><span class="nv">&gt;</span><span class="nb">+</span><span class="c">                  Add 1 to Cell #3</span>
+<span class="c">    </span><span class="nv">&gt;</span><span class="nb">-</span><span class="c">                  Subtract 1 from Cell #4</span>
+<span class="c">    </span><span class="nv">&gt;&gt;</span><span class="nb">+</span><span class="c">                 Add 1 to Cell #6</span>
+<span class="c">    </span><span class="k">[</span><span class="nv">&lt;</span><span class="k">]</span><span class="c">                 Move back to the first zero cell you find; this will</span>
+<span class="c">                        be Cell #1 which was cleared by the previous loop</span>
+<span class="c">    </span><span class="nv">&lt;</span><span class="nb">-</span><span class="c">                  Decrement the loop Counter in Cell #0</span>
+<span class="k">]</span><span class="c">                       Loop until Cell #0 is zero; number of iterations is 8</span>
+</code></pre></div>
+
+</div> </section>
+
+<section>
+ <div>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nv">&gt;&gt;</span><span class="nt">.</span><span class="c">                     Cell #2 has value 72 which is 'H'</span>
+<span class="nv">&gt;</span><span class="nb">---</span><span class="nt">.</span><span class="c">                   Subtract 3 from Cell #3 to get 101 which is 'e'</span>
+<span class="nb">+++++++</span><span class="nt">..</span><span class="nb">+++</span><span class="nt">.</span><span class="c">           Likewise for 'llo' from Cell #3</span>
+<span class="nv">&gt;&gt;</span><span class="nt">.</span><span class="c">                     Cell #5 is 32 for the space</span>
+<span class="nv">&lt;</span><span class="nb">-</span><span class="nt">.</span><span class="c">                     Subtract 1 from Cell #4 for 87 to give a 'W'</span>
+<span class="nv">&lt;</span><span class="nt">.</span><span class="c">                      Cell #3 was set to 'o' from the end of 'Hello'</span>
+<span class="nb">+++</span><span class="nt">.</span><span class="nb">------</span><span class="nt">.</span><span class="nb">--------</span><span class="nt">.</span><span class="c">    Cell #3 for 'rl' and 'd'</span>
+<span class="nv">&gt;&gt;</span><span class="nb">+</span><span class="nt">.</span><span class="c">                    Add 1 to Cell #5 gives us an exclamation point</span>
+<span class="nv">&gt;</span><span class="nb">++</span><span class="nt">.</span><span class="c">                    And finally a newline from Cell #6</span>
+</code></pre></div>
+
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">图灵机与 P 和 NP</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">P: 在确定性图灵机上可以在多项式步内判定的语言。</li>
+<li class=" ml-8">NP: 在非确定性图灵机上可以在多项式步内判定的语言。</li>
+</ul>
+<p class=" font-serif my-1">此处，非确定性图灵机可以认为是能够“神奇地选择最易方式”，或是“在遇到分支形成副本”，从而也就和 TC 中 NP 定义中的 certificate 不谋而合。存在的 certificate 指引确定性图灵机模拟一台非确定性图灵机走正确道路的那条分支的结果。</p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">参考文献</h2>
+<p class=" font-serif my-1">[1] https://en.wikipedia.org/wiki/Turing_machine</p>
+<p class=" font-serif my-1">[2] https://en.wikipedia.org/wiki/Lambda_calculus</p>
+<p class=" font-serif my-1">[3] https://liujiacai.net/blog/2014/10/12/lambda-calculus-introduction/</p>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">谢谢大家！</h1>
+</div> 
+</div> 
+</div> 
+</section> 	
+        </div>
+    </div>
+
+    <script src="https://blog.rijuyuezhu.top/static/reveal/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>

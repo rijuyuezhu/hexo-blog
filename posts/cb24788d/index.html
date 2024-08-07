@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一份简要的斯特林数学习笔记. 从原博客迁移而来.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斯特林数 学习笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/cb24788d/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="一份简要的斯特林数学习笔记. 从原博客迁移而来.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-14T15:00:17.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.560Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Maths">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Stirling Number">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/cb24788d/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/cb24788d/","path":"posts/cb24788d/","title":"斯特林数 学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>斯特林数 学习笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%B1%BB%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0%E6%96%AF%E7%89%B9%E6%9E%97%E5%AD%90%E9%9B%86%E6%95%B0"><span class="nav-text">第二类斯特林数（斯特林子集数）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0%E6%96%AF%E7%89%B9%E6%9E%97%E8%BD%AE%E6%8D%A2%E6%95%B0"><span class="nav-text">第一类斯特林数（斯特林轮换数）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-text">斯特林数的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%B1%BB%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0-%E8%A1%8C"><span class="nav-text">第二类斯特林数 · 行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%B1%BB%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0-%E5%88%97"><span class="nav-text">第二类斯特林数 · 列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0-%E8%A1%8C"><span class="nav-text">第一类斯特林数 · 行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%E6%96%AF%E7%89%B9%E6%9E%97%E6%95%B0-%E5%88%97"><span class="nav-text">第一类斯特林数 · 列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B6%E4%B9%98%E5%B9%82%E4%B8%8E%E6%96%B9%E5%B9%82%E7%9A%84%E8%BD%AC%E5%8C%96"><span class="nav-text">阶乘幂与方幂的转化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%AF%E7%89%B9%E6%9E%97%E5%8F%8D%E6%BC%94"><span class="nav-text">斯特林反演</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/cb24788d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="斯特林数 学习笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          斯特林数 学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-14 23:00:17" itemprop="dateCreated datePublished" datetime="2023-04-14T23:00:17+08:00">2023-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/XCPC/" itemprop="url" rel="index"><span itemprop="name">XCPC</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/XCPC/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>一份简要的斯特林数学习笔记. 从<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41996523/article/details/116004026">原博客</a>迁移而来.</p>
+<span id="more"></span>
+<h1 id="第二类斯特林数斯特林子集数">第二类斯特林数（斯特林子集数）</h1>
+<p><span class="math inline">\(\begin{Bmatrix}n \\
+k\end{Bmatrix}\)</span>，表示将 <span class="math inline">\(n\)</span>
+个两两不同的元素，划分为 <span class="math inline">\(k\)</span>
+个互不区分的非空集合的方案数。</p>
+<p>有递推式 <span class="math inline">\(\begin{Bmatrix}n \\
+k\end{Bmatrix}=k\cdot \begin{Bmatrix}n-1 \\
+k\end{Bmatrix}+\begin{Bmatrix}n-1 \\ k-1\end{Bmatrix},\begin{Bmatrix}n
+\\ 0\end{Bmatrix}=[n=0]\)</span>。</p>
+<p>同时还有通项公式</p>
+<p><span class="math display">\[
+\begin{Bmatrix}n \\
+k\end{Bmatrix}=\sum_{i=0}^k\dfrac{(-1)^{k-i}i^n}{(k-i)!i!}
+\]</span></p>
+<p>证明：</p>
+<p>考虑这样一个问题：将 <span class="math inline">\(n\)</span>
+个物品涂成 <span class="math inline">\(k\)</span>
+种颜色，我们用两种方法计算它的方案数：</p>
+<p><span class="math display">\[
+k^n=\sum_{i=0}^k\binom{k}{i}\begin{Bmatrix}n \\ i\end{Bmatrix}i!
+\]</span></p>
+<p>左边是显然的。右边是枚举用几种颜色涂。（注意到第二类斯特林数不允许空集）</p>
+<p>做一个二项式反演，得到</p>
+<p><span class="math display">\[
+\begin{Bmatrix}n \\
+k\end{Bmatrix}k!=\sum_{i=0}^k(-1)^{k-i}\binom{k}{i}i^n
+\]</span></p>
+<p>稍加整理就能得到结论。</p>
+<h1 id="第一类斯特林数斯特林轮换数">第一类斯特林数（斯特林轮换数）</h1>
+<p><span class="math inline">\(\begin{bmatrix}n \\
+k\end{bmatrix}\)</span>，将 <span class="math inline">\(n\)</span>
+个两两不同的元素，划分为 <span class="math inline">\(k\)</span>
+个互不区分的非空轮换的方案数。</p>
+<p>有递推式 <span class="math inline">\(\begin{bmatrix}n \\
+k\end{bmatrix}=(n-1)\begin{bmatrix}n-1 \\
+k\end{bmatrix}+\begin{bmatrix}n-1 \\ k-1\end{bmatrix},\begin{bmatrix}n
+\\ 0\end{bmatrix}=[n=0]\)</span></p>
+<p>它没有实用的通项公式。</p>
+<h1 id="斯特林数的计算">斯特林数的计算</h1>
+<p>显然，两种斯特林数都可以 <span class="math inline">\(O(nk)\)</span>
+求。</p>
+<h2 id="第二类斯特林数-行">第二类斯特林数 · 行</h2>
+<p>根据通项公式</p>
+<p><span class="math display">\[
+\begin{Bmatrix}n \\
+k\end{Bmatrix}=\sum_{i=0}^n\dfrac{(-1)^{k-i}i^n}{(k-i)!i!}
+\]</span></p>
+<p>于是设 <span class="math inline">\(f_n=\sum_{k\ge 0}\begin{Bmatrix}n
+\\ k\end{Bmatrix}x^k,g_n=\sum_{k\ge 0}\dfrac{i^n}{i!}x^k\)</span>，则
+<span class="math inline">\(f_n=e^{-x}*g_n\)</span>。</p>
+<h2 id="第二类斯特林数-列">第二类斯特林数 · 列</h2>
+<p>先考虑把相同的集合变成不同的非空盒子，则最后答案需要除以 <span
+class="math inline">\(k!\)</span>。</p>
+<p>设一个非空盒子的 EGF（以物品数量为组合对象）为 <span
+class="math inline">\(G(x)\)</span>，<span
+class="math inline">\(k\)</span> 个非空盒子的 EGF 为 <span
+class="math inline">\(F(x)\)</span>。故有</p>
+<p><span class="math display">\[
+G(x)=\sum_{i\ge 1} \dfrac{x^i}{i}=e^x-1,F(x)=G^k(x)
+\]</span></p>
+<p>于是有</p>
+<p><span class="math display">\[
+\sum_{i\ge 0}\begin{Bmatrix}i \\
+k\end{Bmatrix}\dfrac{x^i}{i!}=\dfrac{(e^x-1)^k}{k!}
+\]</span></p>
+<p>直接多项式快速幂计算。</p>
+<h2 id="第一类斯特林数-行">第一类斯特林数 · 行</h2>
+<p>设 <span class="math inline">\(f_n(x)=\sum_{i\ge 0}\begin{bmatrix}n
+\\ k\end{bmatrix}x^i\)</span>，由递推式得到</p>
+<p><span class="math display">\[
+f_{n+1}(x)=(x+n)f_n(x)
+\]</span></p>
+<p>得到</p>
+<p><span class="math display">\[
+f_n(x)=\prod_{i=0}^{n-1}(x+i)=x^{\overline n}
+\]</span></p>
+<p>我们的任务转化为计算上升幂。可以通过分治 FFT 以 <span
+class="math inline">\(O(n\log^2n)\)</span> 完成。</p>
+<p>但是，也可以如下计算：</p>
+<p>考虑倍增，<span
+class="math inline">\(f_{2n}(x)=x^{\overline{2n}}=x^{\overline
+{n}}(x+n)^{\overline{n}}=f_n(x)f_n(x+n)\)</span></p>
+<p>下面为了方便表述，设 <span class="math inline">\(f_n(x)=\sum_{i\ge
+0}a_ix^i\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+    f_n(x+n)=&amp;\sum_{i=0}^na_i(x+n)^i
+    \\=&amp;\sum_{i=0}^na_i\sum_{j=0}^i\binom{i}{j}x^jn^{i-j}
+    \\=&amp;\sum_{j= 0}^n\dfrac{x^j}{j!}\sum_{i =
+j}^n\dfrac{n^{i-j}}{(i-j)!}a_ii!
+\end{aligned}
+\]</span></p>
+<p>设 <span
+class="math inline">\(A_i=a_ii!,B_i=\dfrac{n^i}{i!}\)</span></p>
+<p>故</p>
+<p><span class="math display">\[
+\begin{aligned}
+    f_n(x+n)=&amp;\sum_{j=0}^n\dfrac{x^j}{j!}\sum_{i=j}^nA(i)B(i-j)
+    \\=&amp;\sum_{j=0}^n\dfrac{x^j}{j!}
+    \sum_{i=0}^{n-j}A(i+j)B(i)
+\end{aligned}
+\]</span></p>
+<p>后面那部分显然可以卷积，于是再做个和、除以 <span
+class="math inline">\(j!\)</span> 就可以得到 <span
+class="math inline">\(f_n(x+n)\)</span>。</p>
+<p>总复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<h2 id="第一类斯特林数-列">第一类斯特林数 · 列</h2>
+<p>先写出单个轮换的EGF：</p>
+<p><span class="math display">\[
+f(x)=\sum_{i\ge 1}(i-1)!\dfrac{x^i}{i!}=\sum_{i\ge
+1}\dfrac{x^i}{i}=\ln\dfrac{1}{1-x}
+\]</span></p>
+<p>于是，<span class="math inline">\(k\)</span> 个轮换的 EGF 即为</p>
+<p><span class="math display">\[
+\dfrac{f^k(x)}{k!}
+\]</span></p>
+<p>做多项式快速幂即可。</p>
+<h1 id="阶乘幂与方幂的转化">阶乘幂与方幂的转化</h1>
+<p>根据上面第一类斯特林数的性质，有</p>
+<p><span class="math display">\[
+    x^{\overline{n}}=\sum_{i=0}^n\begin{bmatrix} n \\ i\end{bmatrix}x^i
+\]</span></p>
+<p>利用有符号第一类斯特林数，用类似的推导方法可以得到</p>
+<p><span class="math display">\[
+x^{\underline{n}}=\sum_{i=0}^n(-1)^{n-i}\begin{bmatrix}n \\
+i\end{bmatrix}x^i
+\]</span></p>
+<p>我们再看看怎么转化回去：</p>
+<p><span class="math display">\[
+x^n=\sum_{i=0}^n\begin{Bmatrix}n \\ i\end{Bmatrix}\binom{x}{i} i!
+\]</span></p>
+<p>而 <span class="math inline">\(\binom{x}{i}i!=x^{\underline
+i}\)</span>。</p>
+<p>于是</p>
+<p><span class="math display">\[
+x^n=\sum_{i=0}^n\begin{Bmatrix}n \\ i\end{Bmatrix}x^{\underline i}
+\]</span></p>
+<p>同样有方幂转上升幂</p>
+<p><span class="math display">\[
+x^n=\sum_{i=0}^n(-1)^{n-i}\begin{Bmatrix}n \\
+i\end{Bmatrix}x^{\overline{i}}
+\]</span></p>
+<p>这两个有符号斯特林数推出的式子，可以直接用上升幂和下降幂的相似性得到（它们展开后仅差一些负号）。</p>
+<p>当然，这四个式子都可以数学归纳证明。</p>
+<p>如何记忆呢？</p>
+<p>将阶乘幂转化为方幂，使用第一类斯特林数（它的 OGF 决定了这一点）；</p>
+<p>将方幂转化为阶乘幂，使用第二类斯特林数（它的 组合意义
+决定了这一点）。</p>
+<p>那么，什么时候添加 <span
+class="math inline">\((-1)^{n-i}\)</span>？显然有 <span
+class="math inline">\(x^{\overline{n}}\ge x^n \ge
+x^{\underline{n}}\)</span>，当将大的幂转化为小的幂的时候，需要添加负号。</p>
+<h1 id="斯特林反演">斯特林反演</h1>
+<p>若</p>
+<p><span class="math display">\[
+g(n)=\sum_{i=0}^n\begin{Bmatrix}n \\ i\end{Bmatrix}f(i)
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[
+f(n)=\sum_{i=0}^n(-1)^{n-i}\begin{Bmatrix}n \\ i\end{Bmatrix}g(i)
+\]</span></p>
+<p>当然，把第一类和第二类反过来也对；根据反演的一般套路，改为枚举 <span
+class="math inline">\(j\ge i\)</span> 也对。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/cb24788d/" title="斯特林数 学习笔记">https://blog.rijuyuezhu.top/posts/cb24788d/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Maths/" rel="tag"># Maths</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Stirling-Number/" rel="tag"># Stirling Number</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/d06840d0/" rel="prev" title="网页前端初步 总结">
+                  <i class="fa fa-angle-left"></i> 网页前端初步 总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/c0a6679e/" rel="next" title="问题求解（二） Open Topic II 笔记">
+                  问题求解（二） Open Topic II 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

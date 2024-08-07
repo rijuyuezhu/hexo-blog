@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="选题为 13-2, 讲解 TC Problem 15-3: Bitonic euclidean traveling-salesman problem.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（二） Open Topic III 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/b0473663/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="选题为 13-2, 讲解 TC Problem 15-3: Bitonic euclidean traveling-salesman problem.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/b0473663/BETSP_Ex.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/b0473663/Case1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/b0473663/Case2.png">
+<meta property="article:published_time" content="2023-05-16T08:47:03.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.563Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/b0473663/BETSP_Ex.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/b0473663/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/b0473663/","path":"posts/b0473663/","title":"问题求解（二） Open Topic III 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（二） Open Topic III 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%BC%95%E5%85%A5"><span class="nav-text">问题引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95"><span class="nav-text">设计动态规划算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%8A%B6%E6%80%81%E6%95%B0"><span class="nav-text">优化状态数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E7%A7%8D"><span class="nav-text">变种</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/b0473663/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（二） Open Topic III 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（二） Open Topic III 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-16 16:47:03" itemprop="dateCreated datePublished" datetime="2023-05-16T16:47:03+08:00">2023-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>选题为 13-2, 讲解 TC Problem 15-3: Bitonic euclidean
+traveling-salesman problem.</p>
+<span id="more"></span>
+<p>演示文稿: 详见 <a href="3.pdf">Slide</a>.</p>
+<h1 id="问题引入">问题引入</h1>
+<p><strong>双调欧几里得旅行商问题</strong></p>
+<p>欧几里得平面上有 <span class="math inline">\(n\)</span> 个点,
+每个点的横坐标均不相同, 从最左点沿某路径到达最右点,
+再从最右点沿某路径到最左点, 使得除了初始点外, 每个点均恰好被经过一次,
+求路径长度的最小值.</p>
+<p><img src="BETSP_Ex.png" /></p>
+<p>(Cormen, T. H., Leiserson, C. E., Rivest, R. L., &amp; Stein, C.
+(2022). Introduction to algorithms. MIT press. p405)</p>
+<p>形式化地，设每个点按横坐标从小到大排序后重编号为 <span
+class="math inline">\(1\)</span> 至 <span
+class="math inline">\(n\)</span>. 将序列 <span
+class="math inline">\(2..n\)</span> 划分为两个单调递增的序列(可能为空)
+<span class="math inline">\(\lbrace a_i\rbrace, 1\le i\le p\)</span> 和
+<span class="math inline">\(\lbrace b_i\rbrace, 1\le i\le q\)</span>,
+<span class="math inline">\(p+q=n-1\)</span>. 不妨设 <span
+class="math inline">\(a_p=n\)</span>, 并另记 <span
+class="math inline">\(a_0=b_0=1\)</span>, 求划分方法使得 <span
+class="math display">\[
+S=\sum_{i=0}^{p-1}d(a_i, a_{i+1})+\sum_{i=0}^{q-1}d(b_i, b_{i+1})+d(b_q,
+n)
+\]</span> 最小, 其中 <span class="math inline">\(d(u, v)\)</span>
+表示编号为 <span class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 的两点的欧几里得距离.
+后文的讨论基于该转化后问题.</p>
+<h1 id="设计动态规划算法">设计动态规划算法</h1>
+<p>设 <span class="math inline">\(f[x, y] (x&gt;y\ge 1)\)</span>
+表示将序列 <span class="math inline">\(2..x\)</span> 划分成 <span
+class="math inline">\(a_{1..p}\)</span> 和 <span
+class="math inline">\(b_{1..q}\)</span> 时 <span
+class="math inline">\(\displaystyle \sum_{i=0}^{p-1}d(a_i,
+a_{i+1})+\sum_{i=0}^{q-1}d(b_i, b_{i+1})\)</span> 的最小值, 满足 <span
+class="math inline">\(a_p=x\)</span> 且 <span
+class="math inline">\(b_q=y\)</span>. 若 <span
+class="math inline">\(y\)</span> 等于 <span
+class="math inline">\(1\)</span> 说明 <span
+class="math inline">\(b\)</span> 仅含 <span
+class="math inline">\(b_0=1\)</span>.</p>
+<p>边界条件为 <span class="math inline">\(f[2, 1]=d(1, 2)\)</span>.</p>
+<p>分以下两种情况讨论:</p>
+<ol type="1">
+<li>当 <span class="math inline">\(x-1 &gt; y\ge 1\)</span> 时,
+这种情况下 <span class="math inline">\(y+1..x\)</span> 都会属于 <span
+class="math inline">\(a_{1..p}\)</span>, 那么去掉 <span
+class="math inline">\(x\)</span> 后, 把 <span
+class="math inline">\(x-1\)</span> 当成最后的节点, 会形成 <span
+class="math inline">\(f[x-1, y]\)</span> 的子问题. 转移方程为</li>
+</ol>
+<p><span class="math display">\[
+  f[x,y]=f[x-1,y]+d(x-1,x).
+\]</span></p>
+<p><img src="Case1.png" /></p>
+<ol start="2" type="1">
+<li>当 <span class="math inline">\(x-1=y\ge 2\)</span> 时, 这种情况下
+<span class="math inline">\(x\)</span> 一定存在一个小于 <span
+class="math inline">\(y\)</span> 的前驱节点 <span
+class="math inline">\(u\)</span>, 那么 <span
+class="math inline">\(u+1..x-1\)</span> 都是属于 <span
+class="math inline">\(b\)</span> 的. 去掉 <span
+class="math inline">\(x\)</span> 后, 把 <span
+class="math inline">\(a\)</span> 和 <span
+class="math inline">\(b\)</span> 调换一下, 发现形成了 <span
+class="math inline">\(f[x-1, u]\)</span> 的子问题, 转移方程为</li>
+</ol>
+<p><span class="math display">\[
+  f[x, x-1]=\min_{1\le u&lt;x-1}\lbrace f[x-1, u] + d(u, x)\rbrace.
+\]</span></p>
+<p><img src="Case2.png" /></p>
+<p>于是我们得到了完整的状态转移方程为:</p>
+<p><span class="math display">\[
+\begin{gather*}
+  f[2, 1]=d(2, 1);\\
+  f[x, y]=f[x-1,y]+d(x, x-1), \text{when } x-1&gt;y\ge 1;\\
+  f[x, x-1]=\min_{1\le u&lt;x-1}\lbrace f[x-1, u] + d(u, x)\rbrace,
+\text{when } x\ge 3.
+\end{gather*}
+\]</span></p>
+<p>如何统计最终答案?</p>
+<p>观察到 <span class="math inline">\(f[n, u](1\le u&lt;n)\)</span> 和
+<span class="math inline">\(S\)</span> 仅差一项 <span
+class="math inline">\(d(u, n)\)</span>, 于是 <span
+class="math display">\[
+  S=\min_{1\le u&lt;n}\lbrace f[n, u]+d(u, n)\rbrace.
+\]</span></p>
+<p>于是我们得到了一个时间复杂度为 <span
+class="math inline">\(O(n^2)\)</span>, 空间复杂度为 <span
+class="math inline">\(O(n^2)\)</span> 的算法.</p>
+<blockquote>
+<p>时间复杂度证明:</p>
+<p>共有 <span class="math inline">\(\sum_{1\le j&lt;i\le
+n}1=\binom{n}{2}=\frac{n(n-1)}{2}\)</span> 种状态, 子问题图的点数为
+<span class="math inline">\(|V|=\frac{n(n-1)}{2}\)</span>. 对于 <span
+class="math inline">\((x, y), 1\le y\le x-2\)</span> 的状态,
+在子问题图中仅有指向 <span class="math inline">\((x-1,y)\)</span>
+的一条出边; 对于 <span class="math inline">\((x, x-1), 3\le x\le
+n\)</span>, 有指向 <span class="math inline">\((x-1, u), 1\le u \le
+x-2\)</span> 共 <span class="math inline">\(x-2\)</span> 条出边.
+故总边数为 <span class="math display">\[
+|E|=\sum_{x=3}^n\sum_{y=1}^{x-2}1+\sum_{x=3}^n(x-2)=(n-1)(n-2).
+\]</span> 故时间复杂度为 <span class="math inline">\(O(|V| +
+|E|)=O(n^2)\)</span>.</p>
+</blockquote>
+<h1 id="优化状态数">优化状态数</h1>
+<p>接下来我们尝试对这个动态规划做一些优化, 想办法"压缩"子问题图.
+在上面的解法中, 有相当多的状态仅有一条出边,
+可以尝试用数学方法缩减状态数量!</p>
+<p>对于状态转移方程中的第二项, 可以如下进行推导 <span
+class="math display">\[
+  \begin{aligned}
+    f[x,y]&amp;=f[x-1,y]+d(x, x-1)\\
+      &amp;=f[x-2, y]+d(x-1, x-2)+d(x, x-1)\\
+      &amp;=\cdots\\
+      &amp;=f[y+1, y]+d(y+2, y+1)+\cdots+d(x, x-1)\\
+      &amp;=f[y+1, y]+D(x)-D(y+1), \text{when } 1\le y\le x-2.
+  \end{aligned}
+\]</span> 其中使用了前缀和, <span class="math inline">\(\displaystyle
+D(x)=\sum_{i=2}^x d(i, i-1)\)</span>.</p>
+<p>把它代入第三项, 有</p>
+<p><span class="math display">\[
+  \begin{aligned}
+    f[x, x-1]&amp;=\min_{1\le u&lt;x-1}\lbrace f[x-1, u]+d(u,
+x)\rbrace\\
+    &amp;=\min\lbrace f[x-1, x-2], \min_{1\le u&lt;x-2}\lbrace f[u+1,
+u]+D(x-1)-D(u+1)+d(u, x)\rbrace\rbrace\\
+    &amp;=\min\lbrace f[x-1, x-2], \min_{2\le u\le x-2}\lbrace f[u,
+u-1]+D(x-1)-D(u)+d(u-1, x)\rbrace\rbrace\\
+    &amp;=\min_{2\le u\le x-1}\lbrace f[u, u-1]+D(x-1)-D(u)+d(u-1,
+x)\rbrace, \text{when }x&gt;1.
+  \end{aligned}
+\]</span></p>
+<p>把它代入 <span class="math inline">\(S\)</span>, 同理有</p>
+<p><span class="math display">\[
+  S=\min_{2\le u\le n}\lbrace f[u, u-1]+D(n)-D(u)+d(u-1, n)\rbrace.
+\]</span></p>
+<p>作代换 <span class="math inline">\(g[x]=f[x, x-1], x\ge 2\)</span>,
+得到如下新的转移方程</p>
+<p><span class="math display">\[
+\begin{gather*}
+  g[2]=d(2, 1);\\
+  g[x]=\min_{2\le u\le x-1}\lbrace g[u]+D(x-1)-D(u)+d(u-1, x)\rbrace,
+\text{when }x\ge 3.
+\end{gather*}
+\]</span></p>
+<p>且最终答案 <span class="math display">\[
+  S=\min_{2\le u\le n}\lbrace{g[u]+D(n)-D(u)+d(u-1, n)}\rbrace.
+\]</span></p>
+<p>时间复杂度 <span class="math inline">\(O(n^2)\)</span>, 空间复杂度
+<span class="math inline">\(O(n)\)</span>.</p>
+<h1 id="变种">变种</h1>
+<p>我们设计的动态规划算法在 <span class="math inline">\(O(n^2)\)</span>
+时间、<span class="math inline">\(O(n)\)</span>
+空间内解决了双调欧几里得旅行商问题, 其中空间无法再优化, 已达到最优.</p>
+<p>对于时间, 瓶颈在于状态转移的第二个式子,
+决策点的得到必须需要枚举所有的 <span class="math inline">\(2\le u\le
+x-1\)</span>. 如果可以运用数据结构, 或是具有决策单调性等性质,
+快速得到最小值的决策点, 便可以继续优化复杂度. 然而, 在原问题中,
+欧几里得距离难以处理, 并且该问题不具有决策单调性的性质,
+故笔者暂时没有好的想法.</p>
+<p>但若是把欧几里得距离换为曼哈顿距离,
+那么可以进一步使用平衡树等数据来优化转移, 可以使得最终的时间复杂度为
+<span class="math inline">\(O(n\log n)\)</span>,
+与排序的时间复杂度相同.</p>
+<p>容易发现, 在曼哈顿距离的情况下, 第二个转移方程可以进一步写为</p>
+<p><span class="math display">\[
+\begin{aligned}
+  g[x]&amp;=D(x-1)+\min_{2\le u\le x-1}\lbrace
+g[u]-D(u)+|X_x-X_{u-1}|+|Y_x-Y_{u-1}|\rbrace\\
+  &amp;=D(x-1)+X_x+\min_{2\le u\le x-1}\lbrace
+g[u]-D(u)-X_{u-1}+|Y_x-Y_{u-1}|\rbrace\\
+\end{aligned}
+\]</span></p>
+<p>分类讨论 <span class="math inline">\(Y_x\)</span> 和 <span
+class="math inline">\(Y_{u-1}\)</span> 的关系. 对于 <span
+class="math inline">\(Y_{u-1}\le Y_x\)</span> 的, 有 <span
+class="math display">\[
+  s_1=D(x-1)+X_x+Y_x+\min_{2\le u\le x-1, Y_{u-1}\le Y_x}\lbrace
+g[u]-D(u)-X_{u-1}-Y_{u-1}\rbrace
+\]</span></p>
+<p>同理, 对于 <span class="math inline">\(Y_{u-1}&gt; Y_x\)</span> 的,
+有</p>
+<p><span class="math display">\[
+  s_2=D(x-1)+X_x-Y_x+\min_{2\le u\le x-1, Y_{u-1}&gt; Y_x}\lbrace
+g[u]-D(u)-X_{u-1}+Y_{u-1}\rbrace
+\]</span></p>
+<p>则 <span class="math inline">\(g[x]=\min\lbrace s_1,
+s_2\rbrace\)</span>. 可以使用两棵平衡树以 <span
+class="math inline">\(Y_i\)</span> 为 <span
+class="math inline">\(key\)</span> 维护 <span
+class="math inline">\(\min\)</span> 后的值, 从而在 <span
+class="math inline">\(O(\log n)\)</span> 时间内得到最小值的决策点并转移.
+故总时间复杂度为 <span class="math inline">\(O(n\log n)\)</span>.</p>
+<h1 id="总结">总结</h1>
+<p>本文以双调欧几里得旅行商问题为例, 讲解了其中的动态规划的设计方法,
+并进行优化, 最后得到了 <span class="math inline">\(O(n^2)\)</span>
+时间复杂度, <span class="math inline">\(O(n)\)</span> 空间复杂度的算法.
+并且对变种问题展开讨论, 得到了 <span class="math inline">\(O(n\log
+n)\)</span> 时间复杂度的算法.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/b0473663/" title="问题求解（二） Open Topic III 笔记">https://blog.rijuyuezhu.top/posts/b0473663/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/9d9ffb80/" rel="prev" title="2021 CCPC Guilin 解题报告">
+                  <i class="fa fa-angle-left"></i> 2021 CCPC Guilin 解题报告
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/34e7c893/" rel="next" title="问题求解（二） Open Topic IV 笔记">
+                  问题求解（二） Open Topic IV 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

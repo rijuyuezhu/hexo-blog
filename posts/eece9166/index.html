@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css?family=Lucida+Grande:300,300italic,400,400italic,700,700italic%7CTahoma:300,300italic,400,400italic,700,700italic%7CHiragino+Sans+GB:300,300italic,400,400italic,700,700italic%7CVerdana:300,300italic,400,400italic,700,700italic%7CArial:300,300italic,400,400italic,700,700italic%7CMicrosoft+YaHei:300,300italic,400,400italic,700,700italic%7CSans-serif:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OT：除福特-法尔克森算法外，最大流问题还有很多其它算法，例如 Edmonds-Karp 算法、Dinitz 算法、Push-Relabel 算法等，请调研至少2种算法（其中至多1种来自上述例子），结合例子介绍算法的设计与分析，与福特-法尔克森算法比较异同并分析优劣。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题求解（三） Open Topic 11 笔记">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/eece9166/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="OT：除福特-法尔克森算法外，最大流问题还有很多其它算法，例如 Edmonds-Karp 算法、Dinitz 算法、Push-Relabel 算法等，请调研至少2种算法（其中至多1种来自上述例子），结合例子介绍算法的设计与分析，与福特-法尔克森算法比较异同并分析优劣。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-14T16:04:13.000Z">
+<meta property="article:modified_time" content="2024-08-07T13:13:22.613Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Algorithm Analysis">
+<meta property="article:tag" content="Computer Science">
+<meta property="article:tag" content="Problem Solving">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/eece9166/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/eece9166/","path":"posts/eece9166/","title":"问题求解（三） Open Topic 11 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>问题求解（三） Open Topic 11 笔记 | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E6%84%8F%E5%9B%BE%E4%B8%8A-onm-%E7%9A%84%E7%BD%91%E7%BB%9C%E6%9C%80%E5%A4%A7%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-text">任意图上 \(O(nm)\) 的网络最大流算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%BB%93%E6%9E%9C%E5%92%8C%E6%9C%AC%E6%96%87%E8%B4%A1%E7%8C%AE"><span class="nav-text">前置结果和本文贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%80%9D%E8%B7%AF"><span class="nav-text">主要思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-text">基本方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#abundant-arc"><span class="nav-text">Abundant Arc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B6%E7%BC%A9"><span class="nav-text">收缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E7%B1%BB%E5%BC%A7"><span class="nav-text">四类弧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9---%E5%8E%8B%E7%BC%A9%E6%8E%89%E4%B8%80%E4%BA%9B%E9%A1%B6%E7%82%B9"><span class="nav-text">压缩 - 压缩掉一些顶点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9---%E5%BF%BD%E7%95%A5%E6%8E%89%E4%B8%80%E4%BA%9B%E8%B7%AF%E5%BE%84"><span class="nav-text">压缩 - 忽略掉一些路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E8%AF%81%E6%98%8E"><span class="nav-text">复杂度证明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dinic-%E7%AE%97%E6%B3%95"><span class="nav-text">Dinic 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3"><span class="nav-text">主要思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">算法复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%9B%BE%E4%B8%8A%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">特殊图上的复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/eece9166/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="问题求解（三） Open Topic 11 笔记 | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          问题求解（三） Open Topic 11 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-15 00:04:13" itemprop="dateCreated datePublished" datetime="2023-11-15T00:04:13+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/" itemprop="url" rel="index"><span itemprop="name">Course Note</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Course-Note/Problem-Solving/" itemprop="url" rel="index"><span itemprop="name">Problem Solving</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>OT：除福特-法尔克森算法外，最大流问题还有很多其它算法，例如
+Edmonds-Karp 算法、Dinitz 算法、Push-Relabel
+算法等，请调研至少2种算法（其中至多1种来自上述例子），结合例子介绍算法的设计与分析，与福特-法尔克森算法比较异同并分析优劣。</p>
+<span id="more"></span>
+<p><a href="slide/slide.html">slide</a></p>
+<h1 id="任意图上-onm-的网络最大流算法">任意图上 <span
+class="math inline">\(O(nm)\)</span> 的网络最大流算法</h1>
+<h2 id="引言">引言</h2>
+<p>[1] (Orlin, 2013) 给出了一种在任意图上 <span
+class="math inline">\(O(nm)\)</span> 的网络最大流算法。</p>
+<h2 id="前置结果和本文贡献">前置结果和本文贡献</h2>
+<p>[1] 中的若干证明用到了一些前置结果：</p>
+<ul>
+<li>[2] (King et al., 1994) 给出了强多项式 <span
+class="math inline">\(O(nm\log_{m/(n\log n)})\)</span> 的算法。对于任意
+<span
+class="math inline">\(m=\Omega(n^{1+\epsilon})\)</span>，该算法都是
+<span class="math inline">\(O(nm)\)</span> 的。</li>
+<li>[3] (Goldberg &amp; Rao, 1998) 给出了弱多项式的算法，每轮将 <span
+class="math inline">\(\Delta\)</span> bounded 的最大流问题转化为 <span
+class="math inline">\(\Delta/2\)</span> bounded 的最大流问题，每轮时间为
+<span class="math inline">\(O(\min\lbrace n^{2/3}, m^{1/2}\rbrace\cdot
+m\log (n^2/m))\)</span>。</li>
+</ul>
+<p>可以发现，需要攻克的仅在于 <span class="math inline">\(m\)</span>
+不超过多项式地渐进大于 <span class="math inline">\(n\)</span> 时。</p>
+<p>本文提出 <span class="math inline">\(O(nm+m^{31/16}\log^2n)\)</span>
+的算法。当 <span
+class="math inline">\(m=O(n^{(16/15)-\epsilon})\)</span> 时，该结果是
+<span class="math inline">\(O(nm)\)</span> 的。</p>
+<p>和上文第一个结果相结合，得到了对任意图 <span
+class="math inline">\(O(nm)\)</span> 的网络最大流算法。</p>
+<h2 id="主要思路">主要思路</h2>
+<p>主要利用某种方法套用了 Goldberg 的结果：若最大流为 <span
+class="math inline">\(U\)</span>，则时间为 <span class="math display">\[
+T(n)=\tilde O(\min\lbrace n^{2/3}, m^{1/2}\rbrace\cdot m\log U).
+\]</span></p>
+<ul>
+<li>若 <span class="math inline">\(\log U\le
+m^{7/16}\)</span>，则有</li>
+</ul>
+<p><span class="math display">\[
+    T(n)=\tilde O(m^{1/2}\cdot m\cdot m^{7/16})=\tilde O(m^{31/16}),
+\]</span></p>
+<p>已然满足条件。</p>
+<ul>
+<li>若 <span class="math inline">\(\log U\le
+m^{7/16}\)</span>，则在每轮前，把原图<strong>压缩</strong>成 <span
+class="math inline">\(C\)</span> 顶点、<span
+class="math inline">\(O(C^2)\)</span> 边的图。平均 <span
+class="math inline">\(C=O(m/\log U)\)</span>，则单轮中 <span
+class="math inline">\(n&#39;=C,
+m&#39;=O(C^2)\)</span>，带入有单轮时间为</li>
+</ul>
+<p><span class="math display">\[
+    \tilde O(C^{2/3}\cdot C^2)=\tilde O(C^{8/3}).
+\]</span></p>
+<p>于是 <span class="math inline">\(O(\log U)\)</span> 轮总时间为</p>
+<p><span class="math display">\[
+    T(n)=\tilde O(C^{8/3}\log U)=\tilde O(m^{8/3}\log^{-5/3}U)=\tilde
+O(m^{8/3}\cdot (m^{7/16})^{-5/3})=\tilde O(m^{16/31}).
+\]</span></p>
+<p>故问题的核心在于：要寻求一种<strong>压缩方式</strong>使得平均 <span
+class="math inline">\(C=O(m/\log U)\)</span>，且对于流的影响较小。</p>
+<h2 id="基本方法">基本方法</h2>
+<p>[1] 提出的算法同样由 <span class="math inline">\(O(\log U)\)</span>
+构成，每轮的步骤是：</p>
+<ol type="1">
+<li><p>收缩(comtraction)。</p></li>
+<li><p><strong>压缩</strong>（算法的核心）。</p></li>
+<li><p>运行 Goldberg。</p></li>
+<li><p>恢复对应到原图。</p></li>
+</ol>
+<h2 id="abundant-arc">Abundant Arc</h2>
+<p>每轮算法的输入和输出都表示为 <span class="math inline">\((r, S,
+T)\)</span>，其中 <span class="math inline">\(r\)</span>
+是残余网络，<span class="math inline">\(C_{S, T}\)</span>
+是一组源汇割。可知在残余网络中至多还可以增长 <span
+class="math inline">\(c(S, T)\)</span> 的流，记作<strong>流上限</strong>
+<span class="math inline">\(\Delta=c(S, T)\)</span>（和 Goldberg 中的
+<span class="math inline">\(\Delta\)</span> 同义）。</p>
+<p><strong>Abundant Arc</strong>: 若有一边 <span
+class="math inline">\(r(e)\ge 2\Delta\)</span>，则称其为 <span
+class="math inline">\(\Delta\)</span>-Abundant Arc.</p>
+<p><em>Theorem</em>: 若在某轮算法中，输入为 <span
+class="math inline">\((r, S, T): \Delta\)</span>，输出为 <span
+class="math inline">\((r&#39;, S&#39;, T&#39;):
+\Delta&#39;\)</span>，且若 <span class="math inline">\(r(e)\ge
+2\Delta\)</span> 是 <span class="math inline">\(\Delta\)</span>-Abundant
+Arc，则在结束后，<span class="math inline">\(r&#39;(e)\ge
+2\Delta&#39;\)</span> 是 <span
+class="math inline">\(\Delta&#39;\)</span>-Abundant Arc.</p>
+<p><em>Proof</em>: 设 <span class="math inline">\(e\)</span> 增广了
+<span class="math inline">\(x\)</span>，即 <span
+class="math inline">\(r(e)-r&#39;(e)=x\)</span>，则有 <span
+class="math inline">\(\Delta&#39;\le \Delta-x\)</span>。故而</p>
+<p><span class="math display">\[
+\begin{align*}
+    r&#39;(e)&amp;=r(e)-x\\
+        &amp;\ge 2\Delta-x\\
+        &amp;\ge 2(\Delta&#39;+x)-x\\
+        &amp;\ge 2\Delta&#39;
+\end{align*}
+\]</span></p>
+<p>故而 Abundant Arc 集合只会增加，不会减少。</p>
+<h2 id="收缩">收缩</h2>
+<p>对输入 <span class="math inline">\((r, S, T)\)</span>，可以先将
+<strong>Abundant Arc
+环</strong>收缩：在收缩后的图上的流，必然可以满足收缩前的图的流。</p>
+<p>对于算法的 3. 运行 Goldberg，为了证明的方便，假设结束后的流 <span
+class="math inline">\(\Delta&#39;\le
+\Delta/(8m)\)</span>。可以发现复杂度只影响对数倍。</p>
+<h2 id="四类弧">四类弧</h2>
+<p>把图中所有弧分为四类：</p>
+<ul>
+<li>Little Arc(<span class="math inline">\(L\)</span>)：弧 <span
+class="math inline">\(\langle i, j\rangle\)</span> 满足 <span
+class="math inline">\(c(\langle i, j\rangle) + c(\langle j,
+i\rangle)&lt; \Delta/(64m^3)\)</span>.</li>
+<li>Medium Arc(<span class="math inline">\(M\)</span>): 弧 <span
+class="math inline">\(\langle i, j\rangle\)</span> 满足上式 <span
+class="math inline">\(\ge \Delta/(64m^3)\)</span>，但正、反向弧都不是
+Abundant Edge。</li>
+<li>Abundant Arc(<span class="math inline">\(A\)</span>)。</li>
+<li>Anti Abundant Arc(<span
+class="math inline">\(A&#39;\)</span>)：反向弧在 <span
+class="math inline">\(A\)</span> 中的弧。</li>
+</ul>
+<p>注意到因为收缩后的图无 Abundant Arc 环，故一条边不能既在 <span
+class="math inline">\(A\)</span> 中又在 <span
+class="math inline">\(A&#39;\)</span> 中。<span class="math inline">\(L,
+M, A, A&#39;\)</span> 构成了弧集的一个划分。</p>
+<h2 id="压缩---压缩掉一些顶点">压缩 - 压缩掉一些顶点</h2>
+<p>如果一个顶点<strong>同时</strong>满足以下两个条件，则它可以被压缩（Compatible）：</p>
+<ul>
+<li>与它相邻的边没有 Medium Arc；</li>
+<li>进入它的 Anti Abundant Arc 的残余容量和与离开它的相差不超过 <span
+class="math inline">\(\Delta/(16m^2)\)</span>。</li>
+</ul>
+<p>换言之：一个顶点保留（是
+Criticle）的条件是，满足以下条件<strong>之一</strong>：</p>
+<ul>
+<li>与它相邻的边有 Medium Arc；</li>
+<li>进入它的 Anti Abundant Arc 的残余容量和与离开它的相差超过 <span
+class="math inline">\(\Delta/(16m^2)\)</span>。</li>
+</ul>
+<p>直观理解，当一个顶点旁边的与 Abundant Arc
+无关的边都是微不足道的时候，且 Anti Abundant Arc
+流入和流出量基本相抵时，它是不重要的。</p>
+<h2 id="压缩---忽略掉一些路径">压缩 - 忽略掉一些路径</h2>
+<p>如果一条路径 <span class="math inline">\(P\)</span> 中，存在某条
+Little Arc： 则它可以增流的量至多为 <span
+class="math inline">\(\Delta/(64m^3)\)</span>，可以忽略。故只需考虑
+<span class="math inline">\(P\)</span> 经过 Medium Arc、Abundant Arc 和
+Anti Abundant Arc。</p>
+<p><em>Claim</em>: <span class="math inline">\(P\)</span> 中若存在 Anti
+Abundant Subpath 是以 Compatible 顶点为端点，则也可以忽略。</p>
+<p>因此，只需考虑的路径是：仅包含 Medium Arc、Abundant Arc、Auti
+Abundant Path（以 Criticle 顶点为端点）的路径。</p>
+<p>于是<strong>只需在 Criticle 顶点和以下三种边中运行 Goldberg
+最大流算法</strong>: 当 <span class="math inline">\(i, j\)</span> 都是
+Criticle 时</p>
+<ul>
+<li>Medium 边；</li>
+<li>伪 Abundant 弧：若在原图中存在 <span
+class="math inline">\(i\Rightarrow j\)</span> 的
+<strong>Abundant</strong> Path，则有容量为 <span
+class="math inline">\(2\Delta\)</span> 的 <span
+class="math inline">\(\langle i, j\rangle\)</span> 弧；</li>
+<li>伪 Anti Abundant 弧：若在原图中存在 <span
+class="math inline">\(i\Rightarrow j\)</span> 的 Anti Abundant
+Path，则有容量为所有这样的路径的残余容量和的弧 <span
+class="math inline">\(\langle i, j\rangle\)</span>。</li>
+</ul>
+<h2 id="复杂度证明">复杂度证明</h2>
+<p><em>Theorem</em>: Criticle 顶点在<strong>全部</strong> <span
+class="math inline">\(O(\log U)\)</span> 轮算法中共 <span
+class="math inline">\(O(m)\)</span> 个，故每轮平均 <span
+class="math inline">\(O(m/\log U)\)</span>，故开头的复杂度分析正确。</p>
+<p><em>Proof</em>: 注意到对于原图中的弧:</p>
+<ul>
+<li>对于 <em>Medium Arc</em>，在 <span class="math inline">\(3\)</span>
+次操作后一定会变成 Abundant Arc；</li>
+<li>对于所有相邻弧都不是 <em>Medium Arc</em>，但是因为"进入它的 Anti
+Abundant Arc 的残余容量和与离开它的相差超过 <span
+class="math inline">\(\Delta/(16m^2)\)</span>"而不能被压缩的 Criticle
+顶点，在 <span class="math inline">\(4\)</span> 轮后一定会有一条 Anti
+Abundant Arc 变为 Abundant Arc，进而形成 Abundant Cycle 被收缩。</li>
+</ul>
+<h1 id="dinic-算法">Dinic 算法</h1>
+<p>(尽管正确的名字可能是 Dinitz，但就这么叫了)</p>
+<h2 id="主要思想">主要思想</h2>
+<p>每次对于残余网络 <span class="math inline">\(r\)</span>，进行一次
+BFS，按照从 <span class="math inline">\(s\)</span>
+的距离得到<strong>分层图</strong> <span
+class="math inline">\(r_d\)</span>。</p>
+<p>对于 <span class="math inline">\(r_d\)</span>
+进行<strong>若干次</strong> DFS，找出在 <span
+class="math inline">\(r_d\)</span> 上 <strong>阻塞流</strong>，即无法从
+<span class="math inline">\(s\)</span> 到 <span
+class="math inline">\(t\)</span> 得到更多的流(不考虑退流)。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">Dinic</span>(<span class="params">r, s, t</span>):</span><br><span class="line">    maxflow = <span class="number">0</span></span><br><span class="line">    flow = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> bfs() gets a connective graph <span class="keyword">from</span> s to t:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            flow = dfs(s, INF)</span><br><span class="line">            maxflow += flow</span><br><span class="line">            <span class="keyword">if</span> (flow == <span class="number">0</span>):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> maxflow</span><br></pre></td></tr></table></figure>
+<p>可以看到 Dinic 算法是 Ford-Fulkerson 增广的一种变种，正确性证明和 FF
+算法相同，以下主要考虑其复杂度。</p>
+<h2 id="算法复杂度">算法复杂度</h2>
+<p><em>Theorem 1</em>：对于单轮的分层图，DFS 求出阻塞流的复杂度为 <span
+class="math inline">\(O(nm)\)</span>。</p>
+<p><em>Theorem 2</em>: Dinic 算法至多考虑 <span
+class="math inline">\(O(n)\)</span> 次分层图。</p>
+<p><em>Theorem 3</em>: 从上述两个定理可知，Dinic 算法的总复杂度为 <span
+class="math inline">\(O(n^2m)\)</span>，但对于平均情况（以及特殊网络）有更好的复杂度。</p>
+<h2 id="特殊图上的复杂度">特殊图上的复杂度</h2>
+<ul>
+<li><p>若网络中全部弧的容量均为 <span
+class="math inline">\(1\)</span>，则 Dinic 算法的复杂度为 <span
+class="math inline">\(O(m\cdot \min\lbrace n^{2/3},
+m^{1/2}\rbrace)\)</span>。</p></li>
+<li><p>若网络中全部弧的容量均为 <span
+class="math inline">\(1\)</span>，且除源点和汇点外的每个点均满足 <span
+class="math inline">\(d^-(u)=1\)</span> 或 <span
+class="math inline">\(d^+(u)=1\)</span>，则 Dinic 算法的复杂度为 <span
+class="math inline">\(O(m\sqrt n)\)</span>。</p></li>
+</ul>
+<p>对于二分图最大匹配，注意到该复杂度与 Hopcroft-Karp
+算法相同。实质上，两个算法的本质是相同的。</p>
+<h1 id="参考资料">参考资料</h1>
+<p>[1] James B. Orlin. 2013. Max flows in O(nm) time, or better. In
+Proceedings of the forty-fifth annual ACM symposium on Theory of
+Computing (STOC '13). Association for Computing Machinery, New York, NY,
+USA, 765–774. https://doi.org/10.1145/2488608.2488705</p>
+<p>[2] V. King, S. Rao, and R. Tarjan. A faster deterministic maximum
+flow algorithm. J. Algorithms, 23:447–474, 1994.</p>
+<p>[3] A. V. Goldberg and S. Rao. Beyond the flow decomposition barrier.
+Journal of the ACM, 45:783–797, 1998.</p>
+<p>[4] https://oi-wiki.org/graph/flow/max-flow/</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/eece9166/" title="问题求解（三） Open Topic 11 笔记">https://blog.rijuyuezhu.top/posts/eece9166/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Algorithm-Analysis/" rel="tag"># Algorithm Analysis</a>
+              <a href="/tags/Computer-Science/" rel="tag"># Computer Science</a>
+              <a href="/tags/Problem-Solving/" rel="tag"># Problem Solving</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/226491f8/" rel="prev" title="问题求解（三） Open Topic 10 笔记">
+                  <i class="fa fa-angle-left"></i> 问题求解（三） Open Topic 10 笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/60419685/" rel="next" title="问题求解（三） Open Topic 12 笔记">
+                  问题求解（三） Open Topic 12 笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

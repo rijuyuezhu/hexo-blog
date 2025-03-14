@@ -34,7 +34,14 @@ Introduction</strong></h1>
 code (e.g. LLVM-IR, SPIR-V, MLIR) which can be interpreted or further
 compiled for a <em>target device</em>. An AI Compiler typically consists
 of the following parts.</p>
-<p><img src="aicompiler.drawio.svg" width=100% /></p>
+<figure>
+<img src="aicompiler.drawio.svg" width=100% />
+<figcaption>
+<p>
+Figure 1: AI Compiler Routine
+</p>
+</figcaption>
+</figure>
 <p>There are three levels of optimization in AI compilers:</p>
 <dl>
 <dt>Graph-Level Optimization.</dt>
@@ -126,8 +133,22 @@ class="uri">https://pytorch.org/tutorials/</a></li>
 hardware device instruction sets (with minimal runtime). It receives
 <strong>models</strong> from PyTorch, TensorFlow, ONNX etc., and
 compiles them for various target <strong>devices</strong>.</p>
-<p><img src="tvm_overall_flow.svg" width=70% />
-<img src="tvm_compile_rt.png" width=70% /></p>
+<figure>
+<img src="tvm_overall_flow.svg" width=70% />
+<figcaption>
+<p>
+Figure 2: TVM working flow
+</p>
+</figcaption>
+</figure>
+<figure>
+<img src="tvm_compile_rt.png" width=70% />
+<figcaption>
+<p>
+Figure 3: TVM compilation and runtime
+</p>
+</figcaption>
+</figure>
 <h3 id="running-example">Running Example</h3>
 <p>Given a simple MLP model (here we use TVM frontend to describe the
 model; in practice, one can use PyTorch or other frameworks to define
@@ -168,18 +189,19 @@ Intermediate Representation)</h2>
 <h3 id="concepts-1">Concepts</h3>
 <p>To support DSLs (including those for AI compilation) and represent
 many application/device-specific objects, a single centralized IR - LLVM
-IR - is insufficient. MLIR is designed to address this problem. It has a
+IR</p>
+<ul>
+<li>is insufficient. MLIR is designed to address this problem. It has a
 <strong>discrete</strong>, <strong>hierarchical</strong> and
 <strong>extensible</strong> definition, where many <em>dialects</em> can
 be defined to represent different levels of abstraction and different
-domains.</p>
+domains.</li>
+</ul>
 <figure>
-<p>
-<img src="mlir_dialects.png" style="width:70.0%" />
-</p>
+<img src="mlir_dialects.png" width=100% />
 <figcaption>
 <p>
-MLIR Dialects
+Figure 4: MLIR Dialects
 </p>
 </figcaption>
 </figure>

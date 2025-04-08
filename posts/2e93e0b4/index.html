@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css2?family=Lucida+Grande:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Tahoma:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Hiragino+Sans+GB:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Verdana:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Arial:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Microsoft+YaHei:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sans-serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="This post introduces SGLang, an inference system designed to optimize large language model (LLM) deployment. We focus on:  SGLang’s workflow and its distribution setup (e.g., PP&#x2F;TP&#x2F;DP constraints); De">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SGLang Meets Deepseek">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="This post introduces SGLang, an inference system designed to optimize large language model (LLM) deployment. We focus on:  SGLang’s workflow and its distribution setup (e.g., PP&#x2F;TP&#x2F;DP constraints); De">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/1.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/2.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/3.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/4.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/5.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/6.png">
+<meta property="og:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/7.png">
+<meta property="article:published_time" content="2025-04-08T15:59:38.000Z">
+<meta property="article:modified_time" content="2025-04-08T16:46:19.282Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Artificial Intelligence">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Deepseek">
+<meta property="article:tag" content="SGLang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.rijuyuezhu.top/posts/2e93e0b4/1.png">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/2e93e0b4/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/2e93e0b4/","path":"posts/2e93e0b4/","title":"SGLang Meets Deepseek"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SGLang Meets Deepseek | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sglang-distribution-setup-wo-dp-attention"><span class="nav-text">SGLang Distribution
+Setup (w&#x2F;o DP Attention)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#overview"><span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurations"><span class="nav-text">Configurations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dp-attention-optimization"><span class="nav-text">DP Attention Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tp-in-llama-3"><span class="nav-text">TP in Llama 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#problems-of-tp-in-deepseek"><span class="nav-text">Problems of TP in Deepseek</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sglang-dp-attention-for-deepseek-v3"><span class="nav-text">SGLang DP
+Attention for Deepseek V3</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/2e93e0b4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SGLang Meets Deepseek | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SGLang Meets Deepseek
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-04-08 23:59:38" itemprop="dateCreated datePublished" datetime="2025-04-08T23:59:38+08:00">2025-04-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Artificial-Intelligence/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Artificial-Intelligence/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Artificial-Intelligence/LLM/Inference/" itemprop="url" rel="index"><span itemprop="name">Inference</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>This post introduces SGLang, an inference system designed to optimize
+large language model (LLM) deployment. We focus on:</p>
+<ol type="1">
+<li>SGLang’s workflow and its distribution setup (e.g., PP/TP/DP
+constraints);</li>
+<li>Deepseek’s inference challenges on SGLang and how DP Attention
+optimization addresses them.</li>
+</ol>
+<span id="more"></span>
+<h2 id="sglang-distribution-setup-wo-dp-attention">SGLang Distribution
+Setup (w/o <em>DP Attention</em>)</h2>
+<h3 id="overview">Overview</h3>
+<p>The SGLang<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> distribution setup can be summerized
+as follows:</p>
+<ul>
+<li>NO PP support;</li>
+<li>DP&gt;1 is not supported on multiple nodes<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. In
+fact, DP will be <a
+target="_blank" rel="noopener" href="https://docs.sglang.ai/backend/server_arguments.html#data-parallelism">deprecated</a>
+in the future. SGLang suggests SGLang Router for DP (an orchestrator
+written in Rust);</li>
+<li>TP % nnodes == 0.</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> (</span><br><span class="line">    <span class="variable language_">self</span>.tp_size % <span class="variable language_">self</span>.nnodes == <span class="number">0</span></span><br><span class="line">), <span class="string">&quot;tp_size must be divisible by number of nodes&quot;</span></span><br><span class="line"><span class="keyword">assert</span> <span class="keyword">not</span> (</span><br><span class="line">    <span class="variable language_">self</span>.dp_size &gt; <span class="number">1</span> <span class="keyword">and</span> <span class="variable language_">self</span>.nnodes != <span class="number">1</span> <span class="keyword">and</span> <span class="keyword">not</span> <span class="variable language_">self</span>.enable_dp_attention</span><br><span class="line">), <span class="string">&quot;multi-node data parallel is not supported unless dp attention!&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="configurations">Configurations</h3>
+<p>The following figures show the structure for different parallel
+configurations in SGLang.</p>
+<figure>
+<img src="1.png" width=70% />
+<figcaption>
+Figure 1. TP=1, DP=1, nnodes=1
+</figcaption>
+</figure>
+<hr />
+<figure>
+<img src="2.png" width=70% />
+<figcaption>
+Figure 2. TP=2, DP=1, nnodes=1
+</figcaption>
+</figure>
+<hr />
+<figure>
+<img src="3.png" width=70% />
+<figcaption>
+Figure 3. TP=4, DP=1, nnodes=2
+</figcaption>
+</figure>
+<hr />
+<figure>
+<img src="4.png" width=70% />
+<figcaption>
+Figure 4. TP=2, DP=2, nnodes=1
+</figcaption>
+</figure>
+<hr />
+<h2 id="dp-attention-optimization">DP Attention Optimization</h2>
+<h3 id="tp-in-llama-3">TP in Llama 3</h3>
+<p>Before introducing the <em>DP Attention</em> optimization, let's
+first investigate how TP is implemented in Llama 3.</p>
+<ul>
+<li><code>word_embedding</code>: vocab parallel;</li>
+<li><code>positional_embedding</code>: replicate;</li>
+<li><code>attn</code>: parallel on head dim;</li>
+<li><code>mlp</code>: parallel on column then row.</li>
+</ul>
+<p>Llama 3 attn can be implemented as follows. For convenience, we omit
+RoPE and use MHA. Notice that the size of <em>every</em> matrix is
+reduced by <code>tp</code> times. Also, the KV cache size is reduced by
+<code>tp</code> times.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, hidden_states</span>):</span><br><span class="line">    <span class="comment"># hidden_states: (bs, seq_len, hidden_dim)</span></span><br><span class="line">    q, k, v = qkv_proj(hidden_states).view(bs, seq_len,</span><br><span class="line">        head_num/tp, <span class="number">3</span>*head_dim).split().transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># qkv_proj on tp: (hidden_dim, 3*head_num*head_dim/tp)</span></span><br><span class="line">    <span class="comment"># &#123;q,k,v&#125;: (bs, head_num/tp, seq_len, head_dim)</span></span><br><span class="line">    save_kvcache(k, v) <span class="comment"># Reduce `tp`x KV cache size</span></span><br><span class="line">    attn_weights = matmul(q, k.transpose(<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">    attn_weights = softmax(attn_weights, dim=-<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># attn_weights: (bs, head_num/tp, seq_len, seq_len)</span></span><br><span class="line">    attn_output = matmul(attn_weights, v)</span><br><span class="line">    attn_output = attn_output.transpose(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># attn_output: (bs, seq_len, head_num/tp, head_dim)</span></span><br><span class="line">    attn_output = attn_output.reshape(bs, seq_len, -<span class="number">1</span>)\</span><br><span class="line">        .all_reduce()</span><br><span class="line">    <span class="comment"># attn_output: (bs, seq_len, hidden_dim)</span></span><br><span class="line">    attn_output = <span class="variable language_">self</span>.o_proj(attn_output)</span><br><span class="line">    <span class="keyword">return</span> attn_output, attn_weights</span><br></pre></td></tr></table></figure>
+<p>MLP in Llama 3 is paralleled based on column then row
+dispatching.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.gate_up_proj = MergedColumnParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.down_proj = RowParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.act_fn = SiluAndMul()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    gate_up, _ = <span class="variable language_">self</span>.gate_up_proj(x)</span><br><span class="line">    x = <span class="variable language_">self</span>.act_fn(gate_up)</span><br><span class="line">    x, _ = <span class="variable language_">self</span>.down_proj(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<h3 id="problems-of-tp-in-deepseek">Problems of TP in Deepseek</h3>
+<p>However, the TP implementation in Llama 3 is not optimal for
+Deepseek. This is because</p>
+<ul>
+<li><p><code>mla_attn</code>:</p>
+<ul>
+<li><p>Latent of size <code>(1, kv_lora_rank + qk_rope_head_dim)</code>
+for each token shall be saved. This cannot be divided along with the
+num_head dim — KV cache size cannot be reduced;</p></li>
+<li><p>Some params (e.g. <code>q_a_proj</code>,
+<code>kv_a_proj_with_mqa</code>) cannot be paralleled — parameter
+duplications.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.q_a_proj = ReplicatedLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.q_b_proj = ColumnParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.kv_b_proj = ColumnParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.o_proj = RowParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.kv_a_proj_with_mqa = ReplicatedLinear(...)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><p><code>moe_mlp</code>:</p>
+<ul>
+<li>Expert parallel (EP) is better than TP, since each of the experts is
+small.</li>
+</ul></li>
+</ul>
+<h3 id="sglang-dp-attention-for-deepseek-v3">SGLang <em>DP
+Attention</em> for Deepseek V3</h3>
+<p><em>DP Attention</em> intends to solve the above problems<a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> in <code>mla_attn</code>. The
+parallel policy becomes:</p>
+<ul>
+<li><code>word_embedding</code>: replicate</li>
+<li><code>positional_embedding</code>: replicate</li>
+<li><code>attn</code>: parallel on batch size (independent
+requests)</li>
+</ul>
+<figure>
+<img src="5.png" width=70% />
+<figcaption>
+Figure 5. DP Attention
+</figcaption>
+</figure>
+<p>Its configuration requirement is:</p>
+<ul>
+<li>1 &lt; AttnDP ≤ TP and TP % AttnDP = 0. This is because SGLang
+supports DP+TP attention.</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> (</span><br><span class="line">    <span class="variable language_">self</span>.dp_size &gt; <span class="number">1</span></span><br><span class="line">), <span class="string">&quot;Please set a dp-size &gt; 1. You can use 1 &lt; dp-size &lt;= tp-size &quot;</span></span><br><span class="line"><span class="keyword">assert</span> <span class="variable language_">self</span>.tp_size % <span class="variable language_">self</span>.dp_size == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>And some concrete configurations is shown below:</p>
+<figure>
+<img src="6.png" width=70% />
+<figcaption>
+Figure 6. TP=2, AttnDP=2, nnodes=1
+</figcaption>
+</figure>
+<hr/>
+<figure>
+<img src="7.png" width=70% />
+<figcaption>
+Figure 7. TP=4, AttnDP=2, nnodes=1
+</figcaption>
+</figure>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a target="_blank" rel="noopener" href="https://github.com/sgl-project/sglang"
+class="uri">https://github.com/sgl-project/sglang</a>, on tag
+v0.4.4_post4<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>When using <em>DP Attention</em>, DP has another meaning
+in SGLang. We use the word “AttnDP” instead of “DP” when enabling <em>DP
+Attention</em> for clarity (In fact, the canonical “DP” is always 1 in
+such situations). When using the word “DP”, we mean the canonical “DP”
+and <em>DP Attention</em> is disabled.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>See also <a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/15280741714"
+class="uri">https://zhuanlan.zhihu.com/p/15280741714</a><a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/2e93e0b4/" title="SGLang Meets Deepseek">https://blog.rijuyuezhu.top/posts/2e93e0b4/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Artificial-Intelligence/" rel="tag"># Artificial Intelligence</a>
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+              <a href="/tags/Deepseek/" rel="tag"># Deepseek</a>
+              <a href="/tags/SGLang/" rel="tag"># SGLang</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/54261af8/" rel="prev" title="AI Compilation Introduction">
+                  <i class="fa fa-angle-left"></i> AI Compilation Introduction
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

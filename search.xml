@@ -11268,14 +11268,14 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
       </tags>
   </entry>
   <entry>
-    <title>SGLang Meets Deepseek</title>
+    <title>SGLang Meets DeepSeek</title>
     <url>/posts/2e93e0b4/</url>
     <content><![CDATA[<p>This post introduces SGLang, an inference system designed to optimize
 large language model (LLM) deployment. We focus on:</p>
 <ol type="1">
 <li>SGLang’s workflow and its distribution setup (e.g., PP/TP/DP
 constraints);</li>
-<li>Deepseek’s inference challenges on SGLang and how DP Attention
+<li>DeepSeek’s inference challenges on SGLang and how DP Attention
 optimization addresses them.</li>
 </ol>
 <span id="more"></span>
@@ -11345,9 +11345,9 @@ reduced by <code>tp</code> times. Also, the KV cache size is reduced by
 <p>MLP in Llama 3 is paralleled based on column then row
 dispatching.</p>
 <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">self</span>.gate_up_proj = MergedColumnParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.down_proj = RowParallelLinear(...)</span><br><span class="line"><span class="variable language_">self</span>.act_fn = SiluAndMul()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    gate_up, _ = <span class="variable language_">self</span>.gate_up_proj(x)</span><br><span class="line">    x = <span class="variable language_">self</span>.act_fn(gate_up)</span><br><span class="line">    x, _ = <span class="variable language_">self</span>.down_proj(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
-<h3 id="problems-of-tp-in-deepseek">Problems of TP in Deepseek</h3>
+<h3 id="problems-of-tp-in-deepseek">Problems of TP in DeepSeek</h3>
 <p>However, the TP implementation in Llama 3 is not optimal for
-Deepseek. This is because</p>
+DeepSeek. This is because</p>
 <ul>
 <li><p><code>mla_attn</code>:</p>
 <ul>
@@ -11366,7 +11366,7 @@ small.</li>
 </ul></li>
 </ul>
 <h3 id="sglang-dp-attention-for-deepseek-v3">SGLang <em>DP
-Attention</em> for Deepseek V3</h3>
+Attention</em> for DeepSeek V3</h3>
 <p><em>DP Attention</em> intends to solve the above problems<a
 href="#fn3" class="footnote-ref" id="fnref3"
 role="doc-noteref"><sup>3</sup></a> in <code>mla_attn</code>. The
@@ -11432,8 +11432,8 @@ href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
       <tags>
         <tag>Artificial Intelligence</tag>
         <tag>LLM</tag>
-        <tag>Deepseek</tag>
         <tag>SGLang</tag>
+        <tag>DeepSeek</tag>
       </tags>
   </entry>
 </search>

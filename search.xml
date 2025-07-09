@@ -27,6 +27,60 @@ awesome things. Enjoy yourself!</p>
 href="https://github.com/System-Paper-Reproduce/OSDI25-2502.04563-WaferLLM">SPR
 Repo</a>; <a href="https://arxiv.org/abs/2502.04563">arXiv</a>.</p>
 <span id="more"></span>
+<h1 id="contribution-of-the-paper">Contribution of the Paper</h1>
+<ul>
+<li>The "Programming Model" of the Cerebras WSE device,
+<strong>PLMR</strong>:
+<ul>
+<li><strong>P</strong> for Parallel. The WSE has far more cores than
+normal GPUs.</li>
+<li><strong>L</strong> for latency. The latency of transferring data
+between cores is heterogeneous. A simple model is that, the cores form a
+grid, and the latency of transferring data between two cores is
+proportional to the Manhattan distance between them (and also depends on
+the routing path).</li>
+<li><strong>M</strong> for memory. Each of the cores has its small-size
+local SRAM memory. And to efficiently use the memory, partition among
+cores must be considered carefully.</li>
+<li><strong>R</strong> for routing. The network on chip (NoC) has quite
+limited routing capability, which must be considered.</li>
+</ul></li>
+<li><strong>WaferLLM</strong>, which partitions or replicates the model
+weights in both x-axis and y-axis directions on the WSE; and the KV
+Cache shifting mechanism to balance the memory usage and the overhead of
+each cores.</li>
+<li><strong>Wafer Scale GEMM</strong>, which leverages a better "2-hop"
+shifting mechanism to reduce the critical path length when implementing
+the GEMM operation on the WSE.</li>
+<li><strong>Wafer Scale GEMV</strong>, which leverages a K-tree
+algorithm to reduce the AllReduce overhead when implementing the GEMV
+operation on the WSE.</li>
+</ul>
+<h1 id="most-amazing-things">Most Amazing Things</h1>
+<ul>
+<li>The simple but special hardware capability of the WSE device, which
+is modeled as a 2D grid of cores with heterogeneous latency and limited
+routing capability, as well as the small-size local SRAM memory.</li>
+<li>The kernel optimization on such a special hardware. In the GEMM
+setting, we learn that the "shifting-interleaving" mechanism can be used
+to implement the GEMM operation with smaller critical path length on a
+device with heterogeneous latency. In the GEMV setting, the K-tree
+algorithm balances the routing overhead and the latency. Choosing <span
+class="math inline">\(K=2\)</span> gets great performance. &gt; The
+latency is reduced from <span class="math inline">\(O((2\alpha +
+\beta)N)\)</span> (Ring Allreduce) to <span
+class="math inline">\(O\left(\alpha N +
+\frac{\sqrt[K]{N}K}{2}\beta\right)=O\left(\alpha N + \sqrt N
+\beta\right)\)</span>.</li>
+<li>The KV Cache shifting mechanism, which leverages the locality of the
+heterogeneous latency.</li>
+</ul>
+<h1 id="reproduce-trail">Reproduce Trail</h1>
+<ul>
+<li>The code repository is given; however, the code is written in
+CSL.</li>
+<li>Low value to read the code since the paper is well-written.</li>
+</ul>
 ]]></content>
       <categories>
         <category>SPR</category>

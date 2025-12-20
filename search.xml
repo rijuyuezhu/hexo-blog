@@ -259,8 +259,8 @@ href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
       <tags>
         <tag>Artificial Intelligence</tag>
         <tag>LLM</tag>
-        <tag>SGLang</tag>
         <tag>DeepSeek</tag>
+        <tag>SGLang</tag>
       </tags>
   </entry>
   <entry>
@@ -624,10 +624,10 @@ theme <code>kphoen-my</code> on its basis. Firstly copy the
 <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash"><span class="built_in">cp</span> ~/.oh-my-zsh/themes/kphoen.zsh-theme ~/.oh-my-zsh/custom/themes/kphoen-my.zsh-theme</span></span><br><span class="line">[rijuyuezhu@rjyz-linux:~] </span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">vim ~/.oh-my-zsh/custom/themes/kphoen-my.zsh-theme</span></span><br></pre></td></tr></table></figure>
 <p>Then I modify <code>kphoen-my.zsh-theme</code> as follows</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># kphoen-my.zsh-theme</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">ZSH_MYTHEME_CONDAENV</span></span>() &#123;</span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONDA_DEFAULT_ENV:-&#125;</span>&quot;</span> &amp;&amp; <span class="string">&quot;<span class="variable">$&#123;CONDA_DEFAULT_ENV&#125;</span>&quot;</span> != base ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;(<span class="variable">$&#123;CONDA_DEFAULT_ENV&#125;</span>) &quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">ZSH_MYTHEME_MACHINE</span></span>() &#123;</span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONTAINER_ID:-&#125;</span>&quot;</span> &amp;&amp; ( -e /run/.containerenv || -e /.dockerenv ) ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;%&#123;<span class="variable">$fg</span>[cyan]%&#125;<span class="variable">$&#123;CONTAINER_ID&#125;</span>%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;%&#123;<span class="variable">$fg</span>[magenta]%&#125;%m%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">ZSH_MYTHEME_SHLVL</span></span>() &#123;</span><br><span class="line">  <span class="built_in">local</span> show_SHLVL=<span class="variable">$&#123;SHLVL&#125;</span></span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="string">&quot;<span class="variable">$&#123;CONTAINER_ID:-&#125;</span>&quot;</span> &amp;&amp; ( -e /run/.containerenv || -e /.dockerenv ) ]]; <span class="keyword">then</span></span><br><span class="line">    (( show_SHLVL-- ))</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">  <span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$&#123;show_SHLVL&#125;</span>&quot;</span> -gt 1 ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;%&#123;<span class="variable">$fg</span>[yellow]%&#125;(<span class="variable">$&#123;show_SHLVL&#125;</span>)%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PROMPT=<span class="string">&#x27;[%&#123;$fg[red]%&#125;%n%&#123;$reset_color%&#125;@$(ZSH_MYTHEME_MACHINE)$(ZSH_MYTHEME_SHLVL):%&#123;$fg[blue]%&#125;%~%&#123;$reset_color%&#125;$(git_prompt_info)] $(ZSH_MYTHEME_CONDAENV)</span></span><br><span class="line"><span class="string">%# &#x27;</span></span><br><span class="line"></span><br><span class="line">ZSH_THEME_GIT_PROMPT_PREFIX=<span class="string">&quot; on %&#123;<span class="variable">$fg</span>[green]%&#125;&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_SUFFIX=<span class="string">&quot;%&#123;<span class="variable">$reset_color</span>%&#125;&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_DIRTY=<span class="string">&quot;&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_CLEAN=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># display exitcode on the right when &gt;0</span></span><br><span class="line">ZSH_MYTHEME_RETURNCODE=<span class="string">&quot;%(?..%&#123;<span class="variable">$fg</span>[red]%&#125;%? ↵%&#123;<span class="variable">$reset_color</span>%&#125;)&quot;</span></span><br><span class="line"></span><br><span class="line">RPROMPT=<span class="string">&#x27;$&#123;ZSH_MYTHEME_RETURNCODE&#125;$(git_prompt_status)%&#123;$reset_color%&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">ZSH_THEME_GIT_PROMPT_ADDED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[green]%&#125; ✚&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_MODIFIED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[blue]%&#125; ✹&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_DELETED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[red]%&#125; ✖&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_RENAMED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[magenta]%&#125; ➜&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_UNMERGED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[yellow]%&#125; ═&quot;</span></span><br><span class="line">ZSH_THEME_GIT_PROMPT_UNTRACKED=<span class="string">&quot;%&#123;<span class="variable">$fg</span>[cyan]%&#125; ✭&quot;</span></span><br></pre></td></tr></table></figure>
-<p>To view its effect, when at host the prompt is <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~ on main] </span><br><span class="line"><span class="meta prompt_">%</span></span><br></pre></td></tr></table></figure> where
-<code>rjyz-linux</code> is the hostname. When in the container the
-prompt is <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[rijuyuezhu@u22:~] </span><br><span class="line"><span class="meta prompt_">% </span></span><br></pre></td></tr></table></figure> where <code>u22</code> is the container id. And
-I give container id and hostname different colors.</p>
+<p>To view its effect, when at host the prompt is <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[rijuyuezhu@rjyz-linux:~ on main] </span><br><span class="line"><span class="meta prompt_">%</span></span><br></pre></td></tr></table></figure>
+where <code>rjyz-linux</code> is the hostname. When in the container the
+prompt is <figure class="highlight console"><table><tr><td class="code"><pre><span class="line">[rijuyuezhu@u22:~] </span><br><span class="line"><span class="meta prompt_">% </span></span><br></pre></td></tr></table></figure> where <code>u22</code> is the container id.
+And I give container id and hostname different colors.</p>
 <p>The crux to manage to do this modification is to notice that, when
 inside a container, the environment variable <code>CONTAINER_ID</code>
 is set to be the container id.</p>
@@ -2443,41 +2443,41 @@ class="math inline">\(y\)</span> 等，用来表示函数参数。</li>
 构成，初始化内存全为 0。</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: center;">符号</th>
 <th style="text-align: center;">意义</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><code>&gt;</code></td>
 <td style="text-align: center;"><code>++p</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><code>&lt;</code></td>
 <td style="text-align: center;"><code>--p</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><code>+</code></td>
 <td style="text-align: center;"><code>++(*p)</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><code>-</code></td>
 <td style="text-align: center;"><code>--(*p)</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><code>.</code></td>
 <td style="text-align: center;">输出 <code>*p</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><code>,</code></td>
 <td style="text-align: center;">输入 <code>*p</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><code>[</code></td>
 <td style="text-align: center;">下详</td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><code>]</code></td>
 <td style="text-align: center;">下详</td>
 </tr>
@@ -5289,7 +5289,7 @@ domain. Here is a template:</p>
 <col style="width: 19%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: center;">算法</th>
 <th style="text-align: center;">在/离线</th>
 <th style="text-align: center;">时间复杂度</th>
@@ -5297,7 +5297,7 @@ domain. Here is a template:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">倍增法</td>
 <td style="text-align: center;">在线</td>
 <td style="text-align: center;"><span class="math inline">\(O(n\log
@@ -5305,7 +5305,7 @@ n)\sim O(\log n)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(O(n\log
 n)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">树链剖分法</td>
 <td style="text-align: center;">在线</td>
 <td style="text-align: center;"><span class="math inline">\(O(n)\sim
@@ -5313,7 +5313,7 @@ O(\log n)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(O(n)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">Link Cut Tree 法</td>
 <td style="text-align: center;">在线</td>
 <td style="text-align: center;"><span class="math inline">\(O(n\log
@@ -5321,7 +5321,7 @@ n)\sim O(\log n)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(O(n)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">RMQ, ST 表</td>
 <td style="text-align: center;">在线</td>
 <td style="text-align: center;"><span class="math inline">\(O(n\log
@@ -5329,7 +5329,7 @@ n)\sim O(1)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(O(n\log
 n)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><strong>Tarjan LCA</strong></td>
 <td style="text-align: center;">离线</td>
 <td style="text-align: center;"><span
@@ -5337,7 +5337,7 @@ class="math inline">\(O(n+q\alpha(q+n, n))\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(O(n+q)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><strong>Tarjan LCA(改进)</strong></td>
 <td style="text-align: center;">离线</td>
 <td style="text-align: center;"><span
@@ -5345,7 +5345,7 @@ class="math inline">\(O(n+q)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(O(n+q)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">标准 RMQ</td>
 <td style="text-align: center;">在线</td>
 <td style="text-align: center;"><span class="math inline">\(O(n)\sim
@@ -6234,7 +6234,7 @@ class="math inline">\(1+\dfrac{1}{2^2}+\dfrac{1}{3^2}+\cdots+\dfrac{1}{n^2}\)</s
 <p>于是我们得到了 (*) 的执行次数的数据如下</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: center;">最小值</th>
 <th style="text-align: center;">最大值</th>
 <th style="text-align: center;">均值</th>
@@ -6242,7 +6242,7 @@ class="math inline">\(1+\dfrac{1}{2^2}+\dfrac{1}{3^2}+\cdots+\dfrac{1}{n^2}\)</s
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><span
 class="math inline">\(0\)</span></td>
 <td style="text-align: center;"><span

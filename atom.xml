@@ -10,7 +10,44 @@
   <rights>All rights reserved 2026, Rijuyuezhu</rights>
   <subtitle>Record every drop in my life</subtitle>
   <title>Rijuyuezhu's Blog</title>
-  <updated>2026-03-04T05:26:37.515Z</updated>
+  <updated>2026-04-03T09:48:40.517Z</updated>
+  <entry>
+    <author>
+      <name>Rijuyuezhu</name>
+    </author>
+    <category term="Linux" scheme="https://blog.rijuyuezhu.top/categories/Linux/"/>
+    <category term="Linux" scheme="https://blog.rijuyuezhu.top/tags/Linux/"/>
+    <category term="Tools" scheme="https://blog.rijuyuezhu.top/tags/Tools/"/>
+    <id>https://blog.rijuyuezhu.top/posts/991efb02/</id>
+    <link href="https://blog.rijuyuezhu.top/posts/991efb02/"/>
+    <published>2026-04-03T09:27:20.000Z</published>
+    <summary>
+      <![CDATA[<p>I recently switched my desktop environment from GNOME to <a
+href="https://niri-wm.github.io/niri">niri-wm</a>. This blog documents
+my configuration process and troubleshooting steps for niri-wm.</p>]]>
+    </summary>
+    <title>Niri-wm Configuration and Troubleshooting</title>
+    <updated>2026-04-03T09:48:40.517Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Rijuyuezhu</name>
+    </author>
+    <category term="Life" scheme="https://blog.rijuyuezhu.top/categories/Life/"/>
+    <category term="Travels" scheme="https://blog.rijuyuezhu.top/categories/Life/Travels/"/>
+    <category term="Travel" scheme="https://blog.rijuyuezhu.top/tags/Travel/"/>
+    <category term="Life" scheme="https://blog.rijuyuezhu.top/tags/Life/"/>
+    <id>https://blog.rijuyuezhu.top/posts/84687717/</id>
+    <link href="https://blog.rijuyuezhu.top/posts/84687717/"/>
+    <published>2026-03-17T07:45:07.000Z</published>
+    <summary>
+      <![CDATA[<p>Some of my friends and I have visited Mount Huangshan this week. Two
+days and one night's trip was really enjoyable, filled with laughter and
+fun.</p>]]>
+    </summary>
+    <title>Visiting Mount Huangshan</title>
+    <updated>2026-03-29T05:07:18.232Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Rijuyuezhu</name>
@@ -382,43 +419,6 @@ Edmonds-Karp 算法、Dinitz 算法、Push-Relabel
 算法等，请调研至少2种算法（其中至多1种来自上述例子），结合例子介绍算法的设计与分析，与福特-法尔克森算法比较异同并分析优劣。</p>]]>
     </summary>
     <title>问题求解（三） Open Topic 11 笔记</title>
-    <updated>2024-08-07T13:13:22.613Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Rijuyuezhu</name>
-    </author>
-    <category term="Course Note" scheme="https://blog.rijuyuezhu.top/categories/Course-Note/"/>
-    <category term="Problem Solving" scheme="https://blog.rijuyuezhu.top/categories/Course-Note/Problem-Solving/"/>
-    <category term="Algorithm Analysis" scheme="https://blog.rijuyuezhu.top/tags/Algorithm-Analysis/"/>
-    <category term="Computer Science" scheme="https://blog.rijuyuezhu.top/tags/Computer-Science/"/>
-    <category term="Problem Solving" scheme="https://blog.rijuyuezhu.top/tags/Problem-Solving/"/>
-    <id>https://blog.rijuyuezhu.top/posts/226491f8/</id>
-    <link href="https://blog.rijuyuezhu.top/posts/226491f8/"/>
-    <published>2023-11-07T09:57:45.000Z</published>
-    <summary>
-      <![CDATA[<p>OT：请调研并介绍图灵机及其至少 2 种<a
-href="https://en.wikipedia.org/wiki/Turing_machine_equivalents">等价模型</a>，讨论图灵机、P、NP之间的关系。</p>]]>
-    </summary>
-    <title>问题求解（三） Open Topic 10 笔记</title>
-    <updated>2024-08-07T13:13:22.613Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Rijuyuezhu</name>
-    </author>
-    <category term="Course Note" scheme="https://blog.rijuyuezhu.top/categories/Course-Note/"/>
-    <category term="Problem Solving" scheme="https://blog.rijuyuezhu.top/categories/Course-Note/Problem-Solving/"/>
-    <category term="Algorithm Analysis" scheme="https://blog.rijuyuezhu.top/tags/Algorithm-Analysis/"/>
-    <category term="Computer Science" scheme="https://blog.rijuyuezhu.top/tags/Computer-Science/"/>
-    <category term="Problem Solving" scheme="https://blog.rijuyuezhu.top/tags/Problem-Solving/"/>
-    <id>https://blog.rijuyuezhu.top/posts/ca406595/</id>
-    <link href="https://blog.rijuyuezhu.top/posts/ca406595/"/>
-    <published>2023-10-28T03:40:04.000Z</published>
-    <summary>
-      <![CDATA[<p>OT：请调研教材中未介绍过的至少2种判定问题和2种优化问题（不能是相互对应版本，也不能是教材中介绍过的问题的对应版本），讨论适用场景，用教材中的方法形式化描述问题。</p>]]>
-    </summary>
-    <title>问题求解（三） Open Topic 9 笔记</title>
     <updated>2024-08-07T13:13:22.613Z</updated>
   </entry>
 </feed>

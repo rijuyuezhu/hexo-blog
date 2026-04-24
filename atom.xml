@@ -10,7 +10,31 @@
   <rights>All rights reserved 2026, Rijuyuezhu</rights>
   <subtitle>Record every drop in my life</subtitle>
   <title>Rijuyuezhu's Blog</title>
-  <updated>2026-04-03T09:48:40.517Z</updated>
+  <updated>2026-04-24T15:26:30.093Z</updated>
+  <entry>
+    <author>
+      <name>Rijuyuezhu</name>
+    </author>
+    <category term="Artificial Intelligence" scheme="https://blog.rijuyuezhu.top/categories/Artificial-Intelligence/"/>
+    <category term="Computer System" scheme="https://blog.rijuyuezhu.top/categories/Artificial-Intelligence/Computer-System/"/>
+    <category term="LLM" scheme="https://blog.rijuyuezhu.top/tags/LLM/"/>
+    <category term="Agents" scheme="https://blog.rijuyuezhu.top/tags/Agents/"/>
+    <category term="Security" scheme="https://blog.rijuyuezhu.top/tags/Security/"/>
+    <category term="Sandboxing" scheme="https://blog.rijuyuezhu.top/tags/Sandboxing/"/>
+    <id>https://blog.rijuyuezhu.top/posts/8948f892/</id>
+    <link href="https://blog.rijuyuezhu.top/posts/8948f892/"/>
+    <published>2026-04-24T15:17:20.000Z</published>
+    <summary>
+      <![CDATA[<p>This post gives a brief overview of why LLM agents need sandboxing,
+what kinds of sandboxing are commonly used, and which tradeoffs matter
+in practice.</p>
+<p>My main takeaway is simple: once an agent can touch the file system,
+execute programs, and reach the network, safety stops being just a
+prompting problem and becomes a sandboxing problem.</p>]]>
+    </summary>
+    <title>LLM Sandboxing</title>
+    <updated>2026-04-24T15:26:30.093Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Rijuyuezhu</name>
@@ -399,26 +423,6 @@ href="https://dl.acm.org/doi/10.1145/179812.179818">最短超串问题的松弛�
       <![CDATA[<p>OT：除MAX-SAT和TSP外，分支定界和局部搜索算法还可用于解决其它问题，请为每种算法调研至少1种可以解决的问题，结合例子介绍算法的设计与分析。</p>]]>
     </summary>
     <title>问题求解（三） Open Topic 12 笔记</title>
-    <updated>2024-08-07T13:13:22.613Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Rijuyuezhu</name>
-    </author>
-    <category term="Course Note" scheme="https://blog.rijuyuezhu.top/categories/Course-Note/"/>
-    <category term="Problem Solving" scheme="https://blog.rijuyuezhu.top/categories/Course-Note/Problem-Solving/"/>
-    <category term="Algorithm Analysis" scheme="https://blog.rijuyuezhu.top/tags/Algorithm-Analysis/"/>
-    <category term="Computer Science" scheme="https://blog.rijuyuezhu.top/tags/Computer-Science/"/>
-    <category term="Problem Solving" scheme="https://blog.rijuyuezhu.top/tags/Problem-Solving/"/>
-    <id>https://blog.rijuyuezhu.top/posts/eece9166/</id>
-    <link href="https://blog.rijuyuezhu.top/posts/eece9166/"/>
-    <published>2023-11-14T16:04:13.000Z</published>
-    <summary>
-      <![CDATA[<p>OT：除福特-法尔克森算法外，最大流问题还有很多其它算法，例如
-Edmonds-Karp 算法、Dinitz 算法、Push-Relabel
-算法等，请调研至少2种算法（其中至多1种来自上述例子），结合例子介绍算法的设计与分析，与福特-法尔克森算法比较异同并分析优劣。</p>]]>
-    </summary>
-    <title>问题求解（三） Open Topic 11 笔记</title>
     <updated>2024-08-07T13:13:22.613Z</updated>
   </entry>
 </feed>

@@ -11930,4 +11930,238 @@ sharing should now work normally!</p>
         <tag>Tools</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LLM Sandboxing</title>
+    <url>/posts/8948f892/</url>
+    <content><![CDATA[<p>This post gives a brief overview of why LLM agents need sandboxing,
+what kinds of sandboxing are commonly used, and which tradeoffs matter
+in practice.</p>
+<p>My main takeaway is simple: once an agent can touch the file system,
+execute programs, and reach the network, safety stops being just a
+prompting problem and becomes a sandboxing problem.</p>
+<span id="more"></span>
+<h2 id="why-sandboxing">Why Sandboxing</h2>
+<p>Modern LLM agents are no longer just models that answer questions. As
+soon as they are given tools, they start looking much more like real
+software actors, and that means they need real boundaries.</p>
+<h3 id="agent-risks">Agent Risks</h3>
+<p>The core reason is straightforward: capable agents already have
+dangerous primitives.</p>
+<ul>
+<li>They can write arbitrary files to the system and may delete
+important data.</li>
+<li>They can execute arbitrary code and may run malicious commands or
+scripts.</li>
+<li>They can access the network and may interact with remote servers or
+expose sensitive data.</li>
+</ul>
+<p>If we give an agent real power, we also need real boundaries.</p>
+<h3 id="prompting-is-not-enough">Prompting Is Not Enough</h3>
+<p>The most naive line of defense is to write stricter instructions. For
+example: "Don't remove any data!"</p>
+<figure style="text-align: center;">
+<img src="1.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+Models make mistakes, just like humans do.
+</p>
+</figcaption>
+</figure>
+<p>That may help in some cases, but it is obviously not a robust
+protection mechanism. Models make mistakes, misunderstand instructions,
+or follow a harmful local objective while missing the broader
+constraint. If the action is truly dangerous, it should be blocked by
+the system, not merely discouraged in the prompt.</p>
+<h3 id="search-based-protection">Search-Based Protection</h3>
+<p>The next step up is usually search-based protection: look at tool
+inputs or shell commands, try to match dangerous patterns, and reject
+them.</p>
+<p>This is better than nothing, but still brittle. It works poorly for
+languages like <code>bash</code>, where the same intent can be expressed
+through many equivalent commands, scripts, pipes, or layers of
+indirection. As soon as the agent is allowed to generate code instead of
+a single obvious command, simple matching rules become easy to bypass
+accidentally or deliberately.</p>
+<figure style="text-align: center;">
+<div
+style="display: flex; gap: 8px; justify-content: center; align-items: flex-start;">
+<p><img src="2.png" width="45%" /> <img src="3.png" width="45%" /></p>
+</div>
+<figcaption>
+<p>
+OpenCode protection. Search-based protection is poor, especially for a
+language like <code>bash</code> and for script execution.
+</p>
+</figcaption>
+</figure>
+<h3 id="file-system-sandbox">File System Sandbox</h3>
+<p>File system sandboxing is much more convincing because it changes
+what the process can actually see. Instead of trying to guess whether a
+command looks dangerous, we restrict the namespace itself. The agent can
+only access directories that are explicitly exposed to it.</p>
+<figure style="text-align: center;">
+<img src="4.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+File system sandboxing: only selected directories are accessible.
+</p>
+</figcaption>
+</figure>
+<h3 id="how-bwrap-works">How <code>bwrap</code> Works</h3>
+<p><code>bwrap</code> works in two important ways:</p>
+<ul>
+<li>It leverages <a
+href="https://man7.org/linux/man-pages/man7/user_namespaces.7.html">Linux
+user namespaces</a> to obtain a kind of pseudo-root privilege inside the
+sandbox.</li>
+<li>It uses <code>mount --bind</code> to construct a customized file
+system view for the sandboxed process.</li>
+</ul>
+<h3 id="network-sandbox">Network Sandbox</h3>
+<p>Restricting the file system is not enough if the agent can still talk
+to the outside world freely. Unrestricted network access is another
+escape hatch.</p>
+<figure style="text-align: center;">
+<img src="5.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+Network escape: the agent can access arbitrary servers on the Internet,
+which may lead to data leakage or other security issues.
+</p>
+</figcaption>
+</figure>
+<p>One practical mitigation is to manually insert proxies and only
+expose network access through those controlled paths. In other words,
+network access should also be mediated, not granted wholesale.
+Anthropic's write-up on Claude Code sandboxing and its sandbox runtime
+are both useful references here.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<figure style="text-align: center;">
+<img src="6.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+Claude Code sandboxing.
+</p>
+</figcaption>
+</figure>
+<h2 id="other-scenarios">Other Scenarios</h2>
+<h3 id="cloud-agents">Cloud Agents</h3>
+<p>When the agent runs in the cloud, sandboxing is still central. The
+difference is just where the boundary sits.</p>
+<p>Systems such as OpenAI Codex Cloud and Claude Code on the Web run
+agents on the cloud side rather than directly on the user's machine.</p>
+<ul>
+<li>They usually rely on Docker- or microVM-based sandboxing to protect
+the host system and limit resource usage.</li>
+</ul>
+<h3 id="benchmarking">Benchmarking</h3>
+<p>Sandboxing is not only for protection. Sometimes it is part of the
+benchmark or operating interface itself. For example, OSWorld requires a
+VM or sandbox environment to run GUI tasks and evaluate agents on
+them.<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p>
+<figure style="text-align: center;">
+<img src="7.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+OSWorld uses a sandbox environment to run the agent and evaluate its
+performance on GUI tasks.
+</p>
+</figcaption>
+</figure>
+<h3 id="code-execution">Code Execution</h3>
+<p>Another common scenario is lightweight code execution, such as
+running Python for a chatbot. In that setting, the interface may only
+need basic <code>stdin</code>/<code>stdout</code>, so the sandbox can be
+much lighter than a full interactive operating-system environment.</p>
+<p>For example, Zeroboot uses copy-on-write forking to create a sandbox
+environment in milliseconds.</p>
+<figure style="text-align: center;">
+<img src="8.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+Zeroboot is a fast sandboxing solution for code execution scenarios.
+</p>
+</figcaption>
+</figure>
+<h2 id="two-more-points">Two More Points</h2>
+<h3 id="sandbox-interface">Sandbox Interface</h3>
+<p>One point I find easy to miss is that sandboxing is not only about
+protection. It also defines what the agent can see and how the agent
+interacts with the environment.</p>
+<ul>
+<li>In OSWorld, the sandbox provides a clean interface to the
+environment and also helps with evaluation through recording and
+replaying.</li>
+<li>For today's code agents, the <code>bwrap + socat</code> style used
+by Claude Code is already enough for many use cases because its
+interface is close to the operating system itself.</li>
+<li>But if the target task needs a richer or more structured interface,
+then the design of the sandbox also directly affects the agent's
+capabilities.</li>
+</ul>
+<p>In other words, the "power" of a sandbox is heavily constrained by
+the interface it exposes. Protection matters, but functionality matters
+too. A sandbox that is perfectly safe but strips away the right
+abstractions may also make the agent much weaker.</p>
+<h3 id="startup-cost">Startup Cost</h3>
+<p>The other point is startup latency. Sandbox startup is often on the
+critical path of agent execution.</p>
+<ul>
+<li>In chat-like or otherwise lightweight workloads, sandbox startup
+overhead may even exceed the time spent on the task itself.</li>
+<li>This makes startup latency an important design dimension, not just
+an implementation detail.</li>
+</ul>
+<p>The comparison above is adapted from the excellent
+<code>awesome-sandbox</code> collection.<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<figure style="text-align: center;">
+<img src="9.png" width="100%" style="display: block; margin: 0 auto;" />
+<figcaption>
+<p>
+Features of different sandboxing techniques.
+</p>
+</figcaption>
+</figure>
+<p>Taken together, this leaves me with a fairly simple takeaway: sandbox
+design is a balancing act between protection, interface quality, and
+startup cost. If agents keep getting more capable, sandboxing will
+increasingly look like core systems infrastructure rather than an
+optional safety add-on.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="https://www.anthropic.com/engineering/claude-code-sandboxing">Anthropic:
+Making Claude Code more secure and autonomous with sandboxing</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://github.com/anthropic-experimental/sandbox-runtime">Anthropic
+Experimental: Sandbox Runtime for Claude Code</a><a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a
+href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/f9b97db490458df1d97f95f6f33f0a70-Abstract-Datasets_and_Benchmarks_Track.html">OSWorld:
+Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer
+Environments</a><a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a
+href="https://github.com/restyler/awesome-sandbox">restyler/awesome-sandbox</a><a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>Artificial Intelligence</category>
+        <category>Computer System</category>
+      </categories>
+      <tags>
+        <tag>LLM</tag>
+        <tag>Agents</tag>
+        <tag>Security</tag>
+        <tag>Sandboxing</tag>
+      </tags>
+  </entry>
 </search>

@@ -10,7 +10,37 @@
   <rights>All rights reserved 2026, Rijuyuezhu</rights>
   <subtitle>Record every drop in my life</subtitle>
   <title>Rijuyuezhu's Blog</title>
-  <updated>2026-04-24T15:26:30.093Z</updated>
+  <updated>2026-10-19T12:58:21.595Z</updated>
+  <entry>
+    <author>
+      <name>Rijuyuezhu</name>
+    </author>
+    <category term="Others" scheme="https://blog.rijuyuezhu.top/categories/Others/"/>
+    <category term="Agents" scheme="https://blog.rijuyuezhu.top/tags/Agents/"/>
+    <category term="Psychology" scheme="https://blog.rijuyuezhu.top/tags/Psychology/"/>
+    <category term="Productivity" scheme="https://blog.rijuyuezhu.top/tags/Productivity/"/>
+    <category term="Well-being" scheme="https://blog.rijuyuezhu.top/tags/Well-being/"/>
+    <id>https://blog.rijuyuezhu.top/posts/955995c7/</id>
+    <link href="https://blog.rijuyuezhu.top/posts/955995c7/"/>
+    <published>2026-10-19T12:39:04.000Z</published>
+    <summary>
+      <![CDATA[<p>I have been working on several research and software projects at the
+same time. With AI coding agents, there is now another layer of
+multitasking: a handful of sessions can be running in parallel, each
+occasionally asking me to review a change, answer a question, or decide
+what to do next.</p>
+<p>This creates an interesting tension. More work can happen in
+parallel, but my attention still has to move from one context to
+another. I wanted to understand what psychology says about that
+experience—and, more importantly, how to organize a day so that the
+extra parallelism is useful without leaving me mentally exhausted.</p>
+<p>My guiding idea is simple: <strong>let projects and agents run
+concurrently, while giving my own attention room to focus and
+recover.</strong></p>]]>
+    </summary>
+    <title>Multitasking in the Age of AI Agents: Attention and Recovery</title>
+    <updated>2026-10-19T12:58:21.595Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Rijuyuezhu</name>
@@ -52,25 +82,6 @@ my configuration process and troubleshooting steps for niri-wm.</p>]]>
     </summary>
     <title>Niri-wm Configuration and Troubleshooting</title>
     <updated>2026-04-03T09:48:40.517Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Rijuyuezhu</name>
-    </author>
-    <category term="Life" scheme="https://blog.rijuyuezhu.top/categories/Life/"/>
-    <category term="Travels" scheme="https://blog.rijuyuezhu.top/categories/Life/Travels/"/>
-    <category term="Travel" scheme="https://blog.rijuyuezhu.top/tags/Travel/"/>
-    <category term="Life" scheme="https://blog.rijuyuezhu.top/tags/Life/"/>
-    <id>https://blog.rijuyuezhu.top/posts/84687717/</id>
-    <link href="https://blog.rijuyuezhu.top/posts/84687717/"/>
-    <published>2026-03-17T07:45:07.000Z</published>
-    <summary>
-      <![CDATA[<p>Some of my friends and I have visited Mount Huangshan this week. Two
-days and one night's trip was really enjoyable, filled with laughter and
-fun.</p>]]>
-    </summary>
-    <title>Visiting Mount Huangshan</title>
-    <updated>2026-03-29T05:07:18.232Z</updated>
   </entry>
   <entry>
     <author>
@@ -273,8 +284,8 @@ to automate it.</p>]]>
     </author>
     <category term="Computer System" scheme="https://blog.rijuyuezhu.top/categories/Computer-System/"/>
     <category term="CS:APP" scheme="https://blog.rijuyuezhu.top/categories/Computer-System/CS-APP/"/>
-    <category term="Computer Science" scheme="https://blog.rijuyuezhu.top/tags/Computer-Science/"/>
     <category term="Linux" scheme="https://blog.rijuyuezhu.top/tags/Linux/"/>
+    <category term="Computer Science" scheme="https://blog.rijuyuezhu.top/tags/Computer-Science/"/>
     <category term="Computer System" scheme="https://blog.rijuyuezhu.top/tags/Computer-System/"/>
     <id>https://blog.rijuyuezhu.top/posts/db646f34/</id>
     <link href="https://blog.rijuyuezhu.top/posts/db646f34/"/>

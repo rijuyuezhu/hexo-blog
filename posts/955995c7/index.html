@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com//css2?family=Lucida+Grande:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Tahoma:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Hiragino+Sans+GB:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Verdana:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Arial:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Microsoft+YaHei:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sans-serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.rijuyuezhu.top","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeIn"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="I have been working on several research and software projects at the same time. With AI coding agents, there is now another layer of multitasking: a handful of sessions can be running in parallel, eac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multitasking in the Age of AI Agents: Attention and Recovery">
+<meta property="og:url" content="https://blog.rijuyuezhu.top/posts/955995c7/index.html">
+<meta property="og:site_name" content="Rijuyuezhu&#39;s Blog">
+<meta property="og:description" content="I have been working on several research and software projects at the same time. With AI coding agents, there is now another layer of multitasking: a handful of sessions can be running in parallel, eac">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-19T12:39:04.000Z">
+<meta property="article:modified_time" content="2026-10-19T12:58:21.595Z">
+<meta property="article:author" content="Rijuyuezhu">
+<meta property="article:tag" content="Agents">
+<meta property="article:tag" content="Productivity">
+<meta property="article:tag" content="Psychology">
+<meta property="article:tag" content="Well-being">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.rijuyuezhu.top/posts/955995c7/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://blog.rijuyuezhu.top/posts/955995c7/","path":"posts/955995c7/","title":"Multitasking in the Age of AI Agents: Attention and Recovery"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Multitasking in the Age of AI Agents: Attention and Recovery | Rijuyuezhu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Rijuyuezhu's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rijuyuezhu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Record every drop in my life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#two-timescales-of-multitasking"><span class="nav-text">Two Timescales of
+Multitasking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-task-switching-costs"><span class="nav-text">What Task Switching Costs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#switch-cost"><span class="nav-text">Switch Cost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attention-residue"><span class="nav-text">Attention Residue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#does-multitasking-harm-the-brain"><span class="nav-text">Does Multitasking Harm the
+Brain?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#why-watching-agent-sessions-all-day-can-be-exhausting"><span class="nav-text">Why
+Watching Agent Sessions All Day Can Be Exhausting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#long-horizon-work-several-projects-per-week-fewer-deep-switches-per-day"><span class="nav-text">Long-Horizon
+Work: Several Projects per Week, Fewer Deep Switches per Day</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-three-line-ready-to-resume-note"><span class="nav-text">The Three-Line
+Ready-to-Resume Note</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#supervising-multiple-agents"><span class="nav-text">Supervising Multiple Agents</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#treat-agent-activity-as-asynchronous-work"><span class="nav-text">Treat Agent Activity
+as Asynchronous Work</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#three-complementary-modes"><span class="nav-text">Three Complementary Modes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#notifications-planned-checks-and-genuine-exceptions"><span class="nav-text">Notifications:
+Planned Checks and Genuine Exceptions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-a-day-might-look-like"><span class="nav-text">What a Day Might Look Like</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rest-is-more-than-switching-to-another-task"><span class="nav-text">Rest Is More Than
+Switching to Another Task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#staying-alert-and-mentally-healthy"><span class="nav-text">Staying Alert and Mentally
+Healthy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep"><span class="nav-text">Sleep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#daylight-and-movement"><span class="nav-text">Daylight and Movement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#caffeine"><span class="nav-text">Caffeine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-real-end-to-the-workday"><span class="nav-text">A Real End to the Workday</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#signs-that-my-work-rhythm-needs-adjusting"><span class="nav-text">Signs That My Work
+Rhythm Needs Adjusting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a-small-seven-day-experiment"><span class="nav-text">A Small Seven-Day Experiment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#three-things-i-want-to-remember"><span class="nav-text">Three Things I Want to
+Remember</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rijuyuezhu"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rijuyuezhu</p>
+  <div class="site-description" itemprop="description">Knowledge and Practice!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rijuyuezhu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rijuyuezhu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wr-huang@outlook.com" title="E-Mail → mailto:wr-huang@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.rijuyuezhu.top/posts/955995c7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rijuyuezhu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rijuyuezhu's Blog">
+      <meta itemprop="description" content="Knowledge and Practice!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Multitasking in the Age of AI Agents: Attention and Recovery | Rijuyuezhu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Multitasking in the Age of AI Agents: Attention and Recovery
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-10-19 20:39:04" itemprop="dateCreated datePublished" datetime="2026-10-19T20:39:04+08:00">2026-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>I have been working on several research and software projects at the
+same time. With AI coding agents, there is now another layer of
+multitasking: a handful of sessions can be running in parallel, each
+occasionally asking me to review a change, answer a question, or decide
+what to do next.</p>
+<p>This creates an interesting tension. More work can happen in
+parallel, but my attention still has to move from one context to
+another. I wanted to understand what psychology says about that
+experience—and, more importantly, how to organize a day so that the
+extra parallelism is useful without leaving me mentally exhausted.</p>
+<p>My guiding idea is simple: <strong>let projects and agents run
+concurrently, while giving my own attention room to focus and
+recover.</strong></p>
+<span id="more"></span>
+<h2 id="two-timescales-of-multitasking">Two Timescales of
+Multitasking</h2>
+<p>I find it useful to distinguish two kinds of multitasking.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>Long-horizon work</th>
+<th>Short-horizon interactions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timescale</td>
+<td>Days, weeks, months</td>
+<td>Seconds, minutes, hours</td>
+</tr>
+<tr>
+<td>Typical work</td>
+<td>Research projects, courses, software development</td>
+<td>Reading agent updates, reviewing diffs, answering questions</td>
+</tr>
+<tr>
+<td>Main challenge</td>
+<td>Keeping several projects moving over time</td>
+<td>Switching attention and reconstructing context</td>
+</tr>
+<tr>
+<td>Useful habit</td>
+<td>Weekly planning and daily focus</td>
+<td>Asynchronous execution and deliberate review windows</td>
+</tr>
+</tbody>
+</table>
+<p>The number of <strong>active projects</strong>, the number of
+<strong>running agent sessions</strong>, and the number of times I
+<strong>switch attention</strong> are three different things. Keeping
+many projects alive does not require visiting all of them every hour.
+Likewise, agents can run concurrently without requiring continuous human
+supervision.</p>
+<h2 id="what-task-switching-costs">What Task Switching Costs</h2>
+<h3 id="switch-cost">Switch Cost</h3>
+<p>Cognitive psychology has a well-established concept called <em>switch
+cost</em>. In experiments, people tend to respond more slowly—and
+sometimes make more errors—immediately after switching from one task to
+another. Even when a switch is predictable and people have time to
+prepare, some cost remains <a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Real-world tasks are more complicated than the simple tasks used in
+laboratory experiments. When I reopen a coding session, I may need to
+recall the goal of the change, the current architecture, the tests that
+failed, and the reasoning behind the previous decision. Going from a
+paper to a different software project can involve a substantial
+reconstruction of context.</p>
+<h3 id="attention-residue">Attention Residue</h3>
+<p>Another useful concept is <em>attention residue</em>. After switching
+from unfinished work A to work B, part of my attention may remain
+occupied by A. Sophie Leroy's research describes how this lingering
+attention can impair performance on the new task <a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>.</p>
+<p>This feels especially relevant when several agent sessions contain
+open questions. I can move my eyes to a different window immediately;
+mentally leaving the previous problem may take longer.</p>
+<h3 id="does-multitasking-harm-the-brain">Does Multitasking Harm the
+Brain?</h3>
+<p>The clearest effects of task switching are immediate: slower
+responses, occasional mistakes, and the effort of getting back into a
+task. What concerns me more over time is the combination of <strong>high
+workload, frequent interruptions, a feeling of being constantly on call,
+and insufficient recovery</strong>. The <a
+target="_blank" rel="noopener" href="https://www.who.int/news-room/fact-sheets/detail/mental-health-at-work">World
+Health Organization</a> identifies excessive workloads, long hours, and
+limited control over work among the psychosocial risks to mental
+health.</p>
+<h2 id="why-watching-agent-sessions-all-day-can-be-exhausting">Why
+Watching Agent Sessions All Day Can Be Exhausting</h2>
+<p>A day with several agents can create three overlapping demands:</p>
+<ol type="1">
+<li><strong>Context reconstruction.</strong> Each session has its own
+goal, files, constraints, recent decisions, and unresolved
+problems.</li>
+<li><strong>Attention residue.</strong> After reviewing one session, I
+may continue thinking about it while trying to work on another.</li>
+<li><strong>Continuous vigilance.</strong> If I expect the next agent
+message to require an immediate answer, even otherwise quiet time can
+feel like waiting for an interruption.</li>
+</ol>
+<p>The key distinction is between an agent <strong>doing work</strong>
+and an agent <strong>needing me</strong>. An agent can be busy for
+twenty minutes while I read a paper. When it produces a result, that
+result can often wait for the next review period.</p>
+<h2
+id="long-horizon-work-several-projects-per-week-fewer-deep-switches-per-day">Long-Horizon
+Work: Several Projects per Week, Fewer Deep Switches per Day</h2>
+<p>I would like several projects to progress over the course of a week.
+That does not mean I need to make meaningful progress on every project
+every day.</p>
+<p>An observational study of GitHub developers, <em>The Sky Is Not the
+Limit: Multitasking Across GitHub Projects</em>, is interesting here. It
+distinguishes participation in multiple projects from switching between
+many projects in a short period <a href="#fn3" class="footnote-ref"
+id="fnref3" role="doc-noteref"><sup>3</sup></a>. That distinction helps
+me think about how to divide my week.</p>
+<p>A reasonable rhythm for me is:</p>
+<ul>
+<li><strong>Weekly:</strong> keep a short overview of active projects,
+their next milestones, and what is waiting on someone or something
+else.</li>
+<li><strong>Daily:</strong> pick a primary project or question that
+deserves an uninterrupted block of thought.</li>
+<li><strong>Between blocks:</strong> handle lighter maintenance work and
+review results from other projects.</li>
+<li><strong>At transitions:</strong> leave a short note about where to
+resume.</li>
+</ul>
+<p>Projects can remain active even during days when they receive little
+of my attention. This also leaves room for useful cross-project
+connections without turning the entire day into a series of shallow
+visits.</p>
+<h3 id="the-three-line-ready-to-resume-note">The Three-Line
+Ready-to-Resume Note</h3>
+<p>Leroy and Glomb studied a simple intervention called a
+<em>ready-to-resume plan</em>: before leaving an interrupted task, spend
+a moment planning how to return to it. This helped reduce attention
+residue <a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>.</p>
+<p>For example, before leaving a software task:</p>
+<blockquote>
+<p><strong>Current state:</strong> The implementation is done; I am
+reviewing the diff.</p>
+<p><strong>Open question:</strong> One rollback path still needs
+checking.</p>
+<p><strong>Next action:</strong> Inspect the failing test, then review
+the exceptional branch.</p>
+</blockquote>
+<p>This takes roughly a minute. When I return, I can resume from a clear
+entry point instead of rereading the entire history.</p>
+<h2 id="supervising-multiple-agents">Supervising Multiple Agents</h2>
+<h3 id="treat-agent-activity-as-asynchronous-work">Treat Agent Activity
+as Asynchronous Work</h3>
+<p>I want my agents to keep working even when I am doing something else.
+Their outputs can form a queue of items that need attention.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Agent state</th>
+<th>What I can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Running</td>
+<td>Let it work; keep my attention on the current task.</td>
+</tr>
+<tr>
+<td>Completed</td>
+<td>Add its result to the next review batch.</td>
+</tr>
+<tr>
+<td>Waiting for input</td>
+<td>Queue the question; prioritize it if it blocks important
+progress.</td>
+</tr>
+<tr>
+<td>Failed or blocked</td>
+<td>Assess the impact and decide when to intervene.</td>
+</tr>
+<tr>
+<td>High-risk action requiring approval</td>
+<td>Review explicitly before allowing the action.</td>
+</tr>
+</tbody>
+</table>
+<p>An urgent failure may deserve immediate attention. For routine
+updates, I can choose when to step in instead of following every status
+change.</p>
+<h3 id="three-complementary-modes">Three Complementary Modes</h3>
+<p>I find it helpful to think in terms of three modes:</p>
+<p><strong>Focus.</strong> Reading a paper, reasoning about a design, or
+writing something difficult. This is where a sustained train of thought
+matters most. A possible starting block is <strong>45–90
+minutes</strong>.</p>
+<p><strong>Supervise.</strong> Reviewing agent output, answering
+questions, making decisions, and dispatching the next round of tasks. A
+possible starting block is <strong>15–30 minutes</strong>.</p>
+<p><strong>Recover.</strong> Getting up, moving around, drinking water,
+or simply being away from the screen. Even <strong>5–10 minutes</strong>
+can offer a real break.</p>
+<p>I can adjust these blocks to the work, my energy level, and the day's
+schedule.</p>
+<h3
+id="notifications-planned-checks-and-genuine-exceptions">Notifications:
+Planned Checks and Genuine Exceptions</h3>
+<p>There is a difference between these two workflows:</p>
+<p><strong>Reactive:</strong> an agent replies → I open it → return to
+the paper → another agent replies → I open that one.</p>
+<p><strong>Deliberate:</strong> agents produce updates → routine updates
+accumulate → I review them together at a convenient point.</p>
+<p>Research on <em>batching smartphone notifications</em> found
+improvements in some measures of well-being and perceived control
+compared with receiving notifications continuously <a href="#fn5"
+class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. I
+would like to try the same idea with routine agent updates.</p>
+<p>In either case, I would keep an exception for genuinely
+time-sensitive or safety-critical matters. Everything else can usually
+wait until I have reached a natural stopping point.</p>
+<h2 id="what-a-day-might-look-like">What a Day Might Look Like</h2>
+<p>I do not need to schedule my attention with the precision of an
+operating-system scheduler. A few recognizable phases are enough.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Phase</th>
+<th>My focus</th>
+<th>What the agents can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start of day</td>
+<td>Choose the main objective and launch independent tasks.</td>
+<td>Begin autonomous work.</td>
+</tr>
+<tr>
+<td>Deep-work block</td>
+<td>Read, write, think; leave routine notifications alone.</td>
+<td>Continue running in the background.</td>
+</tr>
+<tr>
+<td>Review window</td>
+<td>Read results, inspect diffs, respond, and delegate next steps.</td>
+<td>Receive feedback and continue.</td>
+</tr>
+<tr>
+<td>Short break</td>
+<td>Step away from the screen.</td>
+<td>Continue or wait; no supervision needed.</td>
+</tr>
+<tr>
+<td>End of day</td>
+<td>Leave resumption notes and close the workday.</td>
+<td>Non-urgent work can wait until tomorrow.</td>
+</tr>
+</tbody>
+</table>
+<p>The important change is who controls the rhythm. I would like to
+check agents because I have decided it is a good moment to do so, not
+because every new message resets my priorities.</p>
+<h2 id="rest-is-more-than-switching-to-another-task">Rest Is More Than
+Switching to Another Task</h2>
+<p>When reading a paper makes me tired, checking an agent's code might
+feel like a break because it is different work. But it still requires
+attention, decisions, and screen time.</p>
+<p>A genuine pause might mean walking around, stretching, drinking
+water, looking outside, or sitting quietly for a few minutes. The point
+is to let the mind disengage from active problem solving.</p>
+<p>A systematic review and meta-analysis of <em>micro-breaks</em> found
+reductions in fatigue and increases in vigor. Effects on performance in
+complex cognitive tasks were less certain <a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.
+That is a useful expectation to set: a break can be worthwhile because
+it helps me feel and function better, even if it does not immediately
+make me solve a problem faster.</p>
+<h2 id="staying-alert-and-mentally-healthy">Staying Alert and Mentally
+Healthy</h2>
+<p>Work organization matters, but so do the basics of physical
+recovery.</p>
+<h3 id="sleep">Sleep</h3>
+<p>The <a target="_blank" rel="noopener" href="https://www.cdc.gov/sleep/about/">CDC recommends at
+least seven hours of sleep</a> per night for adults aged 18–60. Sleep
+supports alertness, learning, memory, and emotional regulation.</p>
+<p>One tempting habit with agents is to keep checking them late at night
+because they are still running. I can let them run while giving myself a
+definite stopping point. The next review can happen after sleep.</p>
+<h3 id="daylight-and-movement">Daylight and Movement</h3>
+<p>Getting outside during the day, moving away from the desk, and
+maintaining a regular schedule help support a healthier daily rhythm.
+For physical activity, the WHO recommends <strong>150–300 minutes of
+moderate-intensity aerobic activity per week</strong> (or the
+vigorous-intensity equivalent), plus muscle-strengthening activity on at
+least two days <a href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a>.</p>
+<p>This is particularly worth remembering during weeks spent mostly
+reading, coding, and reviewing agent output.</p>
+<h3 id="caffeine">Caffeine</h3>
+<p>Caffeine can improve short-term alertness, but it is not a substitute
+for sleep. Late caffeine can interfere with the following night's rest,
+so I want to be mindful of timing and individual sensitivity.</p>
+<h3 id="a-real-end-to-the-workday">A Real End to the Workday</h3>
+<p>It is easier to recover when the workday has an ending. I can leave
+open questions, pending reviews, and next steps in a trusted place, then
+spend time on activities unrelated to the current projects.</p>
+<p>The long-term goal is to be alert and engaged <em>when working</em>,
+and able to relax <em>when resting</em>.</p>
+<h2 id="signs-that-my-work-rhythm-needs-adjusting">Signs That My Work
+Rhythm Needs Adjusting</h2>
+<p>Counting every context switch is probably less useful than observing
+how I feel and function.</p>
+<p>Some signs worth noticing are:</p>
+<ul>
+<li>I open a session and forget what I was trying to accomplish.</li>
+<li>Sustained reading or thinking feels increasingly difficult.</li>
+<li>I repeatedly check whether an agent has replied, even during
+rest.</li>
+<li>I feel mentally tired early in the day and do not recover after
+breaks.</li>
+<li>My sleep worsens, or I stay preoccupied with work after
+stopping.</li>
+<li>I become persistently irritable, anxious, or less interested in
+things I usually enjoy.</li>
+</ul>
+<p>If difficulties persist for weeks or significantly interfere with
+everyday life, talking with a healthcare or mental-health professional
+would be sensible.</p>
+<h2 id="a-small-seven-day-experiment">A Small Seven-Day Experiment</h2>
+<p>I would start by changing only three habits for a week:</p>
+<ol type="1">
+<li><strong>Keep one uninterrupted focus block each day.</strong> I can
+run agents in parallel without actively checking them.</li>
+<li><strong>Batch routine agent reviews.</strong> Before changing tasks,
+leave a three-line ready-to-resume note.</li>
+<li><strong>Protect real breaks and sleep.</strong> Include time away
+from the screen and a consistent end-of-day boundary.</li>
+</ol>
+<p>At the end of each day, I can give three simple subjective scores
+from 1 to 5: <strong>focus, fatigue, and sleep quality</strong>. After
+seven days, I can see what helps and adjust my rhythm accordingly.</p>
+<h2 id="three-things-i-want-to-remember">Three Things I Want to
+Remember</h2>
+<p><strong>Several projects can progress concurrently; deep attention
+benefits from continuity.</strong></p>
+<p><strong>AI agents can operate asynchronously; I can choose when to
+supervise them.</strong></p>
+<p><strong>Sustainable productivity includes sleep, movement, breaks,
+and genuine recovery.</strong></p>
+<p>The best outcome of having more capable agents would be more freedom
+to think carefully—and more freedom to stop thinking about work when the
+day is over.</p>
+<h2 id="references">References</h2>
+<p>Additional background: <a
+target="_blank" rel="noopener" href="https://www.apa.org/topics/research/multitasking">APA on switching
+costs</a> · <a
+target="_blank" rel="noopener" href="https://www.who.int/news-room/fact-sheets/detail/mental-health-at-work">WHO
+on mental health at work</a> · <a
+target="_blank" rel="noopener" href="https://www.cdc.gov/sleep/about/">CDC on sleep</a>.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Rogers, R. D., &amp; Monsell, S. (1995). <a
+target="_blank" rel="noopener" href="https://doi.org/10.1037/0096-3445.124.2.207">Costs of a
+Predictable Switch Between Simple Cognitive Tasks</a>. <em>Journal of
+Experimental Psychology: General</em>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Leroy, S. (2009). <a
+target="_blank" rel="noopener" href="https://doi.org/10.1016/j.obhdp.2009.04.002">Why Is It So Hard to
+Do My Work? The Challenge of Attention Residue When Switching Between
+Work Tasks</a>. <em>Organizational Behavior and Human Decision
+Processes</em>.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Vasilescu, B., et al. (2016). <a
+target="_blank" rel="noopener" href="https://doi.org/10.1145/2884781.2884875">The Sky Is Not the Limit:
+Multitasking Across GitHub Projects</a>. <em>ICSE</em>.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Leroy, S., &amp; Glomb, T. M. (2018). <a
+target="_blank" rel="noopener" href="https://doi.org/10.1287/orsc.2017.1184">Tasks Interrupted: How
+Anticipating Time Pressure on Resumption of an Interrupted Task Causes
+Attention Residue and Low Performance on Interrupting Tasks and How a
+“Ready-to-Resume” Plan Mitigates the Effects</a>. <em>Organization
+Science</em>.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Fitz, N., et al. (2019). <a
+target="_blank" rel="noopener" href="https://doi.org/10.1016/j.chb.2019.07.016">Batching Smartphone
+Notifications Can Improve Well-being</a>. <em>Computers in Human
+Behavior</em>.<a href="#fnref5" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Albulescu, P., et al. (2022). <a
+target="_blank" rel="noopener" href="https://doi.org/10.1371/journal.pone.0272460">“Give Me a Break!” A
+Systematic Review and Meta-analysis on the Efficacy of Micro-breaks for
+Increasing Well-being and Performance</a>. <em>PLOS ONE</em>.<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>World Health Organization (2020). <a
+target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/books/NBK566048/">Guidelines on
+Physical Activity and Sedentary Behaviour</a>.<a href="#fnref7"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rijuyuezhu
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://blog.rijuyuezhu.top/posts/955995c7/" title="Multitasking in the Age of AI Agents: Attention and Recovery">https://blog.rijuyuezhu.top/posts/955995c7/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Agents/" rel="tag"># Agents</a>
+              <a href="/tags/Psychology/" rel="tag"># Psychology</a>
+              <a href="/tags/Productivity/" rel="tag"># Productivity</a>
+              <a href="/tags/Well-being/" rel="tag"># Well-being</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/8948f892/" rel="prev" title="LLM Sandboxing">
+                  <i class="fa fa-angle-left"></i> LLM Sandboxing
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rijuyuezhu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: '32px',
+  left: 'unset',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"rijuyuezhu/hexo-blog-comments","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
